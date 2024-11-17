@@ -1,0 +1,121 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels
+
+<div class="k-rtl ">
+    @(Html.Kendo().Grid<CustomerModel>()
+        .Name("grid_customersGrid")
+        .Columns(columns =>
+        {
+            columns.Bound("").ClientTemplate("#= renderRecordNumber(data,gridName) #")
+            .Title("#")
+            .Width(40);
+
+            columns.Bound(c => c.FullName)
+            .Sortable(true)
+            .Title(Captions.FullName)
+            .Filterable(true)
+            .Width(90);
+
+            columns.Bound(c => c.NationalCode)
+            .Sortable(true)
+            .Title(Captions.NationalCode)
+            .Filterable(true)
+            .Width(90);
+
+            columns.Bound(c => c.Mobile)
+            .Sortable(true)
+            .Title(Captions.Mobile)
+            .Filterable(true)
+            .Width(90);
+
+            columns.Bound(c => c.AccountStatus)
+            .Sortable(false)
+            .Title(Captions.AccountStatus)
+            .ClientTemplate("<div class='text-center'><span class=\"#=AccountStatusClass#\">#=AccountStatus#</span></div>")
+            .Filterable(false)
+            .Width(50);
+
+            columns.Bound(c => c.IsActive)
+            .Title(Captions.Status)
+            .ClientTemplate($"<div class='text-center'><span class=\"badge #=(IsActive?'badge-success':'badge-danger')#\"> #=(IsActive?'{Captions.Active}':'{Captions.DeActive}')#</span></div>")
+            .Sortable(true)
+            .Filterable(true)
+            .Width(80);
+
+            columns.Bound(c => c.Id)
+            .ClientTemplate("<div class='text-center'><button class='btn btn-info' onclick='loadDataInModal(\"/Dashboard/Customer/AddEssentialNumber?id=0&customerId=#=Id#\",\"addOrEditEssentialTelModal\")'><i class='fa fa-phone'></i></button></div>")
+            .Title(Captions.EssentialTel)
+            .Width(60)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+            columns.Bound(c => c.Id)
+            .ClientTemplate("<div class='text-center'><button class='btn bg-warning' onclick='loadDataInModal(\"/Dashboard/Customer/AddCardNumber?id=0&customerId=#=Id#\",\"addOrEditCardNumberModal\")'><i class='fa fa-credit-card'></i></button></div>")
+            .Title(Captions.CardNumber)
+            .Width(60)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+            columns.Bound(c => c.Id)
+            .ClientTemplate($"<div class='text-center'><button class='btn btn-success' onclick='getRequestWithConfirm(\"/Dashboard/Customer/ResetPassword?id=#=Id#\", \"{UserMessages.AreYouSureForResetPassword}\")' title='{Captions.ResetPassword}'><i class='fa fa-key'></i></button></div>")
+            .Title(Captions.ResetPassword)
+            .Width(60)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+            columns.Bound(c => c.Id)
+            .ClientTemplate("<div class='text-center'>"+
+             "#if(HasProfileImage){#" +
+            $"<button class='btn bg-slate' onclick='loadDataInModal(\"/Dashboard/Customer/GetProfileImages?customerId=#=Id#\",\"profileImagesModal\")'  title='{Captions.ProfileImages}'><i class='fa fa-image'></i></button>" +
+            "#}#"+
+            "</div>")
+            .Title(Captions.ProfileImages)
+            .Width(45)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+
+            columns.Bound(c => c.Id)
+            .ClientTemplate("<div class='text-center'>"+
+            $"<button class='btn btn-primary' onclick='loadData(\"/Dashboard/Customer/CreateOrEditCustomer?id=#=Id#\",\"customerForm\")'  title='{Captions.Edit}'><i class='fa fa-edit'></i></button>" +
+            $"<button class='btn btn-danger' onclick='getRequestWithConfirmRefreshGrid(\"/Dashboard/Customer/RemoveCustomer?id=#=Id#\",\"{UserMessages.AreYouSureForDelete}\",gridName,resetCustomerForm)' title='{Captions.Delete}'><i class='fa fa-trash'></i></button>" +
+            "</div>")
+            .Title(Captions.Operation)
+            .Width(100)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+        })
+        .Sortable()
+        .Selectable()
+        .Scrollable(x => x.Height("auto"))
+        .Filterable()
+        .HtmlAttributes(new { @class = "" })
+        .Pageable(pageable => pageable
+        .PageSizes(new[] { 10, 50, 100, 500 })
+        .Info(true)
+        .Enabled(true)
+        .PreviousNext(true)
+        .Input(true)
+        .Numeric(true)
+        .ButtonCount(8)
+        .Refresh(true)
+        )
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Sort(x => x.Add(y => y.FullName))
+        .Read(read => read.Action("CustomerList_Read", "Customer"))
+        ).Events(ev => ev.DataBound("onDataBound"))
+        )
+</div>
+
+
+<script>
+    function GetData() {
+        return;
+    }
+</script>

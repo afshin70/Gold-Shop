@@ -1,0 +1,134 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels;
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels;
+@using Gold.SharedKernel.Enums;
+@model CustomerProfileModel
+@{
+    CustomerProfileViewModel customerProfileViewModel = new();
+    if (Model is not null)
+    {
+        customerProfileViewModel.SanaCode = Model.SanaCode;
+        customerProfileViewModel.CityId = Model.CityId;
+        customerProfileViewModel.PostalCode = Model.PostalCode;
+        customerProfileViewModel.Address = Model.Address;
+        customerProfileViewModel.JobTitle = Model.JobTitle;
+        customerProfileViewModel.BirthDate = Model.BirthDate;
+    }
+    ViewData["Title"] = $"{Captions.Profile} - {User.GetName()}";
+    ViewBag.SelectedMenuIcon = SiteSelectedIcon.Profile;
+}
+<div class="container mt-2 dir-rtl mb-5">
+    <div class="title-section mb-4 mt-2 text-end">
+        <h5 class="fw-bold">
+            @Captions.Profile
+        </h5>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3 text-center p-md-3">
+            <a class="btn btn-outline-primary" href="#" onclick="loadDataInModal('/EditInformationRequest','editInfoModal')">@UserMessages.ClickForSendEditInformationReqest</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 col-md-2">
+			<div class="border border-primary rounded overflow-hidden mb-3">
+            <img class="img-fluid" id="profileImage" src="/Profile/Image" alt="@User.GetName()">
+        </div>
+        </div>
+        <div class="col-12 col-md-10">
+            <div class="row">
+                <div class="col-12 col-md-6 mb-3 text-white text-end text-md-center p-md-3">
+                    <span class="fw-light fw-bold">
+                        @Captions.FullName :
+                    </span>
+                    <span class="">
+                        @Model?.FullName
+                    </span>
+                </div>
+                <div class="col-12 col-md-6 mb-3 text-white text-end text-md-center p-md-3">
+                    <span class="fw-light fw-bold">
+                        @Captions.National_Identification_Code :
+                    </span>
+                    <span class="">
+                        @Model?.NationalCode
+                    </span>
+                </div>
+                <div class="col-12 col-md-6 mb-3 text-white text-end text-md-center p-md-3">
+                    <span class="fw-light fw-bold">
+                        @Captions.FatherName :
+                    </span>
+                    <span>
+                        @Model?.FatherName
+                    </span>
+                </div>
+                <div class="col-12 col-md-6 mb-3 text-white text-end text-md-center p-md-3">
+                    <span class="fw-light fw-bold">
+                        @Captions.Mobile :
+                    </span>
+                    <span class="">
+                        @Model?.Mobile
+                    </span>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="col-12 mb-5">
+            <partial name="_EditProfileInfo" model="customerProfileViewModel" />
+        </div>
+    </div>
+
+</div>
+
+@{
+    //ModalModel editInfoModel = new()
+    //        {
+    //            IsShowCloseButtonInFooter = true,
+    //            Id = "editInfoModal",
+    //            IsShowCloseIcon = false,
+    //            Size = ModalSize.Larg,
+    //            Title = Captions.EditInformationRequest,
+    //        };
+    //ModalModel bankCardNumberModel = new()
+    //        {
+    //            IsShowCloseButtonInFooter = true,
+    //            Id = "bankCardNumberModal",
+    //            IsShowCloseIcon = true,
+    //            Size = ModalSize.Larg,
+    //            Title = $"{Captions.BankCardNumber}",
+    //            IsShowHeader = true
+    //        };
+            ModernModalModel editInfoModel = new()
+            {
+                Id = "editInfoModal",
+                Size = ModernModalSize.Lg,
+                Title = Captions.EditInformationRequest,
+            };
+    ModernModalModel bankCardNumberModel = new()
+            {
+                Id = "bankCardNumberModal",
+                Size = ModernModalSize.Lg,
+                Title = $"{Captions.BankCardNumber}",
+            };
+
+}
+@*<partial name="_Modal" model="bankCardNumberModel" />
+<partial name="_Modal" model="editInfoModel" />*@
+<partial name="_ModernModal" model="bankCardNumberModel" />
+
+<partial name="_ModernModal" model="editInfoModel" />
+@section Header {
+
+    <link href="~/sitetheme/css/select2.min.css" rel="stylesheet" />
+    <link href="~/sitetheme/css/persian-datepicker.min.css" rel="stylesheet" />
+}
+@section Scripts {
+
+    <script src="~/sitetheme/js/select2.min.js"></script>
+    <script src="~/sitetheme/js/persian-date.min.js"></script>
+    <script src="~/sitetheme/js/persian-datepicker.min.js"></script>
+    <script src="~/scripts/site/persiancalenderconfig.min.js"></script>
+    <script src="~/lib/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
+}

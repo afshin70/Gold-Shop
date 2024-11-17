@@ -1,0 +1,6 @@
+﻿
+@*@if (ViewData[SystemSetting.AlertsKey] != null)
+{
+    @await Html.PartialAsync("_MessageWithModel", (AlertModel)ViewData[SystemSetting.AlertsKey])
+}
+*@

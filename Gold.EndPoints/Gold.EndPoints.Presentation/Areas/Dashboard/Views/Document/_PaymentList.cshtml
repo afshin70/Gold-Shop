@@ -1,0 +1,76 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.DocumentModels
+
+@model List<PaymentModel>
+@{
+    Layout = null;
+}
+<div class="k-rtl ">
+	<div class="k-grid k-widget k-display-block">
+		<div class="k-grid-header" style="padding-left: 17px;">
+			<div class="k-grid-header-wrap k-auto-scrollable">
+				<table>
+					<thead>
+						<tr>
+							<td class="k-header td-5">#</td>
+							<th class="k-header td-15">@Captions.PaymentDate</th>
+							<th class="k-header td-20">@Captions.PaymentAmount (@Captions.Tooman)</th>
+							<th class="k-header td-20">@Captions.ReceiptImage</th>
+							<th class="k-header td-20">@Captions.PaymentRegisterDate</th>
+							<th class="k-header td-20">@Captions.Operation</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		<div class="k-grid-content k-auto-scrollable" style="height: auto;">
+			<table class="k-selectable">
+				@if (Model != null)
+				{
+					<tbody>
+                        @{
+                            int rowNumber = 1;
+                            long sumOfPayments = 0;
+                        }
+                        @foreach (var payment in Model)
+                        {
+							<tr>
+								<td class="td-5">@rowNumber</td>
+								<td class="td-15">@payment.PaymentDate.GeorgianToPersian(ShowMode.OnlyDate)</td>
+								<td class="td-20">@payment.Amount.ToString("N0")</td>
+								<td class="td-20 text-center">
+									@if (!string.IsNullOrEmpty(payment.ImageName))
+                                    {
+										<a href="/Dashboard/Document/GetPaymentImage?imageName=@payment.ImageName" target="_blank">@Captions.ViewReceipt</a>
+                                    }
+								</td>
+								<td class="td-20">@payment.RegisterDate.GeorgianToPersian(ShowMode.OnlyDateAndTime)</td>
+                                <td class="td-20">
+                                    <div class="text-center">
+										<button type="button" class="btn btn-primary" onclick='loadData("/Dashboard/Document/CreateOrEditPayment?installmentId=@payment.InstallmentId&paymentId=@payment.PaymentId", "createOrEditPayment_body")'><i class="fa fa-edit"></i></button>
+										<button type="button" class="btn btn-danger" onclick='deletePayment("/Dashboard/Document/RemovePayment?installmentId=@payment.InstallmentId&paymentId=@payment.PaymentId", "@UserMessages.AreYouSureForDelete", "paymentForm")'><i class="fa fa-trash"></i></button>
+                                    </div>
+                                </td>
+							</tr>
+                            rowNumber++;
+                            sumOfPayments += payment.Amount;
+						}
+					</tbody>
+                    <tfoot>
+						<tr>
+                            <td class="td-5 border-top"> </td>
+                            <td class="td-15 border-top"></td>
+                            <td class="td-20 border-top">@Captions.SumTotal : @sumOfPayments.ToString("N0") @Captions.Tooman</td>
+                            <td class="td-20 border-top"></td>
+                            <td class="td-20 border-top"></td>
+                            <td class="td-20 border-top no-border-left"></td>
+						</tr>
+					</tfoot>
+				}
+			</table>
+		</div>
+	</div>
+</div>
+
+
+
+

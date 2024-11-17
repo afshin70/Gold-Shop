@@ -1,0 +1,110 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.FAQViewModels;
+@model CreateOrEditFAQViewModel
+@{
+    ViewBag.SelectedMenu = (byte)ManagerPermission.ManageFAQ;
+    ViewData["Title"] = Captions.FAQ;
+}
+<div class="tabbable-custom">
+    <ul class="nav nav-tabs">
+        @*<li class="active"  onclick="loadData('/Dashboard/Gallery/CreateOrEditGallery','form_gallery')">*@
+        <li class="active">
+            <a href="#tab_1_1" data-toggle="tab"> @Captions.FAQ</a>
+        </li>
+        <li>
+            @*onclick ="loadData('/Dashboard/Seller/CreateOrEditSeller','form_seller')"*@
+            <a href="#tab_1_2" data-toggle="tab"> @Captions.FAQCategory</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade active in" id="tab_1_1">
+
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span> @Captions.FAQ</span>
+                    </h6>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="form_createOrEditFAQ">
+                    <partial name="_CreateOrEditFAQForm" model="Model" />
+                </div>
+            </div>
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span>@Captions.List @Captions.FAQ</span>
+                    </h6>
+                    <div class="heading-elements">
+                        <button type="button" onclick="exportFile('/Dashboard/FAQ/InitReportData',GetData(),'/Dashboard/FAQ/ExportExcel')" class="btn btn-labeled"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+                        <button type="button" onclick="exportFile('/Dashboard/FAQ/InitReportData',GetData(),'/Dashboard/FAQ/ExportPdf')" class="btn btn-labeled"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+                        <ul class="icons-list left-align">
+                            <li><a data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="list_faq">
+                    <partial name="_FAQList" />
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tab_1_2">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span>@Captions.FAQCategory</span>
+                    </h6>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="form_createOrEditFAQCategory">
+                    <partial name="_CreateOrEditFAQCategoryForm" model="new CreateOrEditFAQCategoryViewModel()" />
+                </div>
+            </div>
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span>@Captions.List @Captions.FAQ</span>
+                    </h6>
+                    <div class="heading-elements">
+                        <ul class="icons-list left-align">
+                            <li><a data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="fAQCategoryList">
+                    <partial name="_FAQCategoryList" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section HeaderScripts{
+    <script>
+        var fAQCategoryGridName = "grid_FAQCategoryGrid";
+        var fAQGridName = "grid_FAQGrid";
+    </script>
+    }
+
+@section Scripts{
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
+    <script src="~/lib/ckeditor/config.js"></script>
+
+    <script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select').select2();
+        });
+    </script>
+
+    <script src="~/scripts/dashboard/faq.js" asp-append-version="true"></script>
+
+ }

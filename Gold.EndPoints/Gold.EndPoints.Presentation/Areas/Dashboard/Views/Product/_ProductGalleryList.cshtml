@@ -1,0 +1,63 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.ProductModels.ProductGallertModels;
+@model List<ProductGalleryModel>
+@{
+    Layout = null;
+}
+<div class="k-rtl ">
+    <div class="k-grid k-widget k-display-block">
+        <div class="k-grid-header" style="padding-left: 17px;">
+            <div class="k-grid-header-wrap k-auto-scrollable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="k-header td-30">@Captions.Image/@Captions.Video</th>
+                            <th class="k-header td-20">@Captions.Arrangement</th>
+                            <th class="k-header td-30">@Captions.Thumbnail</th>
+                            <th class="k-header td-20">@Captions.Operation</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="k-grid-content k-auto-scrollable" style="height: auto;">
+            <table class="k-selectable">
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model.OrderBy(x => x.OrderNo))
+                        {
+                            <tr>
+                                <td class="td-30">
+                                    @if (item.FileType==Gold.Domain.Enums.MediaFileType.Video)
+                                    {
+                                        <video width="180" controls>
+                                            <source src="@($"/Product/Gallery/{item.FileName}")" type="video/mp4">
+                                        </video>
+                                    }
+                                    else if (item.FileType == Gold.Domain.Enums.MediaFileType.Image)
+                                    {
+                                        <img class="img" style="max-width:200px;" src="@($"/Product/Gallery/{item.FileName}")" />
+                                    }
+                                    </td>
+                                <td class="td-20">
+                                    <div class="text-center">
+                                        <button type="button" class='btn btn-success' onclick='loadData("/Dashboard/Product/ChangeProductGalleryOrder?id=@item.ProductGalleryId&pid=@item.OwnProductId&isUp=true", "table_productGalleryList")'><i class="fa fa-arrow-up"></i></button>
+                                        <button type="button" class='btn btn-success' onclick='loadData("/Dashboard/Product/ChangeProductGalleryOrder?id=@item.ProductGalleryId&pid=@item.OwnProductId&isUp=false", "table_productGalleryList")'><i class="fa fa-arrow-down"></i></button>
+                                    </div>
+                                </td>
+                                <td class="td-30">
+                                    <input @(item.FileType!=Gold.Domain.Enums.MediaFileType.Image?"disabled":"") type="checkbox" onclick='loadData("/Dashboard/Product/SetProductGalleryThubmnail?id=@item.ProductGalleryId&pid=@item.OwnProductId","table_productGalleryList")' @(item.IsThumbnail?"checked":string.Empty) />
+                                </td>
+                                <td class="td-20">
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-danger" onclick='getRequestWithConfirmUpdateTargetElement("/Dashboard/Product/RemoveProductGallery?id=@item.ProductGalleryId&pid=@item.OwnProductId", "@UserMessages.AreYouSureForDelete", "table_productGalleryList")'><i class="fa fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

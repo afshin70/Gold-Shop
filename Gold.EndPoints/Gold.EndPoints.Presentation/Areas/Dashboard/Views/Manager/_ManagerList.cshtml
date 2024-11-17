@@ -1,0 +1,78 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.ManagerModels;
+
+<div class="k-rtl ">
+    @(Html.Kendo().Grid<ManagerUserModel>()
+        .Name("grid_managerUsersGrid")
+        .Columns(columns =>
+        {
+            columns.Bound("").ClientTemplate("#= renderRecordNumber(data,gridName) #")
+            .Title("#")
+            .Width(40);
+
+            columns.Bound(c => c.FullName)
+            .Sortable(true)
+            .Title(Captions.FullName)
+            .Filterable(true)
+            .Width(90);
+
+            columns.Bound(c => c.Mobile)
+            .Sortable(true)
+            .Title(Captions.Mobile)
+            .Filterable(true)
+            .Width(95);
+
+            columns.Bound(c => c.UserName)
+            .Sortable(true)
+            .Title(Captions.UserName)
+            .Filterable(true)
+            .Width(80); 
+            
+            columns.Bound(c => c.AccessLevelTitle)
+            .Sortable(true)
+            .Title(Captions.AccessLevel)
+            .Filterable(true)
+            .Width(90);
+
+            columns.Bound(c => c.IsActive)
+            .Title(Captions.Status)
+            .ClientTemplate($"<div class='text-center'><span class=\"badge #=(IsActive?'badge-success':'badge-danger')#\"> #=(IsActive?'{Captions.Active}':'{Captions.DeActive}')#</span></div>")
+            .Sortable(true)
+            .Filterable(true)
+            .Width(83);
+
+            columns.Bound(c => c.ManagerUserId)
+            .ClientTemplate($"<div class='text-center'><button class='btn btn-primary' onclick='loadData(\"/Dashboard/Manager/CreateOrEditManagerUser?id=#=ManagerUserId#\",\"managerUserForm\")'  title='{Captions.Edit}'><i class='fa fa-edit'></i></button>" +
+            $"<button class='btn btn-danger' onclick='getRequestWithConfirmRefreshGrid(\"/Dashboard/Manager/RemoveManager?id=#=ManagerUserId#\",\"{UserMessages.AreYouSureForDelete}\",gridName,resetManagerUserForm)' title='{Captions.Delete}'><i class='fa fa-trash'></i></button></div>")
+            .Title(Captions.Operation)
+            .Width(100)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+        })
+        .Sortable()
+        .Selectable()
+        .Scrollable(x => x.Height("auto"))
+        .Filterable()
+        .HtmlAttributes(new { @class = "" })
+        .Pageable(pageable => pageable
+        .PageSizes(new[] { 10, 50, 100, 500 })
+        .Info(true)
+        .Enabled(true)
+        .PreviousNext(true)
+        .Input(true)
+        .Numeric(true)
+        .ButtonCount(8)
+        .Refresh(true)
+        )
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Sort(x => x.Add(y => y.FullName))
+        .Read(read => read.Action("ManagerList_Read", "Manager"))
+        ).Events(ev => ev.DataBound("onDataBound"))
+        )
+</div>
+
+<script>
+    function GetData(){return;}
+</script>

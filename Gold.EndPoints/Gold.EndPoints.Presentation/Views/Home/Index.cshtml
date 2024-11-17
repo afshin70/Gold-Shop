@@ -1,0 +1,326 @@
+﻿@using Gold.ApplicationService.Contract.Abstractions;
+@using Gold.ApplicationService.Contract.Interfaces;
+@using Gold.SharedKernel.DTO.OperationResult;
+@inject ICustomerService _customerService
+@inject ISettingService _settingService
+@{
+    ViewData["Title"] = Captions.SiteTitle;
+    ViewData["IsShowBackgroundImage"] = true;
+    var userId = User.GetUserId();
+    bool hasDocument = false;
+    if (!string.IsNullOrEmpty(userId))
+    {
+        var result = await _customerService.HasDocumentAsync(int.Parse(userId));
+        hasDocument = result.Data;
+    }
+
+    string goldPrice = string.Empty;
+    var goldPriceInfoResult = await _settingService.GetGoldPriceInfoAsync(default);
+    if (goldPriceInfoResult.IsSuccess)
+    {
+        goldPrice = goldPriceInfoResult.Data.Karat18.ToString("N0");
+    }
+}
+<div class="container">
+    <div class="row dir-rtl flex-column justify-content-end home-menu">
+        <div class="col-12 text-start text-center text-lg-start">
+            <a onclick="@(goldPriceInfoResult.IsSuccess?"loadGoldPriceInfoInModal('/Home/GetGoldPriceInfo','priceList')":string.Empty)" class="btn gold-border  rounded-pill">
+                <span>
+                    <i class="fa-light fa-sparkles me-3"></i>
+                    @Captions.OnlineGoldPrice
+                    @if (!string.IsNullOrEmpty(goldPrice))
+                    {
+                        <span class="price">
+                            @goldPrice
+                        </span>
+                        <span class="price-toman">
+                            تومان
+                        </span>
+                    }
+                    <br>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span class="text">
+                            @UserMessages.ForSeeGoldPrcieClick
+                        </span>
+                    }else
+                    {
+                        <span class="text">
+                            @UserMessages.ForSeeGoldPrcieMustLogin
+                        </span>
+                    }
+                </span>
+                <span>
+
+                </span>
+            </a>
+        </div>
+        
+        @if(User.Identity.IsAuthenticated)
+        {
+            if (hasDocument)
+            {
+                <div class="col-12 text-start text-center text-lg-start">
+                    <a href="/Document" class="btn  gold-border rounded-pill">
+                        <span class="btn-content">
+                            <span>
+                                <i class="fa-light fa-coins me-3"></i>
+                                @Captions.List  @Captions.Documents
+                            </span>
+                            <span>
+
+                            </span>
+                        </span>
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-start text-center text-lg-start">
+                <a href="/Login" class="btn  gold-border rounded-pill">
+                    <span class="btn-content">
+                        <span>
+                            <i class="fa-light fa-user me-3"></i>
+                            @($"{Captions.RegisterInSite}/{Captions.Login}")
+                        </span>
+                        <span>
+
+                        </span>
+                    </span>
+                </a>
+            </div>
+        }
+        <div class="col-12 text-start text-center text-lg-start">
+            <a href="/Product/All" class="btn  gold-border rounded-pill">
+                <span class="btn-content">
+                    <span>
+                        <i class="fa-light fa-gem me-3"></i>
+                        @Captions.ViewProducts
+                    </span>
+                    <span>
+
+                    </span>
+                </span>
+            </a>
+        </div>
+        <div class="col-12 text-start text-center text-lg-start">
+            <a href="/Article" class="btn  gold-border rounded-pill">
+                <span class="btn-content">
+                    <span>
+                        <i class="fa-light fa-book-open me-3"></i>
+                        @Captions.LearningContent
+                    </span>
+                    <span>
+
+                    </span>
+                </span>
+            </a>
+        </div>
+       @* <div class="col-12 text-start text-center text-lg-start">
+            <a onclick="loadGoldPriceCalcModal('/Home/CalculateGoldPrice','goldPriceCalcModal')" class="btn  gold-border rounded-pill">
+                <span class="row justify-content-center mx-0">
+                    <span class="btn-content px-0">
+                        <span>
+                            <i class="fa-light fa-calculator me-3"></i>
+                            @Captions.GoldPriceCalculator
+                            
+                        </span>
+                        <span>
+
+                        </span>
+                    </span>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <span class="col-12 px-0 text-center text">
+                            @UserMessages.ForUseNeedToLogin
+                        </span>
+                    }
+
+                </span>
+                <!--<span class="d-block">
+                    برای استفاده از این امکان ثبت‌نام کنید.
+                </span>-->
+            </a>
+
+        </div>*@
+    </div>
+</div>
+
+
+
+<!-- Calender Modal -->
+<div class="modal fade px-0" id="calenderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+        <div dir="rtl" class="modal-content modal-content-calander">
+            <div class="modal-header border-bottom-0">
+                <h4 class="modal-title text-primary text-center mx-auto fw-bold mt-4">
+                    ماشین حساب طلا
+                </h4>
+                <button type="button" class="btn-close mx-0" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-close"></i>
+                </button>
+            </div>
+            <div class="modal-body px-0">
+                <div class="body-white py-1 px-2">
+                    <table class="table factor-table mb-0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <h6 class="small">
+                                        هر گرم طلا :
+                                    </h6>
+                                </td>
+                                <td class="text-start">
+                                    <span class="btn-outline-gray-gold px-2 py-1">
+                                        <input type="text" class="w-50 number-input">
+                                        <small>
+                                            تومان
+                                        </small>
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <h6 class="small">
+                                        وزن :
+                                    </h6>
+                                </td>
+                                <td class="text-start">
+                                    <span class="btn-outline-gray-gold px-2 py-1">
+                                        <input type="text" class="w-50 float">
+                                        <small>
+                                            گرم
+                                        </small>
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <h6 class="small">
+                                        اجرت ساخت :
+                                    </h6>
+                                </td>
+                                <td class="text-start">
+                                    <span class="btn-outline-gray-gold px-2 py-1">
+                                        <input type="text" class="w-50 float percent">
+                                        <small>
+                                            درصد
+                                        </small>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6 class="small    ">
+                                        ارزش سنگ :
+                                    </h6>
+                                    <small class="text-danger error-input">
+                                        * مبلغ وارد شده کمتر از حد مجاز است.
+                                    </small>
+                                </td>
+                                <td class="text-start">
+                                    <span class="btn-outline-gray-gold px-2 py-1">
+                                        <input type="text" class="w-50  number-input">
+                                        <small>
+                                            تومان
+                                        </small>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h6 class="small">
+                                        سود گالری :
+                                    </h6>
+                                </td>
+                                <td class="text-start">
+                                    <span class="btn-outline-gray-gold px-2 py-1">
+                                        <input type="text" class="w-50 float percent">
+                                        <small>
+                                            درصد
+                                        </small>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-bottom-0">
+                                    <h6 class="small">
+                                        مالیات بر ازرش افزوده :
+                                    </h6>
+                                </td>
+                                <td class="text-start border-bottom-0">
+                                    <span class="btn-outline-gray-gold px-2 py-1">
+                                        <input type="text" class="w-50 percent float">
+                                        <small>
+                                            درصد
+                                        </small>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-bottom-0">
+                                    <h6 class="text-center m-0 pt-2 text-small small fw-bold">
+                                        محاسبه قیمت بر اساس قیمت قانون حذف مالیات از اصل طلا
+                                    </h6>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row mx-0 px-3">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary rounded-pill px-4 my-3">
+                            محاسبه
+                        </button>
+                    </div>
+                    <div class="col-12 fw-bold d-flex justify-content-between bg-primary-text mb-3">
+                        <h6 class="my-1">ارزش طلای خالص:</h6>
+                        <span>
+                            <b>
+                                3,000,000,000,000
+                            </b>
+                            <small>
+                                تومان
+                            </small>
+                        </span>
+                    </div>
+                    <div class="col-12 fw-bold d-flex justify-content-between bg-primary-text">
+                        <h6 class="my-1">جمع نهایی فاکتور :</h6>
+                        <span>
+                            <b>
+                                999,999,999,999
+                            </b>
+                            <small>
+                                تومان
+                            </small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    ModernModalModel goldPriceInfoModel = new()
+            {
+                Id = "priceList",
+                Size = ModernModalSize.Md,
+                Title = string.Empty,
+            };
+
+    ModernModalModel goldPriceCalcModel = new()
+            {
+                Id = "goldPriceCalcModal",
+                Size = ModernModalSize.Md,
+                HeaderHtmlContent = $"<h4 class='modal-title text-primary text-center mx-auto fw-bold mt-4'>{Captions.GoldPriceCalculator}</h4>",
+                IsHtmlHeader = true
+            };
+}
+<partial name="_ModernModal" model="goldPriceInfoModel" />
+<partial name="_ModernModal" model="goldPriceCalcModel" />

@@ -1,0 +1,98 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.ManagerViewModels;
+@model CreateOrEditManagerUserViewModel
+
+
+@{
+    Layout = null;
+}
+
+<form action="/Dashboard/Manager/CreateOrEditManagerUser" onsubmit="submitManagerUserFormByRefreshGrid(this, gridName)">
+    <div class="panel-body">
+
+        <input asp-for="ManagerUserId" type="hidden" />
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="FullName" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="FullName" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Mobile" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="Mobile" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                </div>
+                <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="AccessLevelId" class="star"></label>
+                <select asp-for="AccessLevelId" asp-items="@Model.AccessLevels" class="form-control Select2">
+                    <option value="-1">@Captions.SelectIt</option>
+                </select>
+                <span asp-validation-for="AccessLevelId" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="UserName" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="UserName" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                </div>
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Password" class="@(Model.ManagerUserId == 0?"star":"")"></label>
+                <div class="input-group">
+                    <input asp-for="Password" type="password" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-eye-slash active password-icon"></i></span>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="ConfirmPassword" class="@(Model.ManagerUserId == 0?"star":"")"></label>
+                <div class="input-group">
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-eye-slash active password-icon"></i></span>
+                </div>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+                <div class="input-group">
+                    <label asp-for="IsActive"></label>
+                    <div class="checkbox checkbox-switchery">
+                        <label>
+                            <input type="checkbox" class="switchery" asp-for="IsActive">
+                        </label>
+                    </div>
+                </div>
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            @if (Model != null)
+            {
+                if (Model.ManagerUserId > 0)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-12 form-group">
+                        <div class="alert alert-warning">
+                            <p>@UserMessages.IfYouNotChangePasswordLeaveEmptyInput</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
+    <div class="panel-footer text-right">
+        <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+        <button type="button" onclick="resetManagerUserForm()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Clean</span> <b><i class="fa fa-times-circle"></i></b></button>
+     </div>
+</form>

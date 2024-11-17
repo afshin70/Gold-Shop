@@ -1,0 +1,573 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>برای انجام این کار اطمینان دارید؟</value>
+  </data>
+  <data name="AreYouSureForDelete" xml:space="preserve">
+    <value>آیا از حذف مطمئن هستید؟</value>
+  </data>
+  <data name="AreYouSureForEditDocument" xml:space="preserve">
+    <value>با ویرایش سند، تمام اقساط این سند، به حالت پرداخت نشده در می آیند. آیا برای ویرایش اطلاعات، اطمینان دارید؟</value>
+  </data>
+  <data name="AtLeastOneCollateralIsRequiredForTheDocument" xml:space="preserve">
+    <value>حداقل باید یک ضمانت برای این سند ثبت شود</value>
+  </data>
+  <data name="AtLeastOneEssentialNumberIsRequiredForTheCustomer" xml:space="preserve">
+    <value>حداقل یک شماره ضروری برای مشتری، الزامی است</value>
+  </data>
+  <data name="CanNotAllowToConfirmThisPaymentRecipt" xml:space="preserve">
+    <value>مجاز به تایید رسید پرداخت نمی باشید</value>
+  </data>
+  <data name="CanNottUnPayableTheInstallment" xml:space="preserve">
+    <value>انجام عملیات لغو پرداخت امکان پذیر نیست</value>
+  </data>
+  <data name="CanUnPayableTheInstallment" xml:space="preserve">
+    <value>انجام عملیات لغو پرداخت امکان پذیر است</value>
+  </data>
+  <data name="CustomerInfoByName0IsDeleted" xml:space="preserve">
+    <value>اطلاعات مشتری با نام {0} حذف شد</value>
+  </data>
+  <data name="DataDeletedSuccessfully" xml:space="preserve">
+    <value>اطلاعات با موفقیت حذف شد</value>
+  </data>
+  <data name="DataDeletedSuccessfullyButFileNotDeleted" xml:space="preserve">
+    <value>اطلاعات با موفقیت حذف شد اما فایل حذف نشد</value>
+  </data>
+  <data name="DataEditedSuccessfully" xml:space="preserve">
+    <value>اطلاعات با موفقیت ویرایش  شد</value>
+  </data>
+  <data name="DataSavedSuccessfully" xml:space="preserve">
+    <value>اطلاعات با موفقیت ثبت شد</value>
+  </data>
+  <data name="DocumentNotInActiveMode" xml:space="preserve">
+    <value>وضعیت سند در حالت فعال نمی باشد</value>
+  </data>
+  <data name="ErrorInCopyFile" xml:space="preserve">
+    <value>خطا در کپی کردن فایل</value>
+  </data>
+  <data name="ErrorInDeleteFile" xml:space="preserve">
+    <value>خطا در حذف فایل</value>
+  </data>
+  <data name="ErrorInLoadCities" xml:space="preserve">
+    <value>خطا در بارگذاری شهر ها</value>
+  </data>
+  <data name="ErrorInLoadProvinces" xml:space="preserve">
+    <value>خطا در بارگذاری لیست استان ها</value>
+  </data>
+  <data name="ErrorInLoadSellerList" xml:space="preserve">
+    <value>خطا در بارگذاری لیست فروشنده ها</value>
+  </data>
+  <data name="ErrorInUpdateFile" xml:space="preserve">
+    <value>خطا در بروزرسانی فایل</value>
+  </data>
+  <data name="ErrorInUploadFile" xml:space="preserve">
+    <value>خطا در آپلود فایل</value>
+  </data>
+  <data name="ErrorOccurredWhileProcessingPleaseContactSupportDepartment" xml:space="preserve">
+    <value>هنگام پردازش درخواست شما خطایی رخ داد. لطفا در صورت مشاهده مجدد این پیام، مورد را به بخش پشتیبانی اطلاع دهید</value>
+  </data>
+  <data name="FailureLogin" xml:space="preserve">
+    <value>خطا در ورود به سایت</value>
+  </data>
+  <data name="FormNotValid" xml:space="preserve">
+    <value>مقادیر فرم را به درستی وارد کنید</value>
+  </data>
+  <data name="ForUnSettleDocumentNeedDocumentStatusIsSettled" xml:space="preserve">
+    <value>برای انجام عملیات لغو تسویه باید وضعیت سند در حالت تسویه شده باشد</value>
+  </data>
+  <data name="GalleryIsNotFound" xml:space="preserve">
+    <value>گالری پیدا نشد</value>
+  </data>
+  <data name="GalleryIsNotValid" xml:space="preserve">
+    <value>گالری معتبر نیست</value>
+  </data>
+  <data name="InstallmentAmountIsCalculated" xml:space="preserve">
+    <value>مبلغ اقساط محاسبه شد</value>
+  </data>
+  <data name="InstallmentIsNotPayable" xml:space="preserve">
+    <value>قسط قابل پرداخت نمی باشد</value>
+  </data>
+  <data name="InstallmentIsPayable" xml:space="preserve">
+    <value>قسط قابل پرداخت می باشد</value>
+  </data>
+  <data name="IsDuplicated" xml:space="preserve">
+    <value>{0} تکراری است</value>
+  </data>
+  <data name="ItemNotFount" xml:space="preserve">
+    <value>آیتم مورد نظر یافت نشد</value>
+  </data>
+  <data name="ItIsNotPossibleToPerformThisOperation" xml:space="preserve">
+    <value>امکان انجام این عملیات وجود ندارد</value>
+  </data>
+  <data name="LoanSettingsNotRegisterd" xml:space="preserve">
+    <value>تنظیمات وام به درستی ثبت نشده است</value>
+  </data>
+  <data name="MonthlyProfitPercentageNotRegisterd" xml:space="preserve">
+    <value>درصد سود ماهیانه ثبت نشده است</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>{0} یافت نشد</value>
+  </data>
+  <data name="NotFoundDocumentForThisPaymentRecipt" xml:space="preserve">
+    <value>سندی برای این رسید پرداخت یافت نشد</value>
+  </data>
+  <data name="OneUserIsFounded" xml:space="preserve">
+    <value>کاربر یافت شد</value>
+  </data>
+  <data name="OnlyCanDeleteActiveDocument" xml:space="preserve">
+    <value>حذف تنها برای اسناد فعال امکان پذیر است</value>
+  </data>
+  <data name="OnlyCanDeleteCollateralForActiveDocument" xml:space="preserve">
+    <value>حذف ضمانت سند تنها در وضعیت فعال آن سند امکان پذیر است</value>
+  </data>
+  <data name="OnlyCanEditActiveDocument" xml:space="preserve">
+    <value>برای ویرایش اطلاعات، سند باید در وضعیت فعال باشد</value>
+  </data>
+  <data name="OnlyCanEditAdminDescriptionInActiveDocument" xml:space="preserve">
+    <value>ویراش توضیحات تنها در اسناد فعال امکان پذیر است</value>
+  </data>
+  <data name="OnlyCanEditOrAddCollateralForActiveDocument" xml:space="preserve">
+    <value>ثبت یا ویرایش ضمانت تنها برای اسناد فعال امکان پذیر است</value>
+  </data>
+  <data name="OnlyCanEditCollateralDetailsForActiveDocument" xml:space="preserve">
+    <value> ضمانت تنها در وضعیت فعال سند قابل تغییر می باشد</value>
+  </data>
+  <data name="OnlyCanSettleDocumentIfAllInstalmentsIsPayed" xml:space="preserve">
+    <value>برای تسویه سند باید تمام اقساط آن پرداخت شده باشد</value>
+  </data>
+  <data name="OnlyCanSettleDocumentInActiveMode" xml:space="preserve">
+    <value>تسویه سند تنها در وضعیت فعال آن سند امکان پذیر است</value>
+  </data>
+  <data name="PageNotFound" xml:space="preserve">
+    <value>صفحه درخواستی یافت نشد</value>
+  </data>
+  <data name="PayableInstallmentNotFounded" xml:space="preserve">
+    <value>قسط قابل پرداخت یافت نشد</value>
+  </data>
+  <data name="PaymentDateCanNotMorThanTodayDate" xml:space="preserve">
+    <value>تاریخ پرداخت نمی تواند از تاریخ امروز بزرگتر باشد</value>
+  </data>
+  <data name="PersianDateCanNotBe31And30" xml:space="preserve">
+    <value>برای روز های 30 و 31 نمی توانید سند ثبت کنید</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>من را به خاطر بسپار</value>
+  </data>
+  <data name="SelectedCityIsNotValid" xml:space="preserve">
+    <value>شهر انتخاب شده معتبر نیست</value>
+  </data>
+  <data name="SelectedCityIsValid" xml:space="preserve">
+    <value>شهر انتخاب شده معتبر است</value>
+  </data>
+  <data name="SellerInfoByName0IsDeleted" xml:space="preserve">
+    <value>اطلاعات فروشنده با نام {0} حذف شد</value>
+  </data>
+  <data name="SellerNotFound" xml:space="preserve">
+    <value>فروشنده یافت نشد</value>
+  </data>
+  <data name="SuccessfullyLogin" xml:space="preserve">
+    <value>ورود موفق به سایت</value>
+  </data>
+  <data name="SuccessfullyLogOut" xml:space="preserve">
+    <value>خروج موفق از سایت</value>
+  </data>
+  <data name="TheInstallmentIsPayed" xml:space="preserve">
+    <value>قسط قبلا پرداخت شده است</value>
+  </data>
+  <data name="TheInstallmentsCountMustBeMoreThan0" xml:space="preserve">
+    <value>تعداد اقساط باید بیشتر یا برابر با {0} باشد</value>
+  </data>
+  <data name="ThePasswordIsChanged" xml:space="preserve">
+    <value>رمز عبور تغییر یافت</value>
+  </data>
+  <data name="ThePasswordIsIncorrect" xml:space="preserve">
+    <value>رمز عبور اشتباه است</value>
+  </data>
+  <data name="ThePaymentReciptIsConfirmed" xml:space="preserve">
+    <value>رسید پرداخت مورد نظر تایید شده است</value>
+  </data>
+  <data name="ThePaymentReciptIsConfirmedAndCantRemoveIt" xml:space="preserve">
+    <value>رسید پرداخت مورد نظر تایید شده است و نمیتوان آن را حذف کرد</value>
+  </data>
+  <data name="TheUsernameAndPasswordIsIncorrect" xml:space="preserve">
+    <value>نام کاربری یا رمز عبور اشتباه است</value>
+  </data>
+  <data name="ThisCustomerHaventAEssentialNumber" xml:space="preserve">
+    <value>این مشتری، هیچ شماره ضروری ندارد</value>
+  </data>
+  <data name="ThisDocumentHaventACollateral" xml:space="preserve">
+    <value>برای این سند ضمانتی ثبت نشده است</value>
+  </data>
+  <data name="UserIsActive" xml:space="preserve">
+    <value>وضعیت کاربر فعال است</value>
+  </data>
+  <data name="UserIsNotActive" xml:space="preserve">
+    <value>وضعیت کاربر غیرفعال است</value>
+  </data>
+  <data name="UserNotActive" xml:space="preserve">
+    <value>حساب کاربری شما مسدود است</value>
+  </data>
+  <data name="UserNotACustomer" xml:space="preserve">
+    <value>این کاربر، مشتری نیست</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>کاربر یافت نشد</value>
+  </data>
+  <data name="UserNotFoundByUsername" xml:space="preserve">
+    <value>کاربری با نام کاربری {0} یافت نشد</value>
+  </data>
+  <data name="UserPasswordIsReseted" xml:space="preserve">
+    <value>رمز عبور کاربر بازنشانی شد</value>
+  </data>
+  <data name="UserPasswordIsReseted0" xml:space="preserve">
+    <value>رمز عبور {0} بازنشانی شد</value>
+  </data>
+  <data name="Wellcome" xml:space="preserve">
+    <value>خوش آمدید</value>
+  </data>
+  <data name="YouDontHaveAccessContactAdministrator" xml:space="preserve">
+    <value>شما دسترسی به این بخش ندارید، با مدیریت تماس بگیرید</value>
+  </data>
+  <data name="YourAccountIsBlocked" xml:space="preserve">
+    <value>حساب کاربری شما مسدود است</value>
+  </data>
+  <data name="ErrorInLoadAccessLevels" xml:space="preserve">
+    <value>خطا در بارگذاری سطح دسترسی ها</value>
+  </data>
+  <data name="AreYouSureForArchive" xml:space="preserve">
+    <value>مورد انتخاب شده آرشیو شود؟</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>{0} فعال است</value>
+  </data>
+  <data name="IsNotActive" xml:space="preserve">
+    <value>{0} فعال نیست</value>
+  </data>
+  <data name="TheUsernameOrMobileIsIncorrect" xml:space="preserve">
+    <value>نام کاربری یا تلفن همراه اشتباه است</value>
+  </data>
+  <data name="ResetPasswordCodeIsSendedToMobileNumber" xml:space="preserve">
+    <value>کد بازیابی رمز ورود به شماره موبایل ارسال شد</value>
+  </data>
+  <data name="TheOtpCodeIsExpired" xml:space="preserve">
+    <value>کد تاییدیه منقضی شده است</value>
+  </data>
+  <data name="TheOtpCodeIsInvalid" xml:space="preserve">
+    <value>کد تاییدیه نامعتبر است</value>
+  </data>
+  <data name="TheOtpCodeIsVerified" xml:space="preserve">
+    <value>کد تاییدیه معتبر بود</value>
+  </data>
+  <data name="YourPasswordChangedSuccessfuly" xml:space="preserve">
+    <value>رمز عبور شما با موفقیت تغییر یافت</value>
+  </data>
+  <data name="PossibleCancelPaymentOnlyForLastPaidInstallment" xml:space="preserve">
+    <value>فقط برای آخرین قسط پرداخت شده امکان لغو پرداخت وجود دارد</value>
+  </data>
+  <data name="TheMessageTypeIsInvalid" xml:space="preserve">
+    <value>نوع پیام مشتری نامعتبر است</value>
+  </data>
+  <data name="RetryResetPassword" xml:space="preserve">
+    <value>مجددا برای بازیابی رمز عبور تلاش کنید</value>
+  </data>
+  <data name="MonthlyProfitPercentageDescInLoanSetting" xml:space="preserve">
+    <value>درصد سود ماهیانه باید بین 0 تا 100 و میتواند اعشاری باشد</value>
+  </data>
+  <data name="PenaltyFactorDescInLoanSetting" xml:space="preserve">
+    <value>ضریب جریمه باید بین 0 تا 1 و میتواند اعشاری باشد</value>
+  </data>
+  <data name="IfYouNotChangePasswordLeaveEmptyInput" xml:space="preserve">
+    <value>درصورتی که مایل به تغییر رمز عبور کاربر نمی باشید، آن را خالی بگذارید</value>
+  </data>
+  <data name="SelectingAtLeastOneAccessLevelItemRequired" xml:space="preserve">
+    <value>انتخاب حداقل یک مورد سطح دسترسی الزامی است</value>
+  </data>
+  <data name="AreYouSureForResetPassword" xml:space="preserve">
+    <value>با انجام این عملیات رمز عبور کاربر به شماره تلفن همراه اش تغییر می یابد. آیا از انجام این کار مطمئن هستید؟</value>
+  </data>
+  <data name="OnlyCanPayFirstUnPayedInstallment" xml:space="preserve">
+    <value>فقط برای اولین قسط پرداخت نشده امکان پرداخت وجود دارد</value>
+  </data>
+  <data name="UpPaymentInstallmentNotFound" xml:space="preserve">
+    <value>سند پرداخت نشده وجود ندارد</value>
+  </data>
+  <data name="OnlyCanPayForActiveDocument" xml:space="preserve">
+    <value>برای پرداخت، سند باید در وضعیت فعال باشد</value>
+  </data>
+  <data name="PleaseEnterConfirmationCodeSentToYourMobile" xml:space="preserve">
+    <value>لطفا کد تایید ارسال شده به تلفن همراه خود را وارد نمایید</value>
+  </data>
+  <data name="PleaseEnterYourNewPassword" xml:space="preserve">
+    <value>لطفا رمز عبور جدید خود را وارد نمایید</value>
+  </data>
+  <data name="TheVerifyCodeISended" xml:space="preserve">
+    <value>کد تاییدیه ارسال شد</value>
+  </data>
+  <data name="AreYouSureForRegisterRecipt" xml:space="preserve">
+    <value>آیا از ثبت رسید پرداخت، اطمینان دارید؟</value>
+  </data>
+  <data name="ClickForSendEditInformationReqest" xml:space="preserve">
+    <value>در صورتی که اطلاعات با اطلاعات شناسنامه ای شما مغایرت دارد،  اینجا کلیک کنید.</value>
+  </data>
+  <data name="YourEditInformationRequestSuccessfulySended" xml:space="preserve">
+    <value>درخواست ویرایش اطلاعات با موفقیت ارسال شد</value>
+  </data>
+  <data name="ErrorOccurredWhileProcessingData" xml:space="preserve">
+    <value>خطایی در هنگام پردازش اطلاعات رخ داده است</value>
+  </data>
+  <data name="AreYouSureForRegisterIfMobileDuplicated" xml:space="preserve">
+    <value>شماره تلفن همراه وارد شده برای مشتری دیگری ثبت شده است، آیا مایل به ثبت اطلاعات می باشید؟</value>
+  </data>
+  <data name="ErrorrInProccessDelayAmount" xml:space="preserve">
+    <value>خطایی در محاسبه مبلغ دیرکرد رخ داده است</value>
+  </data>
+  <data name="TryToLoginAfterXMin" xml:space="preserve">
+    <value>لطفا برای ورود، بعد از {0} دقیقه مجددا تلاش کنید</value>
+  </data>
+  <data name="CustomerPaymentValidationMessage" xml:space="preserve">
+    <value>برای پرداخت باید تصویر یا تاریخ و ساعت و مبلغ واریز را وارد کنید</value>
+  </data>
+  <data name="ErrorInUpdateProfileImage" xml:space="preserve">
+    <value>خطا در آپلود فایل تصویر پروفایل</value>
+  </data>
+  <data name="ThePaymentReciptIsRejected" xml:space="preserve">
+    <value>رسید پرداخت مورد نظر در وضعیت تایید نشده است</value>
+  </data>
+  <data name="OnlyCanSettleDocumentIfTotalRemainAmountIsZiro" xml:space="preserve">
+    <value>جهت تسویه این سند، مبلغ بازگشت خورده و تخفیف را به گونه ای وارد نمائید که مانده صفر شود. در حال حاضر {0} می باشد</value>
+  </data>
+  <data name="NotSelectedRecored" xml:space="preserve">
+    <value>رکوردی انتخاب نشده است</value>
+  </data>
+  <data name="NotSelectedValidCustomer" xml:space="preserve">
+    <value>مشتری انتخاب شده معتبر نمی باشد</value>
+  </data>
+  <data name="MessageIsSuccessfulySended" xml:space="preserve">
+    <value>پیام با موفقیت ارسال شد</value>
+  </data>
+  <data name="OnlyCanInstantSettlementActiveDocument" xml:space="preserve">
+    <value>تسویه فوری برای اسنادی که فعال نباشد، ممکن نیست</value>
+  </data>
+  <data name="CallByAdminForSettleDocument" xml:space="preserve">
+    <value>جهت تسویه با مدیریت تماس بگیرید</value>
+  </data>
+  <data name="InstantSettlementMessageForCustomer" xml:space="preserve">
+    <value>جهت تسویه این سند تا امروز ({0}) لطفا مبلغ {1} تومان واریز و رسید را از طریق &lt;a href="/Document/Payment/{1}" target="_blank" class="btn btn-sm btn-primary"&gt;فرم ثبت پرداخت&lt;/a&gt;  ثبت نمائید</value>
+  </data>
+  <data name="PayDateTimeCanNotMoreThanDateTimeNow" xml:space="preserve">
+    <value>تاریخ پرداخت و ساعت واریز نمیتواند از امروز بزرگتر باشد</value>
+  </data>
+  <data name="AllInstallmentsOfLoanHavebeenPaidInFull" xml:space="preserve">
+    <value>تمام اقساط وام بطور کامل پرداخت شده است</value>
+  </data>
+  <data name="AreYouSureSettleDocument" xml:space="preserve">
+    <value>آیا این سند تسویه شود؟</value>
+  </data>
+  <data name="ItIsNotPossibleToPayForThisDate" xml:space="preserve">
+    <value>امکان پرداخت برای تاریخ انتخاب شده وجود ندارد (تاریخ پرداخت نمی تواند از تاریخ پرداخت های ثبت شده برای این قسط کوچکتر باشد.)</value>
+  </data>
+  <data name="ConfirmDocDateMessageForCreate" xml:space="preserve">
+    <value>تاریخ انتخاب شده برای سند، بزرگتر از امروز است. آیا تایید میکنید؟</value>
+  </data>
+  <data name="TheUserIsInvalid" xml:space="preserve">
+    <value>کاربر نامعتبر است</value>
+  </data>
+  <data name="ForUseNeedToLogin" xml:space="preserve">
+    <value>برای استفاده از این قابلیت به سامانه وارد شوید</value>
+  </data>
+  <data name="ForSeeGoldPrcieClick" xml:space="preserve">
+    <value>برای مشاهده لیست کامل طلا و سکه کلیک کنید</value>
+  </data>
+  <data name="ForSeeGoldPrcieMustLogin" xml:space="preserve">
+    <value>برای مشاهده لیست کامل طلا و سکه به سامانه وارد شوید</value>
+  </data>
+  <data name="AllowedForProductRegistration" xml:space="preserve">
+    <value>مجاز برای ثبت کالا میباشد</value>
+  </data>
+  <data name="AllowedLimitForProductRegistrationHasBeenFilled" xml:space="preserve">
+    <value>سقف مجاز برای ثبت کالا  در یک ساعت  برای شما پر شده است</value>
+  </data>
+  <data name="NotSetGalleryForYou" xml:space="preserve">
+    <value>گالری برای شما ثبت نشده است</value>
+  </data>
+  <data name="YouAreAllowedToRegisterProduct" xml:space="preserve">
+    <value>شما اجازه ثبت محصول را دارید</value>
+  </data>
+  <data name="YouAreNotAllowedToRegisterProduct" xml:space="preserve">
+    <value>شما اجازه ثبت محصول را ندارید</value>
+  </data>
+  <data name="AnotherUserHasRegisteredOnTheSiteWithThisInformation" xml:space="preserve">
+    <value>کاربر دیگری با این اطلاعات در سایت ثبت نام کرده است</value>
+  </data>
+  <data name="RegisterCustomerCodeIsSendedToMobileNumber" xml:space="preserve">
+    <value>کد تایید ثبت نام به شماره موبایل ارسال شد</value>
+  </data>
+  <data name="OnlyImagesCanSetForThumbnail" xml:space="preserve">
+    <value>تنها تصاویر را میتوان به عنوان شاخص انتخاب کرد</value>
+  </data>
+  <data name="ProductAddedInCustomerFavorits" xml:space="preserve">
+    <value>{0} به  علاقه مندی ها اضافه شد</value>
+  </data>
+  <data name="ProductRemovededInCustomerFavorits" xml:space="preserve">
+    <value>{0} از  علاقه مندی ها حذف شد</value>
+  </data>
+  <data name="AreYouSureForSendMessage" xml:space="preserve">
+    <value>آیا از ارسال پیام مطمئن هستید؟</value>
+  </data>
+  <data name="WeRecivedYouMessage" xml:space="preserve">
+    <value>ما پیام شما را به درستی دریافت کردیم</value>
+  </data>
+  <data name="YourMessageIsRegistered" xml:space="preserve">
+    <value>پیام شما با موفقیت ثبت شد</value>
+  </data>
+  <data name="ImageOrVideoSizeDescription" xml:space="preserve">
+    <value>سایز مناسب تصویر یا ویدوئو {0} در {1} پیکسل می باشد</value>
+  </data>
+  <data name="ImageSizeDescription" xml:space="preserve">
+    <value>سایز مناسب تصویر {0} در {1} پیکسل می باشد</value>
+  </data>
+  <data name="VideoSizeDescription" xml:space="preserve">
+    <value>سایز مناسب ویدوئو {0} در {1} پیکسل می باشد</value>
+  </data>
+  <data name="TheProductIsVisited" xml:space="preserve">
+    <value>محصول {0} مشاهده شد</value>
+  </data>
+  <data name="PleaseLogin" xml:space="preserve">
+    <value>لطفا وارد سایت شوید</value>
+  </data>
+  <data name="IsNotPossibleToSellThisProductInInstallments" xml:space="preserve">
+    <value>امکان فروش قسطی برای این محصول وجود ندارد</value>
+  </data>
+  <data name="SellerHasNotAccessToRegisterDocument" xml:space="preserve">
+    <value>فروشنده اجازه ثبت سند ندارد</value>
+  </data>
+  <data name="CantChangeProductStatus" xml:space="preserve">
+    <value>امکان تغییر وضعیت محصول وجود ندارد</value>
+  </data>
+  <data name="CantDeleteProduct" xml:space="preserve">
+    <value>امکان حذف محصول وجود ندارد</value>
+  </data>
+  <data name="CantEditeProduct" xml:space="preserve">
+    <value>امکان ویرایش محصول وجود ندارد</value>
+  </data>
+  <data name="YouAreNotAllowedToEditThisInformation" xml:space="preserve">
+    <value>شما مجاز به ویرایش این اطلاعات نمی باشید</value>
+  </data>
+</root>

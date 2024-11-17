@@ -1,0 +1,71 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.ReportViewModels;
+@using Gold.SharedKernel.Tools;
+@model ManagersOperationReportViewModel
+@{
+    List<byte> dayList = new List<byte>();
+    for (byte i = 1; i <= 31; i++)
+        dayList.Add(i);
+
+    var documentDayList = dayList.Select(x => new SelectListItem
+            {
+                Text = x.ToString(),
+                Value = x.ToString()
+            }).ToList();
+    string currentPersianDate = DateTimeTools.GeorgianToPersian(DateTime.Now, ShowMode.OnlyDate);
+}
+
+<div class="panel-body">
+    <div class="section row">
+        <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+            <label asp-for="AdminMenuId"></label>
+            <select asp-for="AdminMenuId" asp-items="ViewBag.AdminMenuList" class="form-control Select2">
+                <option selected value="">@Captions.All</option>
+            </select>
+            <span asp-validation-for="AdminMenuId" class="text-danger"></span>
+		</div>
+        <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+			<label asp-for="ActivityType"></label>
+			<select asp-for="ActivityType" asp-items="ViewBag.ActivityTypes" class="form-control Select2">
+				<option selected value="">@Captions.All</option>
+			</select>
+			<span asp-validation-for="ActivityType" class="text-danger"></span>
+		</div> 
+        <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+			<label asp-for="UserId"></label>
+			<select asp-for="UserId" asp-items="ViewBag.ManagerUsers" class="form-control Select2">
+				<option selected value="">@Captions.All</option>
+			</select>
+			<span asp-validation-for="ActivityType" class="text-danger"></span>
+		</div>
+        <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+            <label asp-for="FromDate"></label>
+            <div class="input-group">
+                <input asp-for="FromDate" type="text" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            </div>
+            <span asp-validation-for="FromDate" class="text-danger"></span>
+        </div>
+  
+        
+        <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+            <label asp-for="ToDate"></label>
+            <div class="input-group">
+                <input asp-for="ToDate" type="text" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+            </div>
+            <span asp-validation-for="ToDate" class="text-danger"></span>
+        </div>
+    
+        <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+            <label asp-for="Description"></label>
+            <div class="input-group">
+                <input asp-for="Description" type="text" class="form-control">
+                <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+            </div>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+</div>
+<div class="panel-footer text-right">
+    <button type="button" onclick="refreshGrid(gridName)" class="btn btn-info btn-labeled"><span>@Captions.Search</span> <b><i class="fa fa-search"></i></b></button>
+ </div>

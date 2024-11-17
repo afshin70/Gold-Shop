@@ -1,0 +1,116 @@
+[
+  {
+    "outputFileName": "wwwroot/Scripts/Dashboard/customerPayment.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/Dashboard/customerPayment.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/Dashboard/customers.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/Dashboard/customers.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/Dashboard/document.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/Dashboard/document.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/Dashboard/gallery.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/Dashboard/gallery.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/Dashboard/global-mine.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/Dashboard/global-mine.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/Dashboard/Layout.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/Dashboard/Layout.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/Dashboard/ManagerUser.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/Dashboard/ManagerUser.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/Dashboard/public.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/Dashboard/public.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/Dashboard/seller.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/Dashboard/seller.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/Dashboard/settings.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/Dashboard/settings.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/Site/site-global-mine.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/Site/site-global-mine.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/DateTime.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/DateTime.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/TimeTools.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/TimeTools.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/SiteTheme/js/script.min.js",
+    "inputFiles": [
+      "wwwroot/SiteTheme/js/script.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Scripts/Site/PersianCalenderConfig.min.js",
+    "inputFiles": [
+      "wwwroot/Scripts/Site/PersianCalenderConfig.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/persianDateTimePicker/PersianDatePicker.min.css",
+    "inputFiles": [
+      "wwwroot/lib/persianDateTimePicker/PersianDatePicker.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/persianDateTimePicker/PersianDatePicker.min.js",
+    "inputFiles": [
+      "wwwroot/lib/persianDateTimePicker/PersianDatePicker.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/SiteTheme/css/main.min.min.css",
+    "inputFiles": [
+      "wwwroot/SiteTheme/css/main.min.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/SiteTheme/css/override.min.css",
+    "inputFiles": [
+      "wwwroot/SiteTheme/css/override.css"
+    ]
+  }
+]

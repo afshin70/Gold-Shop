@@ -1,0 +1,50 @@
+﻿@model ModalModel
+@if (Model is not null)
+{
+    string modalSize = string.Empty;
+    switch (Model.Size)
+    {
+        case ModalSize.Larg:
+            modalSize = "modal-lg";
+            break;
+        case ModalSize.Small:
+            modalSize = "modal-sm";
+            break;
+        default:
+            modalSize =string.Empty;
+            break;
+    }
+    <div class="modal fade @Model.ExtraClass" id="@Model.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog @modalSize" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @if (!string.IsNullOrEmpty(Model.Title))
+                    {
+                        <h5 class="modal-title" id="exampleModalLabel">@Model.Title</h5>
+                    }
+                    @if (Model.IsShowCloseIcon)
+                    {
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    }
+                </div>
+                <div class="modal-body" id="@($"{Model.Id}_body")">
+                    @if (!string.IsNullOrEmpty(Model.BodyContent))
+                    {
+                        <text>@Html.Raw(Model.BodyContent)</text>
+                    }
+                </div>
+                @if (Model.IsShowFooter)
+                {
+                    <div class="modal-footer">
+                        @if (Model.IsShowCloseButtonInFooter)
+                        {
+                            <button type="button" class="@Model.CloseButtonClass" data-dismiss="modal">@Model.CloseButtonName</button>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

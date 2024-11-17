@@ -1,0 +1,78 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.DocumentModels;
+@model List<DocumentModel>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="fa-IR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/themes/default/css/print.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="main">
+        <table border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td class="td-33 pb-15 right">
+                    </td>
+                    <td class="td-33 pb-15 center">
+                        <h3>@Captions.List @Captions.Documents</h3>
+                        @*<img src="~/Images/logo.png" />*@
+                    </td>
+                    <td class="td-33 pb-15 left rtl">
+                        <h3>@Captions.Date : @DateTime.Now.ToPersianDateString()</h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        @if (Model != null && Model.Any())
+        {
+            <table border="0" cellspacing="0" cellpadding="0" class="table-border-print color center">
+                <thead>
+                    <tr>
+                        <th class="td-5">#</th>
+                        <th class="td-10"><b>@Captions.FullName</b></th>
+                        <th class="td-8"><b>@Captions.DocumentNumber</b></th>
+                        <th class="td-15"><b>@Captions.Collateral</b></th>
+                        <th class="td-8"><b>@Captions.DocumentDate</b></th>
+                        <th class="td-8"><b>@Captions.InstallmentAmount (@Captions.Tooman)</b></th>
+                        <th class="td-8"><b>@Captions.RemainInstallmentCount</b></th>
+                        <th class="td-8"><b>@Captions.SumOfRemainAmount (@Captions.Tooman)</b></th>
+                        <th class="td-8"><b>@Captions.Gallery</b></th>
+                        <th class="td-15"><b>@Captions.Description</b></th>
+                        <th class="td-5"><b>@Captions.Status</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        int row = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="td-5">@row</td>
+                                <td class="td-10">@item.FullName</td>
+                                <td class="td-8">@item.DocumentNo</td>
+                                <td class="td-15">@Html.Raw(item.CollateralListInfo)</td>
+                                <td class="td-8">@item.PersianDocumentDate</td>
+                                <td class="td-8">@item.InstallmentAmount.FormatMoney()</td>
+                                <td class="td-8">@item.RemainInstallmentCount</td>
+                                <td class="td-8">@item.SumOfRemainAmount.FormatMoney() @item.SumOfRemainAmountStatus</td>
+                                <td class="td-8">@item.Gallery</td>
+                                <td class="td-15">@Html.Raw(item.AdminDescription)</td>
+                                <td class="td-5">@item.Status</td>
+                            </tr>
+                            row++;
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+
+    </div>
+    <div class="clearfix"></div>
+</body>
+</html>

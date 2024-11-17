@@ -1,0 +1,164 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.DocumentModels;
+
+<script>
+    var gridName = 'grid_documentGrid';
+</script>
+
+<div class="k-rtl">
+    @(Html.Kendo().Grid<DocumentModel>()
+        .Name("grid_documentGrid")
+        .Columns(columns =>
+        {
+            columns.Bound("")
+            .HtmlAttributes(new { @class = "#= RowColor #" })
+            .ClientTemplate("#= renderRecordNumber(data,gridName) #")
+            .Title("#")
+            .Width(43);
+
+            columns.Bound(c => c.FullName)
+            .HtmlAttributes(new { @class = "#= RowColor #" })
+            .Sortable(true)
+            .ClientTemplate("<p ondblclick=\"window.open('/Dashboard/Document/Detail/#=Id#', '_blank')\">#=FullName#</p>")
+            .Title(Captions.Name)
+            .Filterable(true)
+            .Width(110);
+
+            columns.Bound(c => c.DocumentNo)
+            .HtmlAttributes(new { @class = "#= RowColor #" })
+            .Sortable(true)
+            .Title(Captions.Document)
+            .Filterable(true)
+            .Width(65);
+
+            columns.Bound(c => c.CollateralListInfo)
+            .HtmlAttributes(new { @class = "#= RowColor #" })
+            .Sortable(false)
+            .ClientTemplate("<div>#= CollateralListInfo #</div>")
+            .Title(Captions.Collateral)
+            .Filterable(false)
+            .Width(70);
+
+            columns.Bound(c => c.DocumentDate)
+            .ClientTemplate("<span>#=PersianDocumentDate#</span>")
+            .HtmlAttributes(new { @class = "#= RowColor #" })
+            .Sortable(true)
+            .Title(Captions.DocumentDate)
+            .Filterable(false)
+            .Width(80);
+
+            columns.Bound(c => c.InstallmentAmount)
+            .HtmlAttributes(new { @class = "#= RowColor #" })
+            .Sortable(true)
+            .ClientTemplate("<div class=\"text-center\"><span>#=GetPriceStyle(InstallmentAmount)#</span></div>")
+            .FooterHtmlAttributes(new { id = "InstallmentAmountSum" })
+            .ClientFooterTemplate($"Sum: #=getDataFromUrl('/Dashboard/Document/InstallmentAmountSum', GetData(),'InstallmentAmountSum')#")
+            .Title(Captions.InstallmentAmount)
+            .Filterable(true)
+            .Width(103);
+
+
+            columns.Bound(c => c.RemainInstallmentCount)
+            .HtmlAttributes(new { @class = "#= RowColor #" })
+            .Title(Captions.RemainInstallmentCount)
+            .Sortable(true)
+            .Filterable(true)
+            .ClientTemplate("<div class=\"text-center\"><span>#=RemainInstallmentCount#</span></div>")
+            .Width(75);
+
+            columns.Bound(c => c.SumOfRemainAmount)
+            .HtmlAttributes(new { @class = "#= RowColor #" })
+            .ClientTemplate("<div class=\"text-center\"><span>#=GetPriceStyle(SumOfRemainAmount)#</span> #=SumOfRemainAmountStatus#</span>" + "</div>")
+            .FooterHtmlAttributes(new { id = "RemainAmountSum" })
+            .ClientFooterTemplate($"Sum: #=getDataFromUrl('/Dashboard/Document/RemainAmountSum', GetData(),'RemainAmountSum')#")
+            .Title(Captions.SumOfRemainAmount)
+            .Sortable(true)
+            .Filterable(true)
+            .Width(150);
+
+            columns.Bound(c => c.Gallery)
+            .HtmlAttributes(new { @class = "#= RowColor #" })
+            .Title(Captions.Gallery)
+            .Sortable(true)
+            .Filterable(true)
+            .Width(75);
+
+            columns.Bound(c => c.AdminDescription)
+            .HtmlAttributes(new { @class = "#= RowColor #" })
+            .Title(Captions.Description)
+            .Sortable(true)
+            .Filterable(true)
+            .Width(150);
+
+            columns.Bound(c => c.Status)
+            .HtmlAttributes(new { @class = "#= RowColor #" })
+            .Title(Captions.Status)
+            .Sortable(false)
+            .Filterable(false)
+            .Width(60);
+
+            columns.Bound(c => c.SettleDate)
+            .HtmlAttributes(new { @class = "#= RowColor #" })
+            .ClientTemplate("<span>#=PersianSettleDate#</span>")
+            .Sortable(true)
+            .Title(Captions.SettleDate)
+            .Filterable(false)
+            .Width(80);
+
+            columns.Bound(c => c.Id)
+            .HtmlAttributes(new { @class = "#= RowColor #" })
+            .ClientTemplate($"<div><a href='/Dashboard/Document/Detail/#=Id#' target='_blank' class='btn btn-primary'   title='{Captions.Detail}'><i class='fa fa-eye'></i></a>" +
+            "#if(DocStatus==1){# " +
+            $"<button class='btn btn-danger' onclick='getRequestWithConfirmRefreshGrid(\"/Dashboard/Document/RemoveDocument?id=#=Id#\",\"{UserMessages.AreYouSureForDelete}\",gridName)' title='{Captions.Delete}'><i class='fa fa-trash'></i></button></div>" +
+            "#}#")
+            .Title(Captions.Operation)
+            .Width(98)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+        })
+        .Sortable()
+        .Selectable()
+        .Scrollable(x => x.Height("auto"))
+        .Filterable()
+        .HtmlAttributes(new { @class = "" })
+        .Pageable(pageable => pageable
+        .PageSizes(new[] { 10, 50, 100, 500 })
+        .Info(true)
+        .Enabled(true)
+        .PreviousNext(true)
+        .Input(true)
+        .Numeric(true)
+        .ButtonCount(8)
+        .Refresh(true)
+        )
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Sort(x => x.Add(y => y.FullName))
+        .Read(read => read.Action("DocumentList_Read", "Document").Data("GetData"))
+        )
+        .Events(ev => ev.DataBound("onDataBound"))
+        .Resizable(resize => resize.Columns(true))
+        )
+</div>
+<script>
+
+    function GetData() {
+        return {
+            DocumentNumber: $("#DocumentNumber").val(),
+            Name: $("#Name").val(),
+            DocumentStatus: $("#DocumentStatus").val(),
+            DocumentDay: $("#DocumentDay").val(),
+            DocumentDate: $("#DocumentDate").val(),
+            InstallmentDate: $("#InstallmentDate").val(),
+            NotPayedInstallmentFromDate: $("#NotPayedInstallmentFromDate").val(),
+            NotPayedInstallmentToDate: $("#NotPayedInstallmentToDate").val(),
+            SettleDate: $("#SettleDate").val(),
+            GalleryId: $("#GalleryId").val(),
+            CollateralTypeId: $("#CollateralTypeId").val(),
+            CollateralDescription: $("#CollateralDescription").val(),
+            OverdueInstallmentsCount: $("#OverdueInstallmentsCount").val(),
+        }
+    }
+
+</script>

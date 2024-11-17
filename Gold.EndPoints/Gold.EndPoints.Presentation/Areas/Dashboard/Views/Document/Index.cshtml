@@ -1,0 +1,56 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.CityModels
+@{
+    ViewBag.SelectedMenu = (byte)ManagerPermission.DocumentsList;
+    ViewData["Title"] = Captions.Documents;
+}
+
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <span> @Captions.Documents</span>
+        </h6>
+        <div class="heading-elements">
+          <ul class="icons-list ">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="customerForm">
+        <partial name="_DocumentListForm" />
+    </div>
+</div>
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <span>@Captions.List @Captions.Documents</span>
+        </h6>
+        <div class="heading-elements">
+            <button type="button" onclick="exportFile('/Dashboard/Document/InitReportData',GetData(),'/Dashboard/Document/ExportExcel')" class="btn  btn-labeled legitRipple"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+            <button type="button" onclick="exportFile('/Dashboard/Document/InitReportData',GetData(),'/Dashboard/Document/ExportPdf')" class="btn  btn-labeled legitRipple"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+            <ul class="icons-list left-align">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="">
+        <partial name="_DocumentList" />
+    </div>
+</div>
+@section Stylesheet{
+    <link href="~/lib/persiandatetimepicker/persiandatepicker.min.css" rel="stylesheet" />
+}
+
+@section Scripts{
+
+   <script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select').select2();
+        });
+    </script>
+    <script src="~/lib/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="~/lib/persiandatetimepicker/persiandatepicker.min.js" asp-append-version="true"></script>
+    <script src="~/scripts/dashboard/document.js" asp-append-version="true"></script>
+ }

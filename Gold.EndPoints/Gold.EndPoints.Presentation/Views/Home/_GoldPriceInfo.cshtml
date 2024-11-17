@@ -1,0 +1,147 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.GoldPriceModels;
+@model GoldPriceInfoModel
+@{
+    Layout = null;
+}
+
+<h3 id="timer" class="text-center dir-ltr">
+    <span id="timer-hour">@DateTime.Now.Hour</span> :
+    <span id="timer-min">@DateTime.Now.Minute</span> :
+    <span id="timer-second">@DateTime.Now.Second</span>
+</h3>
+<h6 class="text-center fw-normal">
+    @Captions.GoldPriceInfoTitle
+</h6>
+<div class="row">
+    <div class="col-12">
+        <table class="table table-price-list">
+            <tbody>
+                <tr>
+                    <td colspan="2" class="text-primary">
+                        <div class="row mx-0">
+                            <div class="col-6 small text-end px-0 col-sm-4">
+                                @Captions.LastUpdate :
+                            </div>
+                            <div class="col-6 dir-ltr small text-start px-0 col-sm-8">
+                                <span> @Model.RegisterDate.GeorgianToPersian(ShowMode.OnlyDate) </span>
+                                -
+                                <span> @Model.RegisterDate.GeorgianToPersian(ShowMode.OnlyTime) </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-price-list-title" colspan="2">
+                        @Captions.GoldRate
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Captions.Shekel
+                    </td>
+                    <td>
+                        @if (Model.Shekel.HasValue)
+                        {
+                            <text> @Model.Shekel.Value.ToString("N0")</text>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Captions.GoldAnas
+                    </td>
+                    <td>
+                        @if (Model.Anas.HasValue)
+                        {
+                            <text> @string.Format("{0:n}", Model.Anas.Value)</text>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Captions.OneGram18KaratGold
+                    </td>
+                    <td>
+                        @Model.Karat18.ToString("N0")
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="table-price-list-title" colspan="2">
+                        @Captions.GoldTypeRate
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Captions.BankCoin
+                    </td>
+                    <td>
+                        @if (Model.Coin.HasValue)
+                        {
+                            <text> @Model.Coin.Value.ToString("N0")</text>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Captions.OldCoin
+                    </td>
+                    <td>
+                        @if (Model.OldCoin.HasValue)
+                        {
+                            <text> @Model.OldCoin.Value.ToString("N0")</text>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Captions.BankHalfCoin
+                    </td>
+                    <td>
+                        @if (Model.HalfCoin.HasValue)
+                        {
+                            <text> @Model.HalfCoin.Value.ToString("N0")</text>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Captions.BankQuarterCoin
+                    </td>
+                    <td>
+                        @if (Model.QuarterCoin.HasValue)
+                        {
+                            <text> @Model.QuarterCoin.Value.ToString("N0")</text>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Captions.GramCoin
+                    </td>
+                    <td>
+                        @if (Model.GramCoin.HasValue)
+                        {
+                            <text> @Model.GramCoin.Value.ToString("N0")</text>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-primary price-list-footer">
+                        <div class="row mx-0">
+                            <div class="col-12 small text-center text-sm-end px-0 col-sm-5">
+                                @Captions.RateInformationSource :
+                            </div>
+                            <div class="col-12 small text-center text-sm-start px-0 col-sm-7">
+                                <a href="https://talaclinicfars.ir/" target="_blank" class="text-primary text-decoration-none">
+                                    @Captions.TalaclinicfarsDesc
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

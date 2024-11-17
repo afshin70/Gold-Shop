@@ -1,0 +1,93 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.SettingsViewModels
+@model LoanSettingsViewModel
+@{
+    Layout = null;
+}
+<form id="form_loanSettings" action="/Dashboard/Setting/LoanSettings" onsubmit="submitFormNormal(this);" method="post">
+    <div class="panel-body">
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="MonthlyProfitPercentage" class="star"></label>(بین 0 - 100)
+                <div class="input-group">
+                    @*<input asp-for="MonthlyProfitPercentage" type="number" min="0.00" max="100.00" step="0.1" class="form-control" maxlength="5">*@
+                    <input asp-for="MonthlyProfitPercentage" type="text" class="form-control " >
+                    <span class="input-group-addon"><i class="fa fa-percentage"></i></span>
+                </div>
+                <span asp-validation-for="MonthlyProfitPercentage" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 pt25">
+                <div class="alert alert-warning">
+                   
+                    <p> <i class="fas fa-exclamation-triangle me-3">&nbsp;</i>@UserMessages.MonthlyProfitPercentageDescInLoanSetting</p>
+                </div>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="PenaltyFactor" class="star"></label>(بین 0 - 1)
+                <div class="input-group">
+                    @*<input asp-for="PenaltyFactor" type="number" min="0.00" max="1.00" step="0.01" class="form-control" maxlength="4">*@
+                    <input asp-for="PenaltyFactor"  class="form-control ">
+                    <span class="input-group-addon"><i class="fa fa-percentage"></i></span>
+                </div>
+                <span asp-validation-for="PenaltyFactor" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 pt25">
+                <div class="alert alert-warning">
+                   
+                    <p> <i class="fas fa-exclamation-triangle me-3">&nbsp;</i>@UserMessages.PenaltyFactorDescInLoanSetting</p>
+                </div>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="TimeToSendReminderMessagesToUsers" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="TimeToSendReminderMessagesToUsers" type="text" data-val-regex-pattern="((([0-1][0-9])|(2[0-3]))(:[0-5][0-9])(:[0-5][0-9])?)" class="form-control time"  onfocusout="timeValidate(this)" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-clock"></i></span>
+                </div>
+                <span asp-validation-for="TimeToSendReminderMessagesToUsers" class="text-danger"></span>
+            </div>
+           
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Tax" class="star"></label>(بین 0 - 100)
+                <div class="input-group">
+                    @*<input asp-for="MonthlyProfitPercentage" type="number" min="0.00" max="100.00" step="0.1" class="form-control" maxlength="5">*@
+                    <input asp-for="Tax" type="text" class="form-control " maxlength="3" onkeypress="return safeOnlyNumber($(this),event)">
+                    <span class="input-group-addon"><i class="fa fa-percentage"></i></span>
+                </div>
+                <span asp-validation-for="Tax" class="text-danger"></span>
+            </div>
+            @*<div class="col-xs-12 col-sm-6 col-md-4 pt25">
+                <div class="alert alert-warning">
+                    <p> <i class="fas fa-exclamation-triangle me-3">&nbsp;</i>@UserMessages.MonthlyProfitPercentageDescInLoanSetting</p>
+                </div>
+            </div>*@
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="MaxProfitGallery" class="star"></label>(بین 0 - 100)
+                <div class="input-group">
+                    @*<input asp-for="MonthlyProfitPercentage" type="number" min="0.00" max="100.00" step="0.1" class="form-control" maxlength="5">*@
+                    <input asp-for="MaxProfitGallery" type="text" class="form-control ">
+                    <span class="input-group-addon"><i class="fa fa-percentage"></i></span>
+                </div>
+                <span asp-validation-for="MaxProfitGallery" class="text-danger"></span>
+            </div>
+           @* <div class="col-xs-12 col-sm-6 col-md-4 pt25">
+                <div class="alert alert-warning">
+                   
+                    <p> <i class="fas fa-exclamation-triangle me-3">&nbsp;</i>@UserMessages.MonthlyProfitPercentageDescInLoanSetting</p>
+                </div>
+            </div>*@
+        </div>
+    </div>
+    <div class="panel-footer text-right">
+        <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+        @*<button type="button" onclick="$('#form_loanSettings').trigger('reset');" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>*@
+    </div>
+</form>
+
+

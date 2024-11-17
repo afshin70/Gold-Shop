@@ -1,0 +1,68 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.GalleryModels
+
+<div class="k-rtl ">
+    @(
+
+        Html.Kendo().Grid<GalleryModel>()
+        .Name("grid_galleryGrid")
+        .Columns(columns =>
+        {
+            columns.Bound("").ClientTemplate("#= renderRecordNumber(data,gridNameGallery) #")
+            .Title("#")
+            .Width(40);
+
+            columns.Bound(c => c.Name)
+            .Sortable(true)
+            .Title(Captions.GalleryName)
+            .Filterable(true)
+            .Width(100);
+
+            columns.Bound(c => c.IsActive)
+            .Title(Captions.Status)
+            .ClientTemplate($"<div class='text-center'><span class=\"badge #=(IsActive?'badge-success':'badge-danger')#\"> #=(IsActive?'{Captions.Active}':'{Captions.DeActive}')#</span></div>")
+            .Sortable(true)
+            .Filterable(true)
+            .Width(58);
+
+            columns.Bound(c => c.HasInstallmentSale)
+            .Title(Captions.HasInstallmentSale)
+            .ClientTemplate($"<div class='text-center'><span class=\"badge #=(HasInstallmentSale?'badge-success':'badge-danger')#\"> #=(HasInstallmentSale?'{Captions.Active}':'{Captions.DeActive}')#</span></div>")
+            .Sortable(true)
+            .Filterable(true)
+            .Width(98);
+
+            columns.Bound(c => c.Id)
+            .ClientTemplate($"<div class='text-center'><button class='btn btn-primary' onclick='loadGalleryData(\"/Dashboard/Gallery/CreateOrEditGallery?id=#=Id#\")'  title='{Captions.Edit}'><i class='fa fa-edit'></i></button>" +
+            $"<button class='btn btn-danger' onclick='getRequestWithConfirmRefreshGrid(\"/Dashboard/Gallery/RemoveGallery?id=#=Id#\",\"{UserMessages.AreYouSureForDelete}\",gridNameGallery,resetGalleryForm)' title='{Captions.Delete}'><i class='fa fa-trash'></i></button></div>")
+            .Title(Captions.Operation)
+            .Width(100)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+        })
+        .Sortable()
+        .Selectable()
+        .Scrollable(x => x.Height("auto"))
+        .Filterable()
+        .HtmlAttributes(new { @class = "" })
+        .Pageable(pageable => pageable
+        .PageSizes(new[] { 10, 50, 100, 500 })
+        .Info(true)
+        .Enabled(true)
+        .PreviousNext(true)
+        .Input(true)
+        .Numeric(true)
+        .ButtonCount(8)
+        .Refresh(true)
+        )
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Sort(x => x.Add(y => y.Name))
+        .Read(read => read.Action("GalleryList_Read", "Gallery"))
+        ).Events(ev => ev.DataBound("onDataBound"))
+        )
+</div>
+<script>
+    function GetData(){return;}
+</script>

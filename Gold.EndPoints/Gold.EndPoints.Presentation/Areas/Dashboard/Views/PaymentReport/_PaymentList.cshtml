@@ -1,0 +1,101 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels.DocumentModels;
+<div class="k-rtl ">
+    @(
+        Html.Kendo().Grid<ConfirmedPaymentReport>()
+            .Name("grid_ConfirmedPaymentReport")
+            .Columns(columns =>
+            {
+            columns.Bound("")
+            .ClientTemplate("#= renderRecordNumber(data,gridName) #")
+            .Title("#")
+            .Width(40);
+
+            columns.Bound(c => c.DocumentNumber)
+            .Title(Captions.DocumentNumber)
+            .Sortable(true)
+            .Filterable(true)
+            .Width(75);
+
+            columns.Bound(c => c.FullName)
+            .Title(Captions.FullName)
+            .Sortable(true)
+            .Filterable(true)
+            .Width(90);
+
+            columns.Bound(c => c.PersianInstallmentDate)
+            .Title(Captions.InstallmentDate)
+            .Sortable(false)
+            .Filterable(false)
+            .Width(80);
+
+            columns.Bound(c => c.InstallmentAmount)
+            .Title(Captions.InstallmentPrice)
+            .ClientTemplate("#=GetPriceStyle(InstallmentAmount)#")
+            .Sortable(true)
+            .Filterable(true)
+            .Width(75);
+
+            columns.Bound(c => c.InstallmentNumber)
+            .Title(Captions.InstallmentNumebr)
+            .Sortable(true)
+            .Filterable(true)
+            .Width(75);
+
+            columns.Bound(c => c.PersianPaymentDate)
+            .Title(Captions.PaymentDate)
+            .Sortable(false)
+            .Filterable(false)
+            .Width(80);
+
+            columns.Bound(c => c.PaymentAmount)
+            .Title(Captions.PaymentAmount)
+            .Sortable(true)
+            .FooterHtmlAttributes(new { id = "PaymentAmountSum" })
+            .ClientFooterTemplate($"Sum: #=getDataFromUrl('/Dashboard/PaymentReport/PaymentAmountSum', GetData(),'PaymentAmountSum')#")
+            .ClientTemplate("#=GetPriceStyle(PaymentAmount)#")
+            .Filterable(true)
+            .Width(80);
+
+            columns.Bound(c => c.ImageName)
+            .ClientTemplate("<div class='text-center'>" +
+            "#if(ImageName!=null && ImageName!=\"\"){#" +
+            $"<a href='/Dashboard/Document/GetPaymentImage?imageName=#=ImageName#' title='{Captions.View} {Captions.ReceiptImage}' target='_blank'>{Captions.View}</a>" +
+                "#}#</div>")
+            .Title(Captions.ReceiptImage)
+            .Width(80)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+        })
+        .Sortable()
+        .Selectable()
+        .Scrollable(x => x.Height("auto"))
+        .Filterable()
+        .HtmlAttributes(new { @class = "" })
+        .Pageable(pageable => pageable
+        .PageSizes(new[] { 10, 50, 100, 500 })
+        .Info(true)
+        .Enabled(true)
+        .PreviousNext(true)
+        .Input(true)
+        .Numeric(true)
+        .ButtonCount(8)
+        .Refresh(true)
+        )
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Read(read => read.Action("PaymentReportList_Read", "PaymentReport").Data("GetData"))
+        ).Events(ev => ev.DataBound("onDataBound"))
+        )
+</div>
+
+<script>
+    function GetData() {
+        return {
+            DocumentNumber: $("#DocumentNumber").val(),
+            FromDatePayment: $("#FromDatePayment").val(),
+            ToDatePayment: $("#ToDatePayment").val(),
+        }
+    }
+</script>

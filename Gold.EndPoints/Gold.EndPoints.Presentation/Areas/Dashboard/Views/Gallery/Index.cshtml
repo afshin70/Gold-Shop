@@ -1,0 +1,124 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.GalleryViewModels
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.SellerViewModels
+@using System.Threading
+@inject Gold.ApplicationService.Contract.Abstractions.IGalleryService _galleryService
+@{
+    ViewData["Title"] = Captions.Galleries;
+
+    var galleries = _galleryService.GetActiveGalleriesAsync(0, new CancellationToken()).Result.Data;
+
+
+    ViewBag.SelectedMenu = (byte)ManagerPermission.Galleries;
+}
+
+<div class="tabbable-custom">
+    <ul class="nav nav-tabs">
+        @*<li class="active"  onclick="loadData('/Dashboard/Gallery/CreateOrEditGallery','form_gallery')">*@
+        <li class="active">
+            <a href="#tab_1_1" data-toggle="tab"> @Captions.Gallery</a>
+        </li>
+        <li>
+            @*onclick ="loadData('/Dashboard/Seller/CreateOrEditSeller','form_seller')"*@
+            <a href="#tab_1_2" data-toggle="tab"> @Captions.Sellers</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade active in" id="tab_1_1">
+
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span> @Captions.Gallery</span>
+                    </h6>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="form_gallery">
+                    <partial name="_CreateOrEditGallery" model="new CreateOrEditGalleryViewModel(){Id=0,IsActive=true}" />
+                </div>
+            </div>
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span>@Captions.List @Captions.Galleries</span>
+                    </h6>
+                    <div class="heading-elements">
+                        <button type="button" onclick="exportFile('/Dashboard/Gallery/InitReportData',GetData(),'/Dashboard/Gallery/ExportExcel')" class="btn btn-labeled"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+                        <button type="button" onclick="exportFile('/Dashboard/Gallery/InitReportData',GetData(),'/Dashboard/Gallery/ExportPdf')" class="btn btn-labeled"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+                        <ul class="icons-list left-align">
+                            <li><a data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="list_gallery">
+                    <partial name="_GalleryList" />
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="tab_1_2">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span> @Captions.Seller</span>
+                    </h6>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="form_seller">
+                    <partial name="~/Areas/Dashboard/views/seller/_createoreditseller.cshtml" model="@(new CreateOrEditSellerViewModel { SellerId=0,IsActive=true ,Galleries=galleries})" />@*,Galleries= _galleryService.GetActiveGalleriesAsync(0,new CancellationToken()).Result.Data*@
+                </div>
+                @* *@
+            </div>
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span>@Captions.List @Captions.Sellers</span>
+                    </h6>
+                    <div class="heading-elements">
+                        <button type="button" onclick="exportFile('/Dashboard/Seller/InitReportData',GetData(),'/Dashboard/Seller/ExportExcel')" class="btn btn-labeled"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+                        <button type="button" onclick="exportFile('/Dashboard/Seller/InitReportData',GetData(),'/Dashboard/Seller/ExportPdf')" class="btn  btn-labeled"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+
+                        <ul class="icons-list left-align">
+                            <li><a data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="list_seller">
+                    <partial name="/Areas/Dashboard/Views/Seller/_SellerList.cshtml" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="clearfix margin-bottom-20"> </div>
+@section Stylesheet{
+
+}
+@section HeaderScripts{
+    <script>
+        var gridNameGallery = "grid_galleryGrid";
+        var gridNameSeller = "grid_sellerGrid";
+    </script>
+    }
+@section scripts{
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
+    <script src="~/lib/ckeditor/config.js"></script>
+    <script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select').select2();
+        });
+    </script>
+    <script src="~/themes/default/js/plugins/forms/styling/switchery.min.js"></script>
+    <script src="~/scripts/dashboard/seller.js" asp-append-version="true"></script>
+    <script src="~/scripts/dashboard/gallery.js" asp-append-version="true"></script>
+
+
+}

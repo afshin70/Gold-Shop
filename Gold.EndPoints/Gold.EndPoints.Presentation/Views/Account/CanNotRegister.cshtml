@@ -1,0 +1,25 @@
+﻿@*@model string
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_RegistrationLayout";
+    }
+    ViewBag.Title = Captions.Warning;
+}
+<smart-page asp-title="@Captions.Warning">
+    
+<div class="panel panel-flat">
+    <div class="panel-body">
+        <div class="alert bg-danger alert-styled-left">
+            @Model
+        </div>
+      
+    </div>
+</div>
+</smart-page>
+
+*@

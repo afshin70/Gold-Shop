@@ -1,0 +1,49 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.SettingsViewModels;
+@{
+	ViewData["Title"] = Captions.SocialNetworks;
+	ViewBag.SelectedMenu = (byte)ManagerPermission.SocialNetwork;
+}
+
+
+<div class="panel panel-flat">
+	<div class="panel-heading">
+		<h6 class="panel-title">
+			<span> @Captions.SocialNetworks</span>
+		</h6>
+		<div class="heading-elements">
+			<ul class="icons-list">
+				<li><a data-action="collapse"></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div>
+		<partial name="_SocialNetworkForm" model="new SocialNetworkViewModel()" />
+	</div>
+</div>
+<div class="panel panel-flat">
+	<div class="panel-heading">
+		<h6 class="panel-title">
+			<span>@Captions.List @Captions.SocialNetworks</span>
+		</h6>
+		<div class="heading-elements">
+			<button type="button" onclick="exportFile('/Dashboard/Setting/InitReportData',GetData(),'/Dashboard/Setting/ExportExcel')" class="btn btn-labeled"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+			<button type="button" onclick="exportFile('/Dashboard/Setting/InitReportData',GetData(),'/Dashboard/Setting/ExportPdf')" class="btn btn-labeled"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+			<ul class="icons-list left-align">
+				<li><a data-action="collapse"></a></li>
+			</ul>
+		</div>
+	</div>
+	<div>
+		<partial name="_SocialNetworkList" />
+	</div>
+</div>
+@section HeaderScripts{
+	<script>
+		var gridName = "grid_SocialNetwork";
+	</script>
+    }
+
+@section Scripts{
+	<script src="~/scripts/dashboard/settings.js" asp-append-version="true"></script>
+ }

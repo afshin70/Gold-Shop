@@ -1,0 +1,402 @@
+﻿@font-face {
+    font-family: IRANSansEN;
+    font-style: normal;
+    font-weight: bold;
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb_Bold.eot');
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb_Bold.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../fonts/iransans/fonts/woff2/IRANSansWeb_Bold.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../fonts/iransans/fonts/woff/IRANSansWeb_Bold.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../fonts/iransans/fonts/ttf/IRANSansWeb_Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 900;
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb(FaNum)_Black.eot');
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb(FaNum)_Black.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../fonts/iransans/fonts/woff2/IRANSansWeb(FaNum)_Black.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../fonts/iransans/fonts/woff/IRANSansWeb(FaNum)_Black.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../fonts/iransans/fonts/ttf/IRANSansWeb(FaNum)_Black.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: bold;
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb(FaNum)_Bold.eot');
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb(FaNum)_Bold.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../fonts/iransans/fonts/woff2/IRANSansWeb(FaNum)_Bold.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../fonts/iransans/fonts/woff/IRANSansWeb(FaNum)_Bold.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../fonts/iransans/fonts/ttf/IRANSansWeb(FaNum)_Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 500;
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb(FaNum)_Medium.eot');
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb(FaNum)_Medium.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../fonts/iransans/fonts/woff2/IRANSansWeb(FaNum)_Medium.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../fonts/iransans/fonts/woff/IRANSansWeb(FaNum)_Medium.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../fonts/iransans/fonts/ttf/IRANSansWeb(FaNum)_Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb(FaNum)_Light.eot');
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb(FaNum)_Light.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../fonts/iransans/fonts/woff2/IRANSansWeb(FaNum)_Light.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../fonts/iransans/fonts/woff/IRANSansWeb(FaNum)_Light.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../fonts/iransans/fonts/ttf/IRANSansWeb(FaNum)_Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 200;
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb(FaNum)_UltraLight.eot');
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb(FaNum)_UltraLight.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../fonts/iransans/fonts/woff2/IRANSansWeb(FaNum)_UltraLight.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../fonts/iransans/fonts/woff/IRANSansWeb(FaNum)_UltraLight.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../fonts/iransans/fonts/ttf/IRANSansWeb(FaNum)_UltraLight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb(FaNum).eot');
+    src: url('../fonts/iransans/fonts/eot/IRANSansWeb(FaNum).eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../fonts/iransans/fonts/woff2/IRANSansWeb(FaNum).woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../fonts/iransans/fonts/woff/IRANSansWeb(FaNum).woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../fonts/iransans/fonts/ttf/IRANSansWeb(FaNum).ttf') format('truetype');
+}
+
+html {
+    direction: rtl;
+    border-width: 0 !important;
+}
+
+body {
+    font-family: 'IRANSans';
+    font-style: normal;
+    font-size: 20px;
+    line-height: 22px;
+    margin: 0;
+    border-width: 0 !important;
+}
+
+.main {
+    background: white;
+    position: relative;
+    width: 100%; /*21cm;*/
+    height: 100%; /*14.8cm;*/
+    display: block;
+    margin: 0 auto;
+    padding: 0 25px 25px 25px;
+    margin-bottom: 0;
+    border-width: 0;
+    /*box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);*/
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border: none;
+    page-break-inside: auto;
+    page-break-after: auto
+}
+
+tr {
+    page-break-inside: avoid;
+    page-break-after: auto
+}
+
+td {
+    border-spacing: 0;
+    font-family: 'IRANSans';
+    border: none;
+    page-break-inside: avoid;
+    page-break-after: auto
+}
+
+thead {
+    display: table-header-group
+}
+
+tfoot {
+    display: table-footer-group
+}
+
+
+table > thead,
+table > tbody,
+table > tfoot {
+    width: 100%;
+}
+
+.rtl {
+    direction: rtl;
+    text-align: right
+}
+
+.ltr {
+    direction: ltr;
+    display: inline-block;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+p {
+    padding: 5px;
+    margin: 0px;
+}
+
+strong {
+    font-weight: 500;
+}
+
+h2 {
+    margin: 0px;
+}
+
+
+h3 {
+    margin: 0px;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.left {
+    text-align: left;
+}
+
+.p-20 {
+    padding: 20px;
+}
+
+.no-bottom-border {
+    border-bottom: none;
+}
+
+.no-left-border {
+    border-left: none !important;
+}
+
+.td-border {
+    border-top: 1px solid #000;
+}
+
+.tr-border td {
+    border-bottom: 1px solid #000;
+}
+
+.td-5 {
+    width: 5%;
+}
+
+.td-8 {
+    width: 8%;
+}
+
+.td-10 {
+    width: 10%;
+}
+
+.td-15 {
+    width: 15%;
+}
+
+.td-18 {
+    width: 18%;
+}
+
+.td-20 {
+    width: 20%;
+}
+
+.td-25 {
+    width: 25%;
+}
+
+.td-22 {
+    width: 22%;
+}
+
+.td-26 {
+    width: 26%;
+}
+
+.td-30 {
+    width: 30%;
+}
+
+.td-32 {
+    width: 32%;
+}
+
+.td-33 {
+    width: 33.33%;
+}
+
+.td-40 {
+    width: 40%;
+}
+
+.td-50 {
+    width: 50%;
+}
+
+.td-60 {
+    width: 60%;
+}
+
+.td-65 {
+    width: 65%;
+}
+
+.td-75 {
+    width: 79.5%;
+}
+
+.td-80 {
+    width: 80%;
+}
+
+.td-81 {
+    width: 81.5%;
+}
+
+
+.fl-right {
+    float: right;
+    height: 72px;
+    width: 1px;
+}
+
+b {
+    font-weight: 600;
+}
+
+.p strong {
+    font-family: 'IRANSansEN';
+    color: #000;
+    font-size: 12px;
+}
+
+.b-x {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.py-5 {
+    padding: 5px 0;
+}
+
+.py-10 {
+    padding: 10px 0;
+}
+
+.py-15 {
+    padding: 15px 0;
+}
+
+.pl-5 {
+    padding-left: 5px;
+}
+
+.pl-10 {
+    padding-left: 10px;
+}
+
+.pl-15 {
+    padding-left: 15px;
+}
+
+.pl-20 {
+    padding-left: 20px;
+}
+
+.pr-5 {
+    padding-right: 5px;
+}
+
+.pr-10 {
+    padding-right: 10px;
+}
+
+.pr-15 {
+    padding-right: 15px;
+}
+
+.pr-20 {
+    padding-right: 20px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mb-40 {
+    margin-bottom: 40px;
+}
+
+
+.column-direction {
+    direction: ltr;
+}
+
+
+    .table-border-print th {
+        font-size: 17px;
+        padding: 10px 5px;
+        line-height: 23px;
+        background-color: #ebebeb;
+        border: 1px solid #000;
+        border-right: 0;
+    }
+
+        .table-border-print th:first-child {
+            border-right: 1px solid #000;
+        }
+
+    .table-border-print td {
+        font-size: 15px;
+        padding: 10px 5px;
+        line-height: 20px;
+    }
+
+        .table-border-print td div {
+            height: 15px;
+        }
+
+    .table-border-print > thead td {
+        background: #bbb;
+        padding: 5px;
+        border: 1px solid #000;
+        border-right: 0;
+    }
+
+
+    .table-border-print tfoot td {
+        background: #dedede;
+        padding: 3px 5px;
+    }
+
+    .table-border-print tbody td:first-child {
+        border-right: 1px solid #000;
+    }
+.table-border-print tbody tr:last-child >td{
+    border-bottom: 1px solid #000;
+}
+
+    .table-border-print tbody td:last-child {
+        border-left: 1px solid #000;
+    }
+
+    .table-border-print tbody td {
+        border-left: 1px solid #000 !important;
+    }
+
+.color tbody tr:nth-child(2n) {
+    background: #eee;
+}
+
+.pb-15 {
+    padding-bottom: 15px;
+}

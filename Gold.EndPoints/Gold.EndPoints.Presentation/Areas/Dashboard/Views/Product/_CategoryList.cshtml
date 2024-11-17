@@ -1,0 +1,66 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.ProductModels.CategoryModels;
+
+<div class="k-rtl ">
+    @(Html.Kendo().Grid<CategoryModel>()
+        .Name("grid_categoriesGrid")
+        .Columns(columns =>
+        {
+            columns.Bound("").ClientTemplate("#= renderRecordNumber(data,categoryGridName) #")
+            .Title("#")
+            .Width(40);
+
+            columns.Bound(c => c.Title)
+            .Sortable(true)
+            .Title(Captions.Title)
+            .Filterable(true)
+            .Width(100);
+
+             columns.Bound(c => c.Id)
+            .Title(Captions.Arrangement)
+            .ClientTemplate(
+               "<div class='text-center'>"+
+            $"<button class='btn btn-success' onclick='updateDataAndRefreshGrid(\"/Dashboard/Product/ChangeCategoryOrder?id=#=Id#&isUp=true\",categoryGridName)'  ><i class='fa fa-arrow-up'></i></button>" +
+            $"<button class='btn btn-success' onclick='updateDataAndRefreshGrid(\"/Dashboard/Product/ChangeCategoryOrder?id=#=Id#&isUp=false\",categoryGridName)' ><i class='fa fa-arrow-down'></i></button>" +
+               "</div>")
+            .Width(100)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+            columns.Bound(c => c.Id)
+            .ClientTemplate($"<div class='text-center'>"+
+            $"<button class='btn btn-primary' onclick='loadCategoryData(\"/Dashboard/Product/CreateOrEditCategory?id=#=Id#\")'  title='{Captions.Edit}'><i class='fa fa-edit'></i></button>" +
+            $"<button class='btn btn-danger' onclick='getRequestWithConfirmRefreshGrid(\"/Dashboard/Product/RemoveCategory?id=#=Id#\",\"{UserMessages.AreYouSureForDelete}\",categoryGridName)' title='{Captions.Delete}'><i class='fa fa-trash'></i></button></div>")
+            .Title(Captions.Operation)
+            .Width(100)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+        })
+        .Sortable()
+        .Selectable()
+        .Scrollable(x => x.Height("auto"))
+        .Filterable()
+        .HtmlAttributes(new { @class = "" })
+        .Pageable(pageable => pageable
+        .PageSizes(new[] { 10, 50, 100, 500 })
+        .Info(true)
+        .Enabled(true)
+        .PreviousNext(true)
+        .Input(true)
+        .Numeric(true)
+        .ButtonCount(8)
+        .Refresh(true)
+        )
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Sort(x => x.Add(y => y.OrderNo))
+        .Read(read => read.Action("CategoryList_Read", "Product"))
+        ).Events(ev => ev.DataBound("onDataBound"))
+        )
+</div>
+
+@*<script>
+    function GetData() { return; }
+</script>*@

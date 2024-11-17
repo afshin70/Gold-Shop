@@ -1,0 +1,100 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.SiteContent;
+@{
+    ViewData["Title"] = Captions.EditInformationRequest;
+    ViewBag.SelectedMenu = (byte)ManagerPermission.ContactUsMessagesManagement;
+}
+
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <div class=" col-xs-6 col-sm-4 col-md-4 "><h6 class="panel-title"> <span> @Captions.Messages</span></h6></div>
+           
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="heading-elements">
+            <button type="button" onclick="exportFile('/Dashboard/SiteContent/InitContactUsMessagesReportData',GetData(),'/Dashboard/SiteContent/ExportExcelContactUsMessages')" class="btn  btn-labeled"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+            <button type="button" onclick="exportFile('/Dashboard/SiteContent/InitContactUsMessagesReportData',GetData(),'/Dashboard/SiteContent/ExportPdfContactUsMessages')" class="btn  btn-labeled"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+            <ul class="icons-list left-align">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="">
+        <div class="k-rtl ">
+            @(
+                Html.Kendo().Grid<ContactUsMessageModel>()
+                .Name("grid_MessagesGrid")
+                .Columns(columns =>
+                {
+                    columns.Bound("").ClientTemplate("#= renderRecordNumber(data,'grid_MessagesGrid') #")
+                    .Title("#")
+                    .Width(40);
+
+                    columns.Bound(c => c.FullName)
+                    .Sortable(true)
+                    .Title(Captions.Name)
+                    .Width(90)
+                    .Filterable(true);
+
+                    columns.Bound(c => c.Phone)
+                    .Sortable(true)
+                    .Title(Captions.PhoneNumber)
+                    .Width(90)
+                    .Filterable(true);
+
+                    columns.Bound(c => c.SendDatePersian)
+                    .Sortable(true)
+                    .Title(Captions.SendDate)
+                    .Filterable(true)
+                    .Width(120);
+
+                    columns.Bound(c => c.Message)
+                    .Sortable(true)
+                    .Title(Captions.Message)
+                    .Filterable(true)
+                    .Width(400);
+
+                    columns.Bound(c => c.Id)
+                    .ClientTemplate($"<div class='text-center'>" +
+                    $"<button class='btn btn-danger' onclick='getRequestWithConfirmRefreshGrid(\"/Dashboard/SiteContent/RemoveMessage?id=#=Id#\",\"{UserMessages.AreYouSureForDelete}\",\"grid_MessagesGrid\")' title='{Captions.Delete}'><i class='fa fa-trash'></i></button></div>")
+                    .Title(Captions.Operation)
+                    .Width(95)
+                    .Filterable(false)
+                    .Sortable(false)
+                    .Groupable(false);
+
+                })
+                .Sortable()
+                .Selectable()
+                .Scrollable(x => x.Height("auto"))
+                .Filterable()
+                .HtmlAttributes(new { @class = "" })
+                .Pageable(pageable => pageable
+                .PageSizes(new[] { 10, 50, 100, 500 })
+                .Info(true)
+                .Enabled(true)
+                .PreviousNext(true)
+                .Input(true)
+                .Numeric(true)
+                .ButtonCount(8)
+                .Refresh(true)
+                )
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .Read(read => read.Action("UserMessageList_Read", "SiteContent").Data("GetData"))
+                ).Events(ev => ev.DataBound("onDataBound"))
+                )
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    
+    <script>
+        function GetData() {
+
+        }
+    </script>
+}

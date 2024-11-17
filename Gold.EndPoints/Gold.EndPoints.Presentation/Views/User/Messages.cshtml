@@ -1,0 +1,89 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels.CustomerMessageModels;
+@using Gold.SharedKernel.DTO.PaginationModels;
+@model Pagination<CustomerMessageModel>
+@{
+    ViewData["Title"] = Captions.Messages;
+    ViewBag.SelectedMenuIcon = SiteSelectedIcon.Profile;
+}
+
+
+
+<div class="container mt-2 mb-5">
+    <div class="title-section mb-4 mt-2 text-end">
+        <h5 class="fw-bold">
+            @Captions.Messages
+        </h5>
+    </div>
+    <div class="row dir-rtl">
+        <div class="col-12 mb-4">
+            @if (Model is not null)
+            {
+                <div class="row">
+                    @foreach (var message in Model.Data)
+                    {
+                        <div class="col-12 col-md-6 mb-3 dir-rtl">
+                            <div class="card">
+                                <div class="card-header text-end d-flex justify-content-between">
+                                    <span class="fw-bold">
+                                        @message.Title
+                                        @*    <span class="badge bg-primary mx-2"> جدید</span>*@
+                                    </span>
+                                    <small>@message.PersianDate</small>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text text-justify">
+                                        @message.Content
+                                    </p>
+                                    <!-- <a href="#" class="btn btn-primary">مشاهده پیام</a> -->
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                if (Model.StartPage != Model.EndPage)
+                {
+                    <nav class="justify-content-center my-4 dir-ltr">
+                        <ul class="pagination justify-content-center">
+                            @if (Model.CurrentPage > Model.StartPage)
+                            {
+                                <li class="page-item ">
+                                    <a href="/Messages?page=@(Model.CurrentPage-1)" class="page-link">قبلی</a>
+                                </li>
+                            }
+                            else
+                            {
+                                @*   <li class="page-item disabled">
+                    <a href="/Messages?page=1" class="page-link">اولین</a>
+                    </li>*@
+                                <li class="page-item disabled">
+                                    <a href="#" class="page-link">قبلی</a>
+                                </li>
+                            }
+
+                            @for (int i = Model.StartPage; i <= Model.EndPage; i++)
+                            {
+                                <li class="page-item @(Model.CurrentPage==i?"active":"")">
+                                    <a href="/Messages?page=@i" class="page-link">@i</a>
+                                </li>
+                            }
+
+                            @if (Model.CurrentPage < Model.EndPage)
+                            {
+                                <li class="page-item">
+                                    <a href="/Messages?page=@(Model.CurrentPage+1)" class="page-link">بعدی</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item disabled">
+                                    <a href="#" class="page-link">بعدی</a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+
+            }
+        </div>
+    </div>
+</div>

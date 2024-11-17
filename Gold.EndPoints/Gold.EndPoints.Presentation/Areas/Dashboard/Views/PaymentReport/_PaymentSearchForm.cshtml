@@ -1,0 +1,41 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels.DocumentViewModels;
+@using Gold.SharedKernel.Tools;
+@model PaymentReportSearchViewModel
+@{
+	string currentPersianDate = DateTimeTools.GeorgianToPersian(DateTime.Now, ShowMode.OnlyDate);
+}
+
+
+<div class="panel-body">
+	<form action="/Dashboard/PaymentReport/ExportExcel" method="post">
+		<div class="section row">
+			<div class="col-xs-12 col-sm-6 col-md-4 form-group">
+				<label asp-for="DocumentNumber"></label>
+				<div class="input-group">
+					<input  asp-for="DocumentNumber" type="tel" onkeypress="return safeOnlyNumber($(this),event)" class="form-control" autocomplete="off">
+					<span class="input-group-addon"><i class="fa fa-pen"></i></span>
+				</div>
+				<span asp-validation-for="DocumentNumber" class="text-danger"></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 form-group">
+				<label asp-for="FromDatePayment"></label>
+				<div class="input-group">
+					<input asp-for="FromDatePayment" type="text" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+					<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+				</div>
+				<span asp-validation-for="FromDatePayment" class="text-danger"></span>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-4 form-group">
+				<label asp-for="ToDatePayment"></label>
+				<div class="input-group">
+					<input asp-for="ToDatePayment" type="text" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+					<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+				</div>
+				<span asp-validation-for="ToDatePayment" class="text-danger"></span>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="panel-footer text-right">
+	<button type="button" onclick="refreshGrid(gridName)" class="btn btn-info btn-labeled"><span>@Captions.Search</span> <b><i class="fa fa-search"></i></b></button>
+</div>

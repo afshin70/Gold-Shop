@@ -1,0 +1,59 @@
+﻿@{
+	ViewData["Title"] = Captions.AccessLevels;
+
+
+	ViewBag.SelectedMenu = (byte)ManagerPermission.AccessLevels;
+}
+
+<div class="panel panel-flat">
+	<div class="panel-heading">
+		<div class="panel-title">
+			<div class=" col-xs-6"><h6 class="panel-title"><span> @Captions.AccessLevels</span></h6></div>
+			
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="heading-elements">
+			<button type="button" onclick="loadDataInModal('/Dashboard/PermissionManager/AddOrEditAccessLevel?id=0','addOrEditAccessLevelModal')" class="btn btn-success btn-labeled"><span>@Captions.Add</span> <b><i class="fa fa-plus"></i></b></button>
+			<button type="button" onclick="exportFile('/Dashboard/PermissionManager/InitReportData',GetData(),'/Dashboard/PermissionManager/ExportExcel')" class="btn  btn-labeled"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+			<button type="button" onclick="exportFile('/Dashboard/PermissionManager/InitReportData',GetData(),'/Dashboard/PermissionManager/ExportPdf')" class="btn  btn-labeled"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+
+			<ul class="icons-list left-align">
+				<li><a data-action="collapse"></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div>
+		<partial name="_AccessLevelList" />
+	</div>
+</div>
+
+@{
+
+	ModalModel addOrEditAccessLevelModel = new()
+			{
+				IsShowCloseButtonInFooter = false,
+				Id = "addOrEditAccessLevelModal",
+				IsShowCloseIcon = true,
+				Size = ModalSize.Larg,
+				Title = Captions.AddAccessLevel,
+			};
+}
+<partial name="_Modal" model="addOrEditAccessLevelModel" />
+@section HeaderScripts{
+	<script>
+		var gridName = "grid_AccessLevelsGrid";
+	</script>
+    }
+
+@section Scripts{
+	<script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('select').select2();
+		});
+	</script>
+
+	<script src="~/themes/default/js/plugins/forms/styling/switchery.min.js"></script>
+ }

@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gold.SharedKernel", "Gold.SharedKernel\Gold.SharedKernel.csproj", "{FACF5680-E3FD-483A-9922-FDB3E0463ABA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gold.Domain", "Gold.Domain\Gold.Domain.csproj", "{FD288556-0B32-4901-B333-645EEB3662FE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gold.ApplicationService", "Gold.ApplicationService\Gold.ApplicationService.csproj", "{7BB848EC-C377-4E82-B533-F00BF031C14F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gold.EndPoints", "Gold.EndPoints", "{D1D7CC42-C0E8-40DB-8482-B3E1F6250DF7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gold.Infrastracture", "Gold.Infrastracture\Gold.Infrastracture.csproj", "{B9646AAB-3C3A-407F-A47E-43EFD8F9AC1D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gold.Resources", "Gold.Resources\Gold.Resources.csproj", "{0191159B-D7BC-43B3-A215-8535D9327D13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gold.EndPoints.Presentation", "Gold.EndPoints\Gold.EndPoints.Presentation\Gold.EndPoints.Presentation.csproj", "{B0FAD738-1B97-45BC-AEF2-37305FE05F47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FACF5680-E3FD-483A-9922-FDB3E0463ABA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FACF5680-E3FD-483A-9922-FDB3E0463ABA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FACF5680-E3FD-483A-9922-FDB3E0463ABA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FACF5680-E3FD-483A-9922-FDB3E0463ABA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD288556-0B32-4901-B333-645EEB3662FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD288556-0B32-4901-B333-645EEB3662FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD288556-0B32-4901-B333-645EEB3662FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD288556-0B32-4901-B333-645EEB3662FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BB848EC-C377-4E82-B533-F00BF031C14F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BB848EC-C377-4E82-B533-F00BF031C14F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BB848EC-C377-4E82-B533-F00BF031C14F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BB848EC-C377-4E82-B533-F00BF031C14F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9646AAB-3C3A-407F-A47E-43EFD8F9AC1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9646AAB-3C3A-407F-A47E-43EFD8F9AC1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9646AAB-3C3A-407F-A47E-43EFD8F9AC1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9646AAB-3C3A-407F-A47E-43EFD8F9AC1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0191159B-D7BC-43B3-A215-8535D9327D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0191159B-D7BC-43B3-A215-8535D9327D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0191159B-D7BC-43B3-A215-8535D9327D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0191159B-D7BC-43B3-A215-8535D9327D13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0FAD738-1B97-45BC-AEF2-37305FE05F47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0FAD738-1B97-45BC-AEF2-37305FE05F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0FAD738-1B97-45BC-AEF2-37305FE05F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0FAD738-1B97-45BC-AEF2-37305FE05F47}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B0FAD738-1B97-45BC-AEF2-37305FE05F47} = {D1D7CC42-C0E8-40DB-8482-B3E1F6250DF7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2646D07-744C-41CD-A892-7824F95F966C}
+	EndGlobalSection
+EndGlobal

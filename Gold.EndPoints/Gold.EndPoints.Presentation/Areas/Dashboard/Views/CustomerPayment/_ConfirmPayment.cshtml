@@ -1,0 +1,130 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels.CustomerPaymentsViewModel
+@model ConfirmCustomerPaymentViewModel
+@{
+    Layout = null;
+    string currentPersianDate = DateTime.Now.GeorgianToPersian(ShowMode.OnlyDate);
+    string paymentPersianDate = string.Empty;
+    if (Model.CustomerPaymentInfo is not null)
+        if (Model.CustomerPaymentInfo.CustomerPayedTime.HasValue)
+            paymentPersianDate = Model.CustomerPaymentInfo.CustomerPayedTime.Value.GeorgianToPersian(ShowMode.OnlyDate);
+
+
+    string status = string.Empty;
+    if (Model.CustomerPaymentInfo?.SumOfRemainAmount < 0)
+        status = Captions.Creditor;
+    else if (Model.CustomerPaymentInfo?.SumOfRemainAmount > 0)
+        status = Captions.Debtor;
+    string accountStatusToCurrentInstallmentValue = string.Empty;
+    if (Model.CustomerPaymentInfo is not null)
+        accountStatusToCurrentInstallmentValue = (Math.Abs(Model.CustomerPaymentInfo.SumOfRemainAmount) > 0 ? Math.Abs(Model.CustomerPaymentInfo.SumOfRemainAmount).ToString("N0") + " " + Captions.Tooman : Captions.FullPayment) + $" {status}";
+}
+<div class="section row">
+    <div class="col-xs-12 form-group">
+        <h6>
+            <lable class="col-xs-12 col-sm-6 form-group">@Captions.DocumentNumber : @Model.CustomerPaymentInfo?.DocumentNumber</lable>
+            <lable class="col-xs-12 col-sm-6 form-group">@Captions.InstallmentDate : @Model.CustomerPaymentInfo?.InstallmentDate.GeorgianToPersian(ShowMode.OnlyDate)</lable>
+            <lable class="col-xs-12 col-sm-6 form-group">@Captions.InstallmentNumebr : @Model.CustomerPaymentInfo?.InstallmentNumber @Captions.From @Model.CustomerPaymentInfo?.InstallmentCount</lable>
+            <lable class="col-xs-12 col-sm-6 form-group">@Captions.InstallmentPrice : @Model.CustomerPaymentInfo?.InstallmentAmount.ToString("N0") @Captions.Tooman</lable>
+            <lable class="col-xs-12 form-group">@Captions.CustomerDescription : @Model.CustomerPaymentInfo?.CustomerDescription</lable>
+            <lable class="col-xs-12 col-sm-6 form-group">@Captions.CustomerPayedTime : @(Model.CustomerPaymentInfo.CustomerPayedTime.HasValue ? Model.CustomerPaymentInfo.CustomerPayedTime.Value.GeorgianToPersian(ShowMode.OnlyDateAndTime) : string.Empty)</lable>
+            <lable class="col-xs-12 col-sm-6 form-group">@Captions.CustomerPaymentRedgisterDate : @Model.CustomerPaymentInfo?.CustomerPaymentRedgisterDate.GeorgianToPersian(ShowMode.OnlyDateAndTime)</lable>
+            <lable class="col-xs-12 col-sm-6 form-group">@Captions.AccountStatusToCurrentInstallment : @accountStatusToCurrentInstallmentValue</lable>
+        </h6>
+    </div>
+</div>
+<hr />
+<div class="row" id="div_createOrEditPayment">
+    <div id="form_createOrEditPayment">
+        <form action="/Dashboard/CustomerPayment/ConfirmPayment" onsubmit="submitConfirmPaymentModalFormAndUpdateTarget(this, 'confirmCustomerPaymentModal','grid_paymentsInPendingConfirmationGrid')">
+            <input asp-for="CustomerPaymentId" type="hidden" />
+            <input asp-for="InstallmentId" type="hidden" />
+            <div class="section row">
+
+                <div class="col-xs-12 col-sm-6 form-group">
+                    <label asp-for="PersianPaymentDate" class="col-xs-12 col-sm-12 star"></label>
+                    <div class="input-group">
+                        <input asp-for="PersianPaymentDate" value="@paymentPersianDate" onchange="fillPaymentDescriptionWithDelayDays()" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate','#confirmCustomerPaymentModal');" class="form-control date" autocomplete="off" />
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                    <span asp-validation-for="PersianPaymentDate" class="text-danger"></span>
+                </div>
+                <div class="col-xs-12 col-sm-6 form-group">
+                    <label asp-for="PaymentAmount" class="col-xs-12 col-sm-12 star"></label>
+                    <div class="input-group">
+                        <input asp-for="PaymentAmount" class="form-control" onchange="fillPaymentDescriptionWithDelayDays()" onkeyup="monyFormat(this)" autocomplete="off" />
+                        <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
+                    </div>
+                    <span asp-validation-for="PaymentAmount" class="text-danger"></span>
+                </div>
+                <div class="col-xs-12 col-sm-6 form-group">
+                    @if (!string.IsNullOrEmpty(Model.ImageName))
+                    {
+                        <label asp-for="ImageName"></label>
+                        <div class="input-group">
+                            <img src="/Dashboard/CustomerPayment/GetCustomerPaymentImage?imageName=@Model.ImageName" id="paymentImageFile" class="img-thumbnail" />
+                        </div>
+                        <span asp-validation-for="ImageName" class="text-danger"></span>
+                    }
+                </div>
+                <div class="col-xs-12 col-sm-6 form-group">
+                    <div class="input-group">
+                        <label asp-for="IsPayInstallment"></label>
+                        <div class="checkbox checkbox-switchery">
+                            <label>
+                                <input type="checkbox" onchange="togleShowElement(this,'installmentOptions')" onclick="fillPaymentDescriptionWithDelayDays()" class="switchery" asp-for="IsPayInstallment">
+                            </label>
+                        </div>
+                    </div>
+                    <span asp-validation-for="IsPayInstallment" class="text-danger"></span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div id="installmentOptions" style="display:none">
+                <div class="section row">
+                    <div class="col-xs-12 col-sm-6 form-group">
+                        <label asp-for="DelayDay" class="col-xs-12 col-sm-12 star">@($"{Captions.Delay}({Captions.Day})")</label>
+                        <div class="input-group">
+                            <input asp-for="DelayDay" type="tel" class="form-control" maxlength="3" onchange="fillPaymentDescriptionWithDelayDays(false)" onkeypress="return safeOnlyNumber($(this),event)" />
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                        <span asp-validation-for="DelayDay" class="text-danger"></span>
+                    </div>
+                </div>
+                @*<div class="col-xs-12 col-sm-6 col-md-6 form-group">
+                <label asp-for="PaymentType" class="star"></label>
+                <select asp-for="PaymentType" asp-items="@Model.PaymentTypes" onchange="fillPaymentDescription()" class="form-control Select2">
+                <option selected value="">@Captions.SelectIt</option>
+                </select>
+                <span asp-validation-for="PaymentType" class="text-danger"></span>
+                </div>*@
+                <div class="section row">
+                    <div class="col-xs-12 col-sm-6 form-group">
+                        <label asp-for="Description" class="col-xs-12 col-sm-12 star"></label>
+                        <div class="input-group">
+                            <textarea asp-for="Description" rows="4" class="form-control " autocomplete="off"></textarea>
+                            <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                        </div>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 form-group">
+                        <label asp-for="CustomerMessageContent" class="col-xs-12 col-sm-12 star"></label>
+                        <div class="input-group">
+                            <textarea asp-for="CustomerMessageContent" rows="4" class="form-control" autocomplete="off"></textarea>
+                            <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                        </div>
+                        <span asp-validation-for="CustomerMessageContent" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="section row">
+                <div class="modal-footer text-right">
+                    <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.Confirm</span> <b><i class="fa fa-check-circle"></i></b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="paymentList">
+        <partial name="_PaymentList" model="Model.Payments" />
+    </div>
+</div>

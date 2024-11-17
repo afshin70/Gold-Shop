@@ -1,0 +1,50 @@
+﻿@model List<CardNumberModel>
+@{
+    Layout = null;
+}
+<div class="k-rtl ">
+    <div class="k-grid k-widget k-display-block">
+        <div class="k-grid-header" style="padding-left: 17px;">
+            <div class="k-grid-header-wrap k-auto-scrollable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="k-header td-30" >@Captions.CardNumber</th>
+                            <th class="k-header td-30">@Captions.CardNumberOwner</th>
+                            <th class="k-header td-20">@Captions.Arrangement</th>
+                            <th class="k-header td-20">@Captions.Operation</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="k-grid-content k-auto-scrollable" style="height: auto;">
+            <table class="k-selectable">
+                <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model.OrderBy(x => x.OrderNumber))
+                        {
+                            <tr>
+                                <td class="td-30">@item.Number</td>
+                                <td class="td-30">@item.Owner</td>
+                                <td class="td-20">
+                                    <div class="text-center">
+                                        <button type="button" class='btn btn-success' onclick='loadData("/Dashboard/Customer/ChangeCardNumberOrder?id=@item.Id&customerId=@item.CustomerId&isUp=true", "table_CardNumbers")'><i class="fa fa-arrow-up"></i></button>
+                                        <button type="button" class='btn btn-success' onclick='loadData("/Dashboard/Customer/ChangeCardNumberOrder?id=@item.Id&customerId=@item.CustomerId&isUp=false", "table_CardNumbers")'><i class="fa fa-arrow-down"></i></button>
+                                    </div>
+                                </td>
+                                <td class="td-20">
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-primary" onclick='loadData("/Dashboard/Customer/EditCardNumber?id=@item.Id&customerId=@item.CustomerId", "form_cardNumberListAndForm_section")'><i class="fa fa-edit"></i></button>
+                                        <button type="button" class="btn btn-danger" onclick='getRequestWithConfirmUpdateTargetElement("/Dashboard/Customer/RemoveCardNumber?id=@item.Id&customerId=@item.CustomerId", "@UserMessages.AreYouSureForDelete", "table_CardNumbers")'><i class="fa fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

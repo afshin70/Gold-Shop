@@ -1,0 +1,504 @@
+﻿@{
+	Layout = null;
+}
+<div class="modal fade" id="productInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-interval="false">
+	<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+		<div dir="rtl" class="modal-content">
+			<div class="modal-header d-flex">
+				<h5 class="modal-title d-flex" id="exampleModalLabel">
+					<div id="favoriteSection">
+					</div>
+					<i data-href="" id="productInfoModal_productHeadTitle"
+					   data-title=""
+					   class="fa-light fa-share-nodes">
+					</i>
+				</h5>
+				<button type="button" class="btn-close p-0 me-auto ms-0" data-bs-dismiss="modal" aria-label="Close">
+					<i class="fa-solid align-top fa-close"></i>
+				</button>
+			</div>
+			<div id="product-info-body" class="modal-body p-lg-3 p-0">
+				<input type="hidden" id="productId" value="0" />
+				<div class="row mx-0">
+					<div class="col-12 order-1 order-lg-0 col-lg-6 pr-0 product-info-detail-area">
+						<div class="card overflow-hidden pa-3">
+							<div class="card-body p-0">
+								<div class="accordion accordion-flush" id="productInfoAccordionArea">
+									<div class="accordion-item" id="installmentPurchase">
+										<h2 class="accordion-header">
+											<button class="accordion-button collapsed" type="button"
+													data-bs-toggle="collapse"
+													data-bs-target="#productInfoAccordionArea-collapseOne"
+													aria-expanded="false" aria-controls="flush-collapseOne">
+												خرید محصول ( قسطی )
+											</button>
+										</h2>
+										<div id="productInfoAccordionArea-collapseOne"
+											 class="accordion-collapse collapse"
+											 data-bs-parent="#productInfoAccordionArea">
+											<div class="accordion-body px-1 accordion-body-white text-justify">
+												<div style="display: block" id="buy-rule-area" class="buy-rule px-3">
+													<div id="productInfoModal_nstallmentPurchaseOfProduct">
+													</div>
+													<h6 class="text-center">
+														<button id="btn-rules" class="btn btn-primary rounded-pill">
+															<i class="fa-solid fa-check"></i>
+															شرایط را خواندم و قبول دارم
+														</button>
+													</h6>
+												</div>
+												<div style="display: none" id="buy-factor-area" class=" table-responsive">
+													<table class="table factor-table mb-0">
+														<tr>
+															<td colspan="1">
+																<h6 class="small">
+																	مبلغ تمام شده فاکتور شما :
+																</h6>
+															</td>
+															<td class="text-start">
+																<span class="btn-outline-gray-gold px-2 py-1">
+																	<span id="invoiceAmount"></span>
+																	<small>
+																		تومان
+																	</small>
+																</span>
+															</td>
+														</tr>
+
+														<tr>
+															<td colspan="1">
+																<h6 class="small">
+																	مبلغ پیش پرداخت را وارد کنید :
+																</h6>
+																@*     <small class="text-danger error-input">
+																* مبلغ وارد شده کمتر از حد مجاز است .
+																</small>*@
+															</td>
+															<td class="text-start">
+																<span class="btn-outline-gray-gold px-2 py-1">
+																	<input type="text" id="prePayment" onchange="ProductInstallmentsCalculation()" onkeyup="monyFormat(this)" onkeypress="return safeOnlyNumber($(this),event)" class="w-50 number-input">
+																	<small>
+																		تومان
+																	</small>
+																</span>
+															</td>
+														</tr>
+
+														<tr>
+															<td colspan="1">
+																<h6 class="small">
+																	تعداد اقساط را انتخاب کنید :
+																</h6>
+															</td>
+															<td class="text-start">
+																<div dir="ltr"
+																	 class="btn-outline-gray-gold number-input-group input-group-sm d-flex w-100">
+																	<button onclick="ProductInstallmentsCalculation()" class="btn btn-link btn-minus" type="button"
+																			id="button-addon1">
+																		<i class="fa-solid fa-minus-circle"></i>
+																	</button>
+																	<small>ماهه</small>
+																	<input data-min="3"
+																		   readonly
+																		   data-max="12"
+																		   data-len="2"
+																		   type="text"
+																		   value="3"
+																		   class="form-control number-add-minus number"
+																		   id="insatllmentCount"
+																		   aria-label="Amount (to the nearest dollar)">
+																	<button onclick="ProductInstallmentsCalculation()" class="btn btn-link btn-plus btn-plus-primary " type="button"
+																			id="button-addon2">
+																		<i class="fa-solid fa-plus-circle"></i>
+																	</button>
+																</div>
+															</td>
+														</tr>
+
+														<tr>
+															<td colspan="1">
+																<h6 class="small">
+																	مبلغ نهایی هر قسط :
+																</h6>
+															</td>
+															<td class="text-start">
+																<span class="btn-outline-gray-gold px-2 py-1">
+																	<span id="installmentAmount"></span>
+																	<small>
+																		تومان
+																	</small>
+																</span>
+															</td>
+														</tr>
+														<tr>
+															<td colspan="2" class="border-bottom-0">
+																<p class="text-center buy-contact-info mb-0">
+																	جهت خرید محصول تماس بگیرید
+																	<br>
+																	<button data-bs-toggle="modal"
+																			data-bs-target="#contactInfo"
+																			class="btn btn-outline-gray-gold rounded-pill mt-2">
+																		اطلاعات تماس
+																		<i class="fa-regular fa-phone-volume"></i>
+																	</button>
+																</p>
+															</td>
+														</tr>
+
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="accordion-item">
+										<h2 class="accordion-header">
+											<button class="accordion-button collapsed" type="button"
+													data-bs-toggle="collapse"
+													data-bs-target="#productInfoAccordionArea-collapseTwo"
+													aria-expanded="false" aria-controls="flush-collapseTwo">
+												خرید محصول ( نقدی )
+											</button>
+										</h2>
+										<div id="productInfoAccordionArea-collapseTwo"
+											 class="accordion-collapse collapse"
+											 data-bs-parent="#productInfoAccordionArea">
+											<div class="accordion-body accordion-body-white">
+												<h6 class="fw-normal" id="productInfoModal_GalleryTitleDesc">
+												</h6>
+												<hr>
+												<div id="productInfoModal_GalleryDescription">
+												</div>
+												@*<h6>آدرس :</h6>
+												<p>
+												شیراز - لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
+												</p>*@
+												<hr>
+												<div class="buy-contact-info">
+													<p class="text-center buy-contact-info mb-0">
+														جهت خرید محصول تماس بگیرید
+														<br>
+														<button data-bs-toggle="modal"
+																data-bs-target="#contactInfo"
+																class="btn btn-outline-gray-gold rounded-pill mt-2">
+															اطلاعات تماس
+															<i class="fa-regular fa-phone-volume"></i>
+														</button>
+													</p>
+												</div>
+
+											</div>
+										</div>
+									</div>
+									<div class="accordion-item">
+										<h2 class="accordion-header">
+											<button class="accordion-button collapsed" type="button"
+													data-bs-toggle="collapse"
+													data-bs-target="#productInfoAccordionArea-collapseThree"
+													aria-expanded="false" aria-controls="flush-collapseThree">
+												توضیحات قیمت
+											</button>
+										</h2>
+										<div id="productInfoAccordionArea-collapseThree"
+											 class="accordion-collapse collapse"
+											 data-bs-parent="#productInfoAccordionArea">
+											<div class="accordion-body  table-responsive accordion-body-white text-justify">
+												<table class="table factor-table mb-0">
+													<tr>
+														<td colspan="2">
+															<h6 class="small">
+																قیمت نهایی محصول :
+															</h6>
+														</td>
+														<td class="text-start">
+															<span class="btn-outline-gray-gold px-2 py-1">
+																<span id="productInfoModal_FinalPrice">
+																	25,500,000
+																</span>
+																<small>
+																	تومان
+																</small>
+															</span>
+														</td>
+													</tr>
+
+													<tr>
+														<td colspan="2">
+															<h6 class="small">
+																ارزش طلای محصول :
+															</h6>
+														</td>
+														<td class="text-start">
+															<span class="btn-outline-gray-gold px-2 py-1">
+																<span id="productInfoModal_GoldPrice">
+
+																</span>
+																<small>
+																	تومان
+																</small>
+															</span>
+														</td>
+													</tr>
+													<tr>
+														<td colspan="2">
+															<h6 class="small">
+																ارزش سنگ :
+															</h6>
+														</td>
+														<td class="text-start">
+															<span class="btn-outline-gray-gold px-2 py-1">
+																<span id="productInfoModal_StonePrice">
+
+																</span>
+																<small>
+																	تومان
+																</small>
+															</span>
+														</td>
+													</tr>
+
+													<tr>
+														<td colspan="2">
+															<h6 class="small">
+																اجرت ساخت :
+																<small class="text-gray_middle">
+																	<span id="productInfoModal_Wage">
+																	</span> درصد
+																</small>
+															</h6>
+														</td>
+														<td class="text-start">
+															<span class="btn-outline-gray-gold px-2 py-1">
+																<span id="productInfoModal_WageAmount">
+
+																</span>
+																<small>
+																	تومان
+																</small>
+															</span>
+														</td>
+													</tr>
+
+													<tr>
+														<td colspan="2">
+															<h6 class="small">
+																سود گالری :
+																<small class="text-gray_middle">
+																	<span id="productInfoModal_GalleryProfit">
+
+																	</span> درصد
+																</small>
+															</h6>
+														</td>
+														<td class="text-start">
+															<span class="btn-outline-gray-gold px-2 py-1">
+																<span id="productInfoModal_GalleryProfitAmount"></span>
+																<small>
+																	تومان
+																</small>
+															</span>
+														</td>
+													</tr>
+
+
+													<tr>
+														<td colspan="2">
+															<h6 class="small">
+																مالیات :
+															</h6>
+														</td>
+														<td class="text-start">
+															<span class="btn-outline-gray-gold px-2 py-1">
+																<span id="productInfoModal_TaxAmount"></span>
+																<small>
+																	تومان
+																</small>
+															</span>
+														</td>
+													</tr>
+													<tr>
+														<td colspan="3" class="border-bottom-0">
+															<p class="text-center m-0 pt-2 text-small small fw-bold">
+																محاسبه قیمت بر اساس قیمت قانون حذف مالیات از اصل طلا
+															</p>
+														</td>
+													</tr>
+
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="accordion-item">
+										<h2 class="accordion-header">
+											<button class="accordion-button collapsed" type="button"
+													data-bs-toggle="collapse"
+													data-bs-target="#productInfoAccordionArea-collapseFour"
+													aria-expanded="false" aria-controls="flush-collapseFour">
+												توضیحات محصول
+											</button>
+										</h2>
+										<div id="productInfoAccordionArea-collapseFour"
+											 class="accordion-collapse collapse"
+											 data-bs-parent="#productInfoAccordionArea">
+											<div class="accordion-body accordion-body-white">
+												<div id="productInfoModal_Description">
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-12 order-0 order-lg-1 col-lg-6 product-info-img-area mb-1 mb-lg-0">
+						<div class="row">
+							<div class="col-12 product-image-slider">
+								<div id="product-image-carousel" class="carousel slide mx-auto" data-interval="false">
+									<div class="carousel-inner" id="product-image-carousel-inner">
+									</div>
+								</div>
+								<div class="carousel-indicators" id="product-image-carousel-indicators">
+								</div>
+							</div>
+							<div class="col-7">
+								<h5 class="product-info-title" id="productInfoModal_Title">
+								</h5>
+								<span class="product-info-gallery-title">
+									@Captions.Gallery :
+									<small id="productInfoModal_GalleryTitle">
+									</small>
+								</span>
+							</div>
+							<div class="col-4 me-4 product-info-gallery-title" id="productInfoModal_PricData">
+							</div>
+							<hr class="my-3">
+							<div class="col-6">
+								@Captions.Weight :
+								<span>
+									<span id="productInfoModal_Weight"></span>
+									<small>
+										@Captions.Gram
+									</small>
+								</span>
+							</div>
+							<div class="col-6 text-start">
+								@Captions.Wage :
+								<span>
+									<span id="productInfoModal_PWage"></span>
+									<small>
+										@Captions.Percentage
+									</small>
+								</span>
+							</div>
+						</div>
+					</div>
+					<hr class="mt-3 mb-0 d-lg-none">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bg-dark" id="product-single-image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-interval="false">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-c-dialog-centered">
+	@*<div class="modal-dialog modal-xl modal-c-dialog-centered mx-auto">*@
+		<div dir="rtl" class="modal-content">
+			<div class="modal-header d-flex">
+				<button type="button" class="btn-close p-0 me-auto ms-0" data-bs-dismiss="modal" aria-label="Close">
+					<i class="fa-solid align-top fa-close"></i>
+				</button>
+			</div>
+			<div class="modal-body p-0" id="product-single-image-modal-body">
+				<div class="row">
+                    <div class="col-12 product-single-image-slider">
+                        <div id="product-single-image-carousel" class="carousel slide px-2 mx-auto" data-interval="false">
+                            <div class="carousel-inner" id="product-single-image-carousel-inner">
+							</div>
+						</div>
+                        <div class="carousel-indicators" id="product-single-image-carousel-indicators">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@*<div class="col-12 product-slider">
+	<div id="product-carousel" class="carousel slide mx-auto" data-interval="false">
+		<div class="carousel-inner" id="product-carousel-inner">
+			<div class="carousel-item active">
+			<img src="~/Product/Image/ca436603-9008-460e-b0d7-d5b6a1300606.jpg" class="d-block w-100 img-fluid" alt="">
+			</div>
+			<div class="carousel-item">
+			<img src="~/Product/Image/20e97571-b5a5-41b3-be2a-84c19736c6a3.jpeg" class="d-block w-100 img-fluid" alt="">
+			</div>
+			<div class="carousel-item">
+			<img src="~/Product/Image/0fa71133-6521-43fd-8f76-4127c4448a44.jpeg" class="d-block w-100 img-fluid" alt="">
+			</div>
+			<div class="carousel-item">
+			<img src="~/Product/Image/ca436603-9008-460e-b0d7-d5b6a1300606.jpg" class="d-block w-100 img-fluid" alt="">
+			</div>
+			<div class="carousel-item">
+			<img src="~/Product/Image/20e97571-b5a5-41b3-be2a-84c19736c6a3.jpeg" class="d-block w-100 img-fluid" alt="">
+			</div>
+			<div class="carousel-item">
+			<img src="~/Product/Image/0fa71133-6521-43fd-8f76-4127c4448a44.jpeg" class="d-block w-100 img-fluid" alt="">
+			</div>
+			<div class="carousel-item">
+			<img src="~/Product/Image/ca436603-9008-460e-b0d7-d5b6a1300606.jpg" class="d-block w-100 img-fluid" alt="">
+			</div>
+			<div class="carousel-item">
+			<img src="~/Product/Image/20e97571-b5a5-41b3-be2a-84c19736c6a3.jpeg" class="d-block w-100 img-fluid" alt="">
+			</div>
+		</div>
+	</div>
+	<div class="carousel-indicators" id="product-carousel-indicators">
+		<button class="carousel-control-next" type="button" data-bs-target="#product-carousel" onclick="slidersNavItemArrow(0,true);"
+		data-bs-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true">
+		</span>
+		<span class="visually-hidden">Next</span>
+		</button>
+		<button type="button" data-bs-target="#product-carousel" onclick="slidersNavItem(0);" data-bs-slide-to="0" aria-label="Slide 1"></button>
+		<button type="button" data-bs-target="#product-carousel" onclick="slidersNavItem(1);" data-bs-slide-to="1" aria-label="Slide 2"></button>
+		<button type="button" data-bs-target="#product-carousel" onclick="slidersNavItem(2);" data-bs-slide-to="2" aria-label="Slide 3"></button>
+		<button type="button" data-bs-target="#product-carousel" onclick="slidersNavItem(3);" data-bs-slide-to="3" aria-label="Slide 4"></button>
+		<button type="button" data-bs-target="#product-carousel" onclick="slidersNavItem(4);" data-bs-slide-to="4" aria-label="Slide 5"></button>
+		<button type="button" data-bs-target="#product-carousel" onclick="slidersNavItem(5);" data-bs-slide-to="5" aria-label="Slide 6"></button>
+		<button type="button" data-bs-target="#product-carousel" onclick="slidersNavItem(6);" data-bs-slide-to="6" aria-label="Slide 7"></button>
+		<button type="button" data-bs-target="#product-carousel" onclick="slidersNavItem(7);" data-bs-slide-to="7" aria-label="Slide 8"></button>
+		<button class="carousel-control-prev" type="button" data-bs-target="#product-carousel" onclick="slidersNavItemArrow(0,false);"
+		data-bs-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true">
+		</span>
+		<span class="visually-hidden">Previous</span>
+		</button>
+	</div>
+	<ul id="slide-items">
+	<li><img src='https://www.markazi.co/Images/Slides/HPLaserMFP_135_A_W_2.jpg' /></li>
+	<li style="background: #aaa;"><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/SMPTE_Color_Bars.svg/200px-SMPTE_Color_Bars.svg.png' /></li>
+	<li><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Test-Logo.svg/1200px-Test-Logo.svg.png' /></li>
+	<li style="background: #aaa;"><img src='https://www.markazi.co/Images/Ads/GIGABYTE_GeForce_RTX_4070_Ti_1200_480.gif' /></li>
+	<li style="background: transparent;">
+	<video controls>
+	<source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+	<source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
+	</video>
+	</li>
+	</ul>
+
+	<div class="col-12">
+	<a  class="control_next float-left">></a>
+	<br />
+	<a  class="control_prev float-right"><</a>
+	<a class="control_prev">
+	<span class="carousel-control-prev-icon"></span>
+	</a>
+	<a class="control_next">
+	<span class="carousel-control-next-icon"></span>
+	</a>
+	</div>
+</div>*@

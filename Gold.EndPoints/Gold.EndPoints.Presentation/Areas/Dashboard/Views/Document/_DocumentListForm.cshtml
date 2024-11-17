@@ -1,0 +1,148 @@
+﻿@using Gold.ApplicationService.Contract.Abstractions;
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels.DocumentViewModels;
+@using Gold.ApplicationService.Contract.Interfaces;
+@using Gold.SharedKernel.Tools;
+@inject ICustomerService _customerService
+@inject IGalleryService _galleryService
+@model SearchDocumentViewModel
+
+@{
+    var docStatusList = _customerService.GetDocumentStatusSelectListItems(1);
+    var collateralsTypesList = await _customerService.GetCollateralsTypeSelectListItemsAsync();
+
+    List<byte> dayList = new List<byte>();
+    for (byte i = 1; i <= 29; i++)
+        dayList.Add(i);
+
+    var documentDayList = dayList.Select(x => new SelectListItem
+            {
+                Text = x.ToString(),
+                Value = x.ToString()
+            }).ToList();
+    string currentPersianDate = DateTimeTools.GeorgianToPersian(DateTime.Now, ShowMode.OnlyDate);
+
+    var galleryList = await _galleryService.GetAllGalleriesAsync();
+    Layout = null;
+}
+
+
+<form id="form_DocumentReport">
+    <div class="panel-body">
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="DocumentNumber"></label>
+                <div class="input-group">
+                    <input asp-for="DocumentNumber" type="tel" onkeypress="return safeOnlyNumber($(this),event)" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="DocumentNumber" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Name"></label>
+                <div class="input-group">
+                    <input asp-for="Name" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="DocumentStatus"></label>
+                <select asp-for="DocumentStatus" asp-items="@docStatusList" class="form-control Select2">
+                    <option selected value="0">@Captions.All</option>
+                </select>
+                <span asp-validation-for="DocumentStatus" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="DocumentDay"></label>
+                <select asp-for="DocumentDay" asp-items="documentDayList" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="DocumentDay" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="DocumentDate"></label>
+                <div class="input-group">
+                    <input asp-for="DocumentDate" type="text" onchange="DocumentDateValidate(this)" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="DocumentDate" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="InstallmentDate"></label>
+                <div class="input-group">
+                    <input asp-for="InstallmentDate" type="text" onchange="DocumentDateValidate(this)" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="InstallmentDate" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="NotPayedInstallmentFromDate"></label>
+                <div class="input-group">
+                    <input asp-for="NotPayedInstallmentFromDate" type="text" onchange="DocumentDateValidate(this)" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="NotPayedInstallmentFromDate" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="NotPayedInstallmentToDate"></label>
+                <div class="input-group">
+                    <input asp-for="NotPayedInstallmentToDate" type="text" onchange="DocumentDateValidate(this)" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="NotPayedInstallmentToDate" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="GalleryId"></label>
+                <select asp-for="GalleryId" asp-items="galleryList.Data" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="GalleryId" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="CollateralTypeId"></label>
+                <select asp-for="CollateralTypeId" asp-items="collateralsTypesList.Data" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="CollateralTypeId" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="CollateralDescription"></label>
+                <div class="input-group">
+                    <input asp-for="CollateralDescription" type="text" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="CollateralDescription" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="SettleDate"></label>
+                <div class="input-group">
+                    <input asp-for="SettleDate" type="text" onchange="DocumentDateValidate(this)" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="SettleDate" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="OverdueInstallmentsCount"></label>
+                <div class="input-group">
+                    <input asp-for="OverdueInstallmentsCount" type="tel" onkeypress="return safeOnlyNumber($(this),event)" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="OverdueInstallmentsCount" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer text-right">
+        <button type="button" onclick="refreshGrid(gridName)" class="btn btn-info btn-labeled"><span>@Captions.Search</span> <b><i class="fa fa-search"></i></b></button>
+    </div>
+</form>
+
+@section Stylesheet{
+    <link href="~/lib/persiandatetimepicker/persiandatepicker.min.css" rel="stylesheet" />
+}
+@section Scripts{
+
+    <script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+    <script src="~/lib/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="~/lib/persiandatetimepicker/persiandatepicker.min.js"></script>
+    <script src="~/scripts/dashboard/document.js" asp-append-version="true"></script>
+ }

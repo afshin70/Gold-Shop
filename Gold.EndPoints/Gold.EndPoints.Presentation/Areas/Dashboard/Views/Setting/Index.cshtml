@@ -1,0 +1,101 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.SettingsViewModels;
+@{
+    ViewData["Title"] = Captions.Setting;
+
+    ViewBag.SelectedMenu = (byte)ManagerPermission.Setting;
+}
+
+<div class="tabbable-custom">
+    <ul class="nav nav-tabs">
+        <li class="active" onclick="loadData('/Dashboard/Setting/LoanSettings','loanSettings')">
+            <a href="#tab_1_1" data-toggle="tab"> @Captions.LoanSettings</a>
+        </li>
+        <li onclick="loadData('/Dashboard/Setting/CreateOrEditDefaultMessage','form_smsContentSetting')">
+            <a href="#tab_1_2" data-toggle="tab"> @Captions.DefaultTextOfMssages</a>
+        </li>
+        <li  onclick="loadData('/Dashboard/Setting/ScriptSettings','scriptSettings')">
+            <a href="#tab_1_3" data-toggle="tab"> @Captions.Scripts </a>
+        </li>
+        @*<li onclick="loadData('/Dashboard/Setting/CreateOrEditSocialNetwork','form_socialNetwork')">*@
+        @*<li>
+            <a href="#tab_1_4" data-toggle="tab"> @Captions.SocialNetworks </a>
+        </li>*@
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade active in" id="tab_1_1">
+
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span> @Captions.LoanSettings</span>
+                    </h6>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="loanSettings">
+                    @*@Url.Action("LoanSettings","Setting")*@
+                </div>
+            </div>
+
+        </div>
+        <div class="tab-pane fade" id="tab_1_2">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span> @Captions.DefaultTextOfMssages</span>
+                    </h6>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="form_smsContentSetting">
+                    @*@Url.Action("LoanSettings","Setting")*@
+                </div>
+            </div>
+
+        </div>
+        <div class="tab-pane fade" id="tab_1_3">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">
+                        <span> @Captions.Scripts</span>
+                    </h6>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="scriptSettings">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix margin-bottom-20"> </div>
+@section HeaderScripts{
+    <script>
+        var gridName = "grid_SocialNetwork";
+    </script>
+    }
+@section scripts{
+    <script src="~/lib/jquery-mask-plugin/src/jquery.mask.js"></script>
+    <script src="~/Scripts/TimeTools.min.js"></script>
+    <script src="~/Scripts/Dashboard/settings.js" asp-append-version="true"></script>
+    <script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select').select2();
+            loadData('/Dashboard/Setting/LoanSettings', 'loanSettings');
+        });
+    </script>
+
+   
+}

@@ -1,0 +1,56 @@
+﻿@model SearchCustomerByPhoneNumberViewModel
+@{
+    Layout = null;
+}
+@*<script>
+    var customersByPhoneNumberGridName = "grid_customersByPhoneNumberGrid";
+    var customersBankCardNumberGridName = "grid_customersByBankCardNumberGrid";
+</script>*@
+
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <span> @Captions.Search</span>
+        </h6>
+        <div class="heading-elements">
+            <ul class="icons-list">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="section row">
+            <div class="margin-top-20">
+                <label class="col-xs-2 col-sm-3 col-md-1 form-group">@Captions.Search </label>
+                <div class="col-xs-10 col-sm-6 col-md-2 form-group">
+                    <label class="radio-inline radio-left">
+                        <input type="radio" asp-for="SearchType" value="@CustomerSearchType.ByPhoneNumber" checked class="styled" onclick="changeSearchType('@CustomerSearchType.ByPhoneNumber')" />
+                        @Captions.PhoneNumber
+                    </label>
+                    <label class="radio-inline radio-left">
+                        <input type="radio" asp-for="SearchType" value="@CustomerSearchType.ByBankCardNumber" class="styled" onclick="changeSearchType('@CustomerSearchType.ByBankCardNumber')" />
+                        @Captions.BankCardNumber
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="section row">
+            <label asp-for="PhoneNumber" class="col-xs-12 col-sm-3 col-md-1 form-group star"></label>
+            <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+                <div class="input-group">
+                    <input asp-for="PhoneNumber" type="tel" onkeypress="return safeOnlyNumber($(this),event)" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-2">
+                <button type="button" onclick="loadDataInPhoneNumberGrid()" class="btn btn-info btn-labeled"><span>@Captions.Search</span> <b><i class="fa fa-search"></i></b></button>
+
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer  text-right">
+    </div>
+</div>
+
+

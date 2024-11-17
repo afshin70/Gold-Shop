@@ -1,0 +1,67 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.DocumentModels;
+@model List<InstallmentModel>
+@{
+    Layout = null;
+}
+
+<table class="sanad-detail">
+    <thead>
+        <tr>
+            <td class="td-5">#</td>
+            <td class="td-10">@Captions.InstallmentsDate</td>
+            <td class="td-10">@Captions.PaymentDate</td>
+            <td class="td-10">@Captions.Delay (@Captions.Day)</td>
+            <td class="td-10">@Captions.PaidAmount</td>
+            <td class="td-10">@Captions.IsPaid</td>
+            <td class="td-25">@Captions.Description</td>
+            <td class="td-20">@Captions.Operation</td>
+        </tr>
+    </thead>
+    @if (Model != null)
+    {
+        <tbody id="installment_list">
+            @{
+                int rowNumber = 1;
+            }
+            @foreach (var installment in Model)
+            {
+                <tr>
+                    <td>@rowNumber</td>
+                    <td>@installment.Date.TryGeorgianToPersian(ShowMode.OnlyDate)</td>
+                    <td>@(installment.PaymentDate is null ? "" : installment.PaymentDate.Value.TryGeorgianToPersian(ShowMode.OnlyDate))</td>
+                    <td>@installment.DelayDays</td>
+                    <td>
+                        @installment.PaymentAmount.FormatMoney()
+                    </td>
+                    <td class="text-center">
+                        @if (installment.IsPaid)
+                        {
+                            <span title="@Captions.IsPaid" class="fa fa-check text-success fa-2x"></span>
+                        }
+                       @* else
+                        {
+                            <span title="@Captions.NotPaid" class="fa fa-exclamation text-danger fa-2x"></span>
+                        }*@
+                    </td>
+                    <td>@installment.Description</td>
+                    <td>
+
+                        <button onclick="loadDataInModal('/Dashboard/Document/PaymentDetail?installmentId=@installment.Id','installmentDetailModal')" title="@Captions.PaymentDetail" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></button>
+                        @if (installment.DocumentStatus==DocumentStatus.Active)
+                        {
+                            if (installment.IsPaid)
+                        {
+                                <button onclick="unPaymentInstallment(`/Dashboard/Document/UnPaymentInstallment?installmentId=@installment.Id&documentId=${documentId}`, '@UserMessages.AreYouSure')" title="@Captions.Cancellation" class="btn btn-sm btn-warning">@Captions.Cancellation</button>
+                        }
+                        else
+                        {
+                            <button onclick="loadDataInModal('/Dashboard/Document/CreateOrEditPayment?installmentId=@installment.Id&paymentId=0','createOrEditPayment')" title="@Captions.Payment" class="btn btn-sm btn-success">@Captions.Payment</button>
+                        }
+                        }
+                    </td>
+                </tr>
+                rowNumber++;
+            }
+        </tbody>
+    }
+</table>

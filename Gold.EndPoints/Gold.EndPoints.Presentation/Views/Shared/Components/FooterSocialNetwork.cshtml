@@ -1,0 +1,10 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.SettingsModels;
+@model List<SocialNetworkModel>
+@if(Model is not null){
+    foreach (var item in Model)
+    {
+		<a href="@item.Url" target="_blank">
+			<img style="max-width: 50px" src="@item.Image" loading="lazy" title="@item.Title">
+		</a>
+	}
+}

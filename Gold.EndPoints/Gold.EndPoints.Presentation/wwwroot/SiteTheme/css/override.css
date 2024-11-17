@@ -1,0 +1,205 @@
+﻿
+.text-left {
+    text-align: left !important;
+    direction: ltr
+}
+
+.video {
+    width: 100%;
+    border-radius: 10px;
+    object-position: center center;
+    border: solid 1px #cc9d5a;
+    background: #000;
+}
+
+.hand {
+    cursor: pointer;
+}
+
+.filter-area .accordion-body-white ul {
+    max-height: 300px;
+}
+
+}
+
+@media only screen and (min-width : 480px) {
+    .mobile-frame {
+        padding: 0px;
+        border: none;
+        border-radius: 12px;
+    }
+}
+
+@media only screen and (max-width : 991px) {
+    .mobile-p-0 {
+        padding: 0 !important;
+    }
+}
+
+.g-border {
+    padding: 10px 10px;
+    border: solid 1px #cc9d5a;
+    border-radius: 12px;
+}
+
+.product-info-detail-area .accordion-body-white {
+    max-height: 333px;
+}
+
+.img-article {
+    object-fit: contain;
+    max-width: 200px;
+    max-height: 112px;
+}
+
+.margin-auto {
+    margin: auto;
+}
+
+.product-image-slider {
+    /*.product-slider-single-image {*/
+    position: relative;
+    height: 396px;
+}
+
+#product-image-carousel {
+    /*#product-carousel-single-image {*/
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 346px;
+    height: 346px;
+    overflow: hidden;
+}
+
+.product-image-slider-item > img {
+    max-width: 346px;
+    max-height: 346px;
+    -o-object-fit: contain;
+    object-fit: contain;
+}
+
+#product-image-carousel-indicators > button:not(:first-child):not(:last-child),
+#product-single-image-carousel-indicators > button:not(:first-child):not(:last-child) {
+    width: 8px !important;
+    height: 8px !important;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    background-color: #cc9d5a;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+    position: static;
+    background-color: transparent !important;
+    width: auto !important;
+    color: #cc9d5a !important;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+    margin-top: 5px;
+    width: 1rem;
+}
+
+.carousel-control-next-icon {
+    background-image: url('../image/right-arrow.svg')
+}
+
+.carousel-control-prev-icon {
+    background-image: url('../image/left-arrow.svg')
+}
+
+    .carousel-control-next-icon > span,
+    .carousel-control-prev-icon > span {
+        color: #cc9d5a;
+    }
+
+.modal-c-dialog-centered {
+    -webkit-align-items: center !important;
+    align-items: center !important;
+    display: flex;
+    align-items: center;
+}
+
+@media only screen and (max-width: 576px) {
+    .product-image-slider {
+        height: 200px;
+    }
+
+    #product-image-carousel {
+        width: 150px;
+    }
+
+    .product-single-image-slider {
+        position: relative;
+        height: 396px;
+    }
+
+    #product-single-image-carousel {
+        -o-object-fit: cover;
+        object-fit: cover;
+        width: 346px;
+        height: 346px;
+        overflow: hidden;
+    }
+
+    /*#product-single-image-carousel-inner {
+        width: 346px !important;
+        height: 346px !important;
+    }
+
+    .product-single-image-slider-item {
+        width: 336px !important;
+        height: 336px !important;
+    }*/
+
+    .product-single-image-slider-item > img {
+        max-width: 346px;
+        max-height: 346px;
+        -o-object-fit: contain;
+        object-fit: contain;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .modal-c-dialog-centered {
+        -webkit-align-items: center !important;
+        align-items: center !important;
+    }
+
+        .modal-c-dialog-centered .modal-content {
+            border: none;
+        }
+}
+
+@media only screen and (min-width: 993px) {
+    .modal-c-dialog-centered {
+        width: 537px;
+    }
+
+    .product-single-image-slider {
+        position: relative;
+        height: 569px !important;
+    }
+
+    #product-single-image-carousel {
+        /*#product-carousel-single-image {*/
+        -o-object-fit: cover;
+        object-fit: cover;
+        width: 519px;
+        height: 519px;
+        overflow: hidden;
+    }
+
+    .product-single-image-slider-item > img {
+        max-width: 519px;
+        max-height: 519px;
+        -o-object-fit: contain;
+        object-fit: contain;
+    }
+}
+
+.pr-0 {
+    padding-right: 0;
+}

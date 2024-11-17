@@ -1,0 +1,38 @@
+﻿@model CardNumberViewModel
+@{
+    Layout = null;
+}
+<div id="form_bankCardsNo_section">
+    <form id="form_bankCardsNo" action="/Dashboard/Document/AddOrEditBankCardNumber" method="post" onsubmit="submitFormAndShowModal3(this, 'editCustomerInfo','form_createOrEditCustomerBankCardsNo')">
+        <input type="hidden" asp-for="CardNumberId" />
+        <input type="hidden" asp-for="CustomerId" />
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="CardNumber" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="CardNumber" type="text" class="form-control number" onkeypress="return maskInput('0000-0000-0000-0000')" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                </div>
+                <span asp-validation-for="CardNumber" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Owner" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="Owner" type="text" class="form-control"  autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                </div>
+                <span asp-validation-for="Owner" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group text-right">
+                <br />
+                <button type="submit" class="btn btn-success btn-labeled"><span>@(Model.CardNumberId > 0 ? Captions.Edit : Captions.Add)</span> <b><i class="fa fa-check-circle"></i></b></button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="table_CardNumbers">
+    @if (Model.CardNumbers.Any())
+    {
+        <partial name="_BankCardNumberList" model="Model.CardNumbers" />
+    }
+</div>

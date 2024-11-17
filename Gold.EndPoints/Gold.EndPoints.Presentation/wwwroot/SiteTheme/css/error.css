@@ -1,0 +1,99 @@
+﻿@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: bold;
+    src: url('../fonts/eot/iransansweb(fanum).eot') format('embedded-opentype');
+    src: url('../fonts/eot/IRANSansWeb(fanum)_Bold.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../fonts/woff2/IRANSansWeb(fanum)_Bold.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../fonts/woff/IRANSansWeb(fanum)_Bold.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../fonts/ttf/IRANSansWeb(fanum)_Bold.ttf') format('truetype');
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+#notfound {
+    position: relative;
+    height: 100vh;
+    background-color: #101010;
+}
+
+    #notfound .notfound {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+.notfound {
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    line-height: 1.4;
+}
+
+    .notfound .notfound-404 {
+        height: 158px;
+        line-height: 153px;
+    }
+
+        .notfound .notfound-404 h1 {
+            font-family: IRANSans;
+            color: #222;
+            font-size: 220px;
+            letter-spacing: 10px;
+            margin: 0px;
+            font-weight: 700;
+            text-shadow: 2px 2px 0px #fff, -2px -2px 0px #fff;
+        }
+
+            .notfound .notfound-404 h1 > span {
+                text-shadow: 2px 2px 0px #CC9D5A, -2px -2px 0px #CC9D5A, 0px 0px 8px #ff8700;
+            }
+
+    .notfound p {
+        font-family: IRANSans;
+        color: #fff;
+        font-size: 25px;
+        font-weight: 400;
+        margin-top: 15px;
+        margin-bottom: 25px;
+    }
+
+    .notfound a {
+        font-family: IRANSans;
+        font-size: 14px;
+        text-decoration: none;
+        text-transform: uppercase;
+        background: transparent;
+        color: #CC9D5A;
+        border: 2px solid #CC9D5A;
+        display: inline-block;
+        padding: 10px 25px;
+        font-weight: 700;
+        -webkit-transition: 0.2s all;
+        transition: 0.2s all;
+        border-radius: 10px;
+    }
+
+        .notfound a:hover {
+            color: #d4ac73;
+            border-color: #d4ac73;
+        }
+
+@media only screen and (max-width: 480px) {
+    .notfound .notfound-404 {
+        height: 122px;
+        line-height: 122px;
+    }
+
+        .notfound .notfound-404 h1 {
+            font-size: 122px;
+        }
+}

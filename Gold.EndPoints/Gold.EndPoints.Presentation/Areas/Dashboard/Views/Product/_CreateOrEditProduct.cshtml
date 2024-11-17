@@ -1,0 +1,119 @@
+﻿@using Gold.ApplicationService.Contract.Abstractions;
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.ProductViewModels;
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.SettingsViewModels;
+@using Gold.Domain.Enums;
+@using Gold.SharedKernel.DTO.OperationResult;
+@inject IGalleryService _galleryService
+@inject ISettingService _settingService
+@inject IProductManagementService _productManagement
+@model CreateOrEditProductViewModel
+@{
+    Layout = null;
+
+    var galleryList = await _galleryService.GetAllGalleriesAsync(0, default);
+    var categoris = await _productManagement.GetAllCategoriesAsync(0, default);
+    var productStatusList = EnumHelper<ProductStatus>.GetAsList().Select(item => new SelectListItem
+            {
+                Selected = false,
+                Text = item.GetDisplayName(),
+                Value = (item).ToString()
+            }).ToList();
+
+    var userTye = User.GetUserType();
+
+
+    if (!Model.ProductId.HasValue)
+    {
+        var loanSettings = await _settingService.GetSettingAsync<LoanSettingsViewModel>(SettingType.LoanSetting, default);
+        if (loanSettings.IsSuccess)
+            Model.GalleryProfit = string.IsNullOrEmpty(loanSettings.Data.MaxProfitGallery) ? "0" : loanSettings.Data.MaxProfitGallery;
+        Model.Karat = 18;
+    }
+}
+<form id="CreateOrEditProductForm" action="/Dashboard/Product/CreateOrEditProduct" onsubmit="submitByRefreshGrid(this, productGridName,resetProductForm)" method="post">
+    <div class="panel-body">
+        <input asp-for="ProductId" type="hidden" />
+        <div class="section row">
+            <div class="col-xs-12 col-sm-4 form-group">
+                <label asp-for="ProductTitle" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="ProductTitle" type="text" class="form-control ">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 form-group">
+                <label asp-for="Weight" class="star">@($"{Captions.Weight}({Captions.Gram})")</label>
+                <div class="input-group">
+                    <input asp-for="Weight" oninput="validateFloatNumberInput(event)" class="form-control ">
+                    <span class="input-group-addon"><i class="fa fa-weight"></i></span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 form-group">
+                <label asp-for="Karat" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="Karat" type="text" oninput="validateGoldKaratInput(event)" class="form-control ">
+                    <span class="input-group-addon"><i class="fa fa-calculator"></i></span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 form-group">
+                <label asp-for="Wage" class="star">@($"{Captions.Wage}({Captions.Percentage})")</label>
+                <div class="input-group">
+                    <input asp-for="Wage" type="text" oninput="validateFloatNumberInput(event)" class="form-control "maxlength="6">
+                    <span class="input-group-addon"><i class="fa fa-percentage"></i></span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 form-group">
+                <label asp-for="GalleryProfit" class="star">@($"{Captions.GalleryProfit}({Captions.Percentage})")</label>
+                <div class="input-group">
+                    <input asp-for="GalleryProfit" type="text" oninput="validateFloatNumberInput(event)" class="form-control ">
+                    <span class="input-group-addon"><i class="fa fa-percentage"></i></span>
+                </div>
+            </div>
+          
+            @if (userTye != null)
+            {
+                if (userTye != UserType.Seller)
+                {
+                    <div class="col-xs-12 col-sm-4 form-group">
+                        <label asp-for="GalleryId" class="star"></label>
+                        <select asp-for="GalleryId" asp-items="galleryList.Data" class="form-control Select2">
+                            <option selected value="">@Captions.SelectIt</option>
+                        </select>
+                    </div>
+                }
+            }
+           
+            <div class="col-xs-12 col-sm-4 form-group">
+                <label asp-for="CategoryIds" class=""></label>
+                <select asp-for="CategoryIds" asp-items="categoris.Data" multiple class="form-control Select2">
+                </select>
+            </div>
+            <div class="col-xs-12 col-sm-4 form-group">
+                <label asp-for="StonPrice" class="star">@($"{Captions.StoneValue}({Captions.Tooman})")</label>
+                <div class="input-group">
+                    <input asp-for="StonPrice" type="text" onkeyup="monyFormat(this)" onkeypress="return safeOnlyNumber($(this),event)" autocomplete="off" class="form-control ">
+                    <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 form-group">
+                <label asp-for="Status" class="star"></label>
+                <select asp-for="Status" asp-items="productStatusList" class="form-control Select2">
+                </select>
+            </div>
+           
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-8 form-group">
+                <label asp-for="Description" class=""></label>
+                <div class="input-group">
+                    <input asp-for="Description" type="hidden">
+                    <textarea id="DescriptionEditor" name="DescriptionEditor"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer text-right">
+        <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+        <button type="button" onclick="resetProductForm()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+    </div>
+</form>

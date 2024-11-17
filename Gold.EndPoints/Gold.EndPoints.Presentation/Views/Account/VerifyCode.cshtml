@@ -1,0 +1,77 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.AuthenticationViewModels;
+@using Gold.Resources;
+@model VerifyResetPasswordCodeViewModel
+@{
+    ViewData["Title"] = Captions.ResetPassword;
+    ViewData["IsShowBackgroundImage"] = true;
+}
+<div class="container">
+    <div id="loginArea"  class="row justify-content-center">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-6">
+            <div class="card shadow  overflow-hidden">
+				<div class="card-body">
+					<form action="/VerifyCode" id="verifyCode" method="post" class="dir-rtl p-1">
+                    <div class="title-section mx-2 text-center">
+                        <h5 class="fw-bold">
+                            @Captions.VerifyCode
+                        </h5>
+                        <p class="fw-light small dir-rtl">
+                            @UserMessages.PleaseEnterConfirmationCodeSentToYourMobile
+                        </p>
+                    </div>
+                    
+                        <input type="hidden" asp-for="UserName" />
+                        <input type="hidden" asp-for="Mobile" />
+                        <input type="hidden" asp-for="Token" />
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-12 text-center text-white mb-2">
+                                @Captions.UserName : @Model.UserName
+                                <span asp-validation-for="UserName" class="text-danger fs-12"></span>
+                            </div>
+                            <div class="col-12 mb-3 ">
+                                <div id="otp" class="row justify-content-center dir-ltr">
+                                    <input name="VerifyCodeNumber[0]" type="tel" maxlength="1" class="form-control text-center px-0 rounded" autocomplete="off" onkeypress="return safeOnlyNumber($(this),event)" autofocus>
+                                    <input name="VerifyCodeNumber[1]" type="tel" maxlength="1" class="form-control text-center px-0 rounded" autocomplete="off" onkeypress="return safeOnlyNumber($(this),event)">
+                                    <input name="VerifyCodeNumber[2]" type="tel" maxlength="1" class="form-control text-center px-0 rounded" autocomplete="off" onkeypress="return safeOnlyNumber($(this),event)">
+                                    <input name="VerifyCodeNumber[3]" type="tel" maxlength="1" class="form-control text-center px-0 rounded" autocomplete="off" onkeypress="return safeOnlyNumber($(this),event)">
+                                    <input name="VerifyCodeNumber[4]" type="tel" maxlength="1" class="form-control text-center px-0 rounded" autocomplete="off" onkeypress="return safeOnlyNumber($(this),event)">
+                                    <input name="VerifyCodeNumber[5]" type="tel" maxlength="1" class="form-control text-center px-0 rounded" autocomplete="off" onkeypress="return safeOnlyNumber($(this),event)">
+                                </div>
+                                <div class="text-center">
+                                    <span asp-validation-for="VerifyCode" class="text-danger fs-12"></span>
+								</div>
+                            </div>
+                            <hr>
+                            <div class="col-6 text-center">
+                                <span style="width: 123px;" id="timer" class="text-gray_middle">
+                                    @Model.Timer.Seconds
+                                </span>
+                                <span onclick="resendVerifyCode()" id="try_again" class="btn btn-outline-gray_light" style="display: none;">
+                                    <i class="fa-regular fa-rotate-right align-middle"></i>
+                                    @Captions.ResendVerifyCode
+                                </span>
+                            </div>
+                            <div class="col-6 col-md-6 text-center">
+                                <button type="submit" class="btn btn-primary px-5">@Captions.Ok</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        setTimer('@Model.Timer.Seconds');
+    </script>
+}
+

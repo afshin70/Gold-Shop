@@ -1,0 +1,92 @@
+﻿@using Gold.ApplicationService.Contract.Interfaces;
+@inject ICustomerService _customerService
+
+<div id="footer_user_menu" class="footer-dropdown-menu animate__animated animate__slideInUp" style="display: none;">
+	<div class="close fot_user_menu_action">
+		<i class="fa-regular fa-times text-white"></i>
+	</div>
+	<div class="row pb-5 mx-0">
+
+		@if (User.Identity.IsAuthenticated)
+		{
+
+			<div class="col-12 text-center py-5 footer_menu pb-3">
+				<h5 class="text-white mb-3">
+					<span>@User.GetName()</span>
+				</h5>
+				@*<h5 class="text-white line_title mb-1">
+					<span>
+						<small>
+							@User.GetName()
+						</small>
+
+						<small>
+							<img class="header-profile-img" id="header_profile_img_mobile" src="/Profile/Image" alt="@User.GetName()">
+							<i class="fa-regular  fa-user text-primary bg-secondary profile_placeholder"></i>
+						</small>
+
+					</span>
+				</h5>*@
+			</div>
+			<div class="row mx-0 text-center justify-content-center">
+				@if (User.GetUserType() == UserType.Customer)
+				{
+					@if (_customerService.HaveDocumentAsync(User.GetUserName()).Result.IsSuccess)
+					{
+						<a href="/Document" class="gradient-box">
+							<span class="mb-0">
+								@Captions.List @Captions.Documents
+								<i class="fa-regular fa-coins ms-2"></i>
+							</span>
+						</a>
+					}
+					<a href="/Messages" class="gradient-box position-relative">
+						<span class="mb-0">
+							@Captions.Messages
+							<i class="fa-regular fa-envelope ms-2"></i>
+							@*<span class="position-absolute top-20 left-20 translate-middle p-1 bg-danger rounded-circle">
+								<span class="visually-hidden">New alerts</span>
+							</span>*@
+
+						</span>
+					</a>
+					<a href="/Profile" class="gradient-box">
+						<span class="mb-0">
+							@Captions.Profile
+							<i class="fa-regular fa-user ms-2"></i>
+						</span>
+					</a>
+					<a href="/FavoriteProducts" class="gradient-box">
+						<span class="mb-0">
+							@Captions.Favorites
+							<i class="fa-regular fa-bookmark ms-2"></i>
+						</span>
+					</a>
+					<a href="/ChangePassword" class="gradient-box">
+						<span class="mb-0">
+							@Captions.ChangePassword
+							<i class="fa-regular fa-lock-keyhole ms-2"></i>
+						</span>
+					</a>
+
+
+				}
+				else
+				{
+					<a href="/Dashboard" class="gradient-box">
+						<span class="mb-0">
+							@Captions.UserPanel
+							<i class="fa-regular fa-right-from-bracket ms-2"></i>
+						</span>
+					</a>
+				}
+				<a href="/logout" class="gradient-box">
+					<span class="mb-0">
+						@Captions.SignOut
+						<i class="fa-regular fa-right-from-bracket ms-2"></i>
+					</span>
+				</a>
+			</div>
+		}
+	</div>
+</div>

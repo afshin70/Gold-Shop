@@ -1,0 +1,64 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.SendMessageViewModels;
+@using Gold.ApplicationService.Contract.Abstractions;
+@using Gold.ApplicationService.Contract.Interfaces;
+@using Gold.SharedKernel.Tools;
+@model SendMessageContentViewModel
+@{
+    Layout = null;
+}
+
+
+<form id="" action="/Dashboard/SendMessage/SendToCustomers" onsubmit="SendMessage(this,'@UserMessages.AreYouSure')" method="post">
+    <div class="panel-body">
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-7 form-group">
+                <label asp-for="Title" class="col-xs-12 col-sm-2 col-md-2 star"></label>
+                <div class="input-group">
+                    <input asp-for="Title" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-7 form-group">
+                <label asp-for="MessageContent" class="col-xs-12 col-sm-2 col-md-2 star"></label>
+                <div class="input-group">
+                    <textarea rows="5" class="form-control" asp-for="MessageContent"></textarea>
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="MessageContent" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+    <div class="panel-footer text-right">
+        <button type="submit" class="btn btn-info btn-labeled"><span>@Captions.Send</span> <b><i class="fa fa-comment"></i></b></button>
+    </div>
+</form>
+<script>
+    function GetData() {
+        return {
+            FullName: $("#FullName").val(),
+            GenderType: $("#GenderType").val(),
+            NationalityType: $("#NationalityType").val(),
+            UserStatus: $("#UserStatus").val(),
+            FromRegisterDate: $("#FromRegisterDate").val(),
+            ToRegisterDate: $("#ToRegisterDate").val(),
+            FromBirthDateDay: $("#FromBirthDateDay").val(),
+            ToBirthDateDay: $("#ToBirthDateDay").val(),
+            FromBirthDateMonth: $("#FromBirthDateMonth").val(),
+            ToBirthDateMonth: $("#ToBirthDateMonth").val(),
+            FromBirthDateYear: $("#FromBirthDateYear").val(),
+            ToBirthDateYear: $("#ToBirthDateYear").val(),
+            AccountStatusType: $("#AccountStatusType").val(),
+            DocumentStatus: $("#DocumentStatus").val(),
+            CollateralTypeId: $("#CollateralTypeId").val(),
+            GalleryId: $("#GalleryId").val(),
+            UnpaidInstallmentFromDate: $("#UnpaidInstallmentFromDate").val(),
+            UnpaidInstallmentToDate: $("#UnpaidInstallmentToDate").val(),
+            DocumentFromDate: $("#DocumentFromDate").val(),
+            DocumentToDate: $("#DocumentToDate").val(),
+            FromInstallmentAmount: $("#FromInstallmentAmount").val(),
+            ToInstallmentAmount: $("#ToInstallmentAmount").val(),
+        }
+    }
+</script>

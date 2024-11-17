@@ -1,0 +1,65 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.SiteContent;
+@model List<ContactUsMessageModel>
+@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html lang="fa-IR">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="~/themes/default/css/print.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="main">
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<td class="td-33 pb-15 right">
+					</td>
+					<td class="td-33 pb-15 center">
+						<h3>@Captions.List @Captions.EditInformationRequest</h3>
+						@*<img src="~/Images/logo.png" />*@
+					</td>
+					<td class="td-33 pb-15 left rtl">
+						<h3>@Captions.Date : @DateTime.Now.ToPersianDateString()</h3>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		@if (Model != null && Model.Any())
+		{
+			<table border="0" cellspacing="0" cellpadding="0" class="table-border-print color center">
+				<thead>
+					<tr>
+						<th class="td-5">#</th>
+						<th class="td-8"><b>@Captions.FullName</b></th>
+						<th class="td-8"><b>@Captions.PhoneNumber</b></th>
+						<th class="td-8"><b>@Captions.SendDate</b></th>
+						<th class="td-10"><b>@Captions.Message</b></th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (Model != null)
+					{
+						int row = 1;
+						foreach (var item in Model)
+						{
+							<tr>
+								<td class="td-5">@row</td>
+								<td class="td-8">@item.FullName</td>
+								<td class="td-8">@item.Phone</td>
+								<td class="td-8">@item.SendDatePersian</td>
+								<td class="">@item.Message</td>
+							</tr>
+							row++;
+						}
+					}
+				</tbody>
+			</table>
+		}
+	</div>
+	<div class="clearfix"></div>
+</body>
+</html>

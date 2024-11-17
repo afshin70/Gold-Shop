@@ -1,0 +1,23 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels.CustomerPymentsModel;
+@model InstantSettlementModel
+@{
+    Layout = null;
+    string message = string.Empty;
+    if (Model is not null)
+        if (Model.InstantSettlementAmount > 0)
+            message = string.Format(UserMessages.InstantSettlementMessageForCustomer,DateTime.Now.GeorgianToPersian(ShowMode.OnlyDate), Model.InstantSettlementAmount.ToString("N0"), Model.DocumentId);
+        else if (Model.InstantSettlementAmount < 0)
+            message = UserMessages.CallByAdminForSettleDocument;
+        else
+            message = UserMessages.AllInstallmentsOfLoanHavebeenPaidInFull;
+}
+<div class="container bg-dark rounded dir-rtl">
+    <div class="row">
+        <div class="col-12 alert">
+            <label class="small  text-white">@Html.Raw(message)</label>
+        </div>
+    </div>
+    @*<div class="col-12">
+    <button type="button" data-bs-dismiss="modal" class="btn btn-outline-gray_light">@Captions.Close</button>
+    </div>*@
+</div>

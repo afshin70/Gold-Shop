@@ -1,0 +1,73 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.FAQViewModels;
+@model CreateOrEditFAQViewModel
+@{
+    ViewData["Title"] = Captions.LearningArticle;
+    ViewBag.SelectedMenu = (byte)ManagerPermission.Article;
+}
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <span> @Captions.Article</span>
+        </h6>
+        <div class="heading-elements">
+            <ul class="icons-list ">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="customerForm">
+        <partial name="_CreateOrEditArticle" />
+    </div>
+</div>
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <span>@Captions.List @Captions.Articles</span>
+        </h6>
+        <div class="heading-elements">
+           @* <button type="button" onclick="exportFile('/Dashboard/Document/InitReportData',GetData(),'/Dashboard/Document/ExportExcel')" class="btn  btn-labeled legitRipple"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+            <button type="button" onclick="exportFile('/Dashboard/Document/InitReportData',GetData(),'/Dashboard/Document/ExportPdf')" class="btn  btn-labeled legitRipple"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+           *@ 
+           <ul class="icons-list left-align">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="">
+        <partial name="_ArticleList" />
+    </div>
+</div>
+
+@{
+    ModalModel changeArticleImageOrVideo = new()
+            {
+                IsShowCloseButtonInFooter = false,
+                Id = "changeArticleImageOrVideoModal",
+                IsShowCloseIcon = true,
+                Size = ModalSize.Larg,
+                //Title = $"{Captions.VideoOrImageFile} {Captions.Article}",
+            };
+}
+<partial name="_Modal" model="changeArticleImageOrVideo" />
+@section HeaderScripts{
+    <script>
+        var gridName = "grid_articlesGrid";
+    </script>
+    }
+
+@section Scripts{
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
+    <script src="~/lib/ckeditor/config.js"></script>
+
+    <script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select').select2();
+        });
+    </script>
+    <script src="~/themes/default/js/plugins/forms/styling/switchery.min.js"></script>
+    <script src="~/scripts/dashboard/article.js" asp-append-version="true"></script>
+
+ }

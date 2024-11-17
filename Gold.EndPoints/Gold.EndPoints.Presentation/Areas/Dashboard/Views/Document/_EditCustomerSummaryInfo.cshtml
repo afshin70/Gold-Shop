@@ -1,0 +1,19 @@
+﻿@model EditCustomerSummaryInfoWithEssentialTelAndCardNoViewModel
+@{
+    Layout = null;
+}
+<div class="panel-body">
+    <div id="form_createOrEditCustomerSummaryInfo">
+        <partial name="_CreateOrEditCustomerSummaryInfo" model="Model.EditCustomerSummaryInfo" />
+       
+    </div>
+    <hr/>
+    <div id="form_createOrEditCustomerEssentialTel">
+        <partial name="_CreateOrEditCustomerEssentialTel" model="Model.EssentialTel" />
+    </div>
+
+    <hr />
+    <div id="form_createOrEditCustomerBankCardsNo">
+        <partial name="_CreateOrEditCustomerBankCardsNo" model="Model.CardNumber" />
+    </div>
+</div>

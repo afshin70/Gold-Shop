@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccessLevel_Delete" xml:space="preserve">
+    <value>سطح دسترسی {0} حذف شد</value>
+    <comment>سطح دسترسی</comment>
+  </data>
+  <data name="AccessLevel_Edit" xml:space="preserve">
+    <value>سطح دسترسی {0} ویرایش شد</value>
+    <comment>سطح دسترسی</comment>
+  </data>
+  <data name="AccessLevel_Insert" xml:space="preserve">
+    <value>سطح دسترسی {0} ثبت شد</value>
+    <comment>سطح دسترسی</comment>
+  </data>
+  <data name="Article_Delete" xml:space="preserve">
+    <value>مقاله {0} حذف شد</value>
+  </data>
+  <data name="Article_Edit" xml:space="preserve">
+    <value>مقاله {0} ویرایش شد</value>
+  </data>
+  <data name="Article_Insert" xml:space="preserve">
+    <value>مقاله {0} ثبت شد</value>
+  </data>
+  <data name="Article_StatusChanged" xml:space="preserve">
+    <value>وضعیت مقاله {0} تغییر کرد</value>
+  </data>
+  <data name="ContactUsMessage_Delete" xml:space="preserve">
+    <value>پیام ارسال شده در تاریخ {0} مربوط به {1} حذف شد.</value>
+  </data>
+  <data name="Customer_Delete" xml:space="preserve">
+    <value>اطلاعات {0} حذف شد</value>
+    <comment>مشتریان</comment>
+  </data>
+  <data name="Customer_Delete_CardNumber" xml:space="preserve">
+    <value>شماره کارت {0} مربوط به {1} حذف شد</value>
+  </data>
+  <data name="Customer_Delete_EssentialNumber" xml:space="preserve">
+    <value>شماره ضروری {0} مربوط به {1} حذف شد</value>
+    <comment>مشتریان</comment>
+  </data>
+  <data name="Customer_Delete_ProfileImage" xml:space="preserve">
+    <value>تصویر {0} مربوط به {1} حذف شد</value>
+    <comment>مشتریان</comment>
+  </data>
+  <data name="Customer_Edit" xml:space="preserve">
+    <value>اطلاعات {0} ویرایش شد</value>
+    <comment>مشتریان</comment>
+  </data>
+  <data name="Customer_Edit_CardNumber" xml:space="preserve">
+    <value>شماره کارت {0} مربوط به {1} ویرایش شد</value>
+  </data>
+  <data name="Customer_Edit_EssentialNumber" xml:space="preserve">
+    <value>شماره ضروری {0} مربوط به {1} ویرایش شد</value>
+    <comment>مشتریان</comment>
+  </data>
+  <data name="Customer_Edit_ResetPassword" xml:space="preserve">
+    <value>رمز عبور {0} ریست شد</value>
+    <comment>مشتریان</comment>
+  </data>
+  <data name="Customer_Insert" xml:space="preserve">
+    <value>اطلاعات {0} ثبت شد</value>
+    <comment>مشتریان</comment>
+  </data>
+  <data name="Customer_Insert_CardNumber" xml:space="preserve">
+    <value>شماره کارت {0} برای {1} ثبت شد</value>
+  </data>
+  <data name="Customer_Insert_EssentialNumber" xml:space="preserve">
+    <value>شماره ضروری {0} برای {1} ثبت شد</value>
+    <comment>مشتریان</comment>
+  </data>
+  <data name="DocumentList_Delete" xml:space="preserve">
+    <value>سند {0} مربوط به {1} حذف شد</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="DocumentList_Delete_Collateral" xml:space="preserve">
+    <value>در سند {0} مربوط به {1}، ضمانت {2} حذف شد</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="DocumentList_Delete_PaymentOfInstallment" xml:space="preserve">
+    <value>پرداخت {0} تومان قسط {1} سند {2} مربوط به {3} حذف شد</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="DocumentList_Edit" xml:space="preserve">
+    <value>سند {0} مربوط به {1} به  شماره سند {2} ویرایش شد</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="DocumentList_Edit_ChangeToActive" xml:space="preserve">
+    <value>وضعیت سند {0} مربوط به {1} از تسویه به فعال تغییر یافت</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="DocumentList_Edit_Collateral" xml:space="preserve">
+    <value>در سند {0} مربوط به {1}، ضمانت {2} ویرایش شد</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="DocumentList_Edit_DocumentCleared" xml:space="preserve">
+    <value>سند {0} مربوط به {1} تسویه شد</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="DocumentList_Edit_DocumentDescription" xml:space="preserve">
+    <value>توضیحات سند {0} مربوط به {1} ویرایش شد</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="DocumentList_Edit_InstallmentChangedToPaid" xml:space="preserve">
+    <value>پرداخت {0} تومان قسط {1} سند {2} مربوط به {3} ویرایش شد و قسط به پرداخت شده تغییر یافت</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="DocumentList_Edit_InstallmentChangedToUnpaid" xml:space="preserve">
+    <value>وضعیت قسط {0} سند {1} مربوط به {2} از پرداخت شده به پرداخت نشده تغییر یافت</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="DocumentList_Edit_PaymentOfInstallment" xml:space="preserve">
+    <value>پرداخت {0} تومان قسط {1} سند {2} مربوط به {3} ویرایش شد</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="DocumentList_Insert_Collateral" xml:space="preserve">
+    <value>برای سند {0} مربوط به {1}، ضمانت {2} ثبت شد</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="DocumentList_Insert_InstallmentChangedToPaid" xml:space="preserve">
+    <value>برای قسط {0} سند {1} مربوط به {2}، پرداخت به مبلغ  {3} تومان ثبت شد و قسط به پرداخت شده تغییر یافت</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="DocumentList_Insert_PaymentOfInstallment" xml:space="preserve">
+    <value>برای قسط {0} سند {1} مربوط به {2}، پرداخت به مبلغ  {3} تومان ثبت شد</value>
+    <comment>لیست اسناد</comment>
+  </data>
+  <data name="Document_Delete_BankCardNumber" xml:space="preserve">
+    <value>شماره کارت بانکی {0} مربوط به {1} حذف شد</value>
+    <comment>شماره کارت بانکی</comment>
+  </data>
+  <data name="Document_Delete_EssentialNumber" xml:space="preserve">
+    <value>شماره ضروری {0} مربوط به {1} حذف شد</value>
+    <comment>سند جدید</comment>
+  </data>
+  <data name="Document_Edit_BankCardNumber" xml:space="preserve">
+    <value>شماره کارت بانکی {0} مربوط به {1} ویرایش شد</value>
+    <comment>سند جدید</comment>
+  </data>
+  <data name="Document_Edit_CustomerInfo" xml:space="preserve">
+    <value>اطلاعات {0} ویرایش شد</value>
+    <comment>سند جدید</comment>
+  </data>
+  <data name="Document_Edit_EssentialNumber" xml:space="preserve">
+    <value>شماره ضروری {0} مربوط به {1} ویرایش شد</value>
+    <comment>سند جدید</comment>
+  </data>
+  <data name="Document_Insert" xml:space="preserve">
+    <value>سند {0} برای {1} ثبت شد</value>
+    <comment>سند جدید</comment>
+  </data>
+  <data name="Document_Insert_BankCardNumber" xml:space="preserve">
+    <value>شماره کارت بانکی {0} برای {1} ثبت شد</value>
+    <comment>سند جدید</comment>
+  </data>
+  <data name="Document_Insert_Customer" xml:space="preserve">
+    <value>اطلاعات {0} ثبت شد</value>
+    <comment>سند جدید</comment>
+  </data>
+  <data name="Document_Insert_EssentialNumber" xml:space="preserve">
+    <value>شماره ضروری {0} برای {1} ثبت شد</value>
+    <comment>سند جدید</comment>
+  </data>
+  <data name="FAQCategory_Delete" xml:space="preserve">
+    <value>دسته بندی  {0} حذف شد</value>
+  </data>
+  <data name="FAQCategory_Edit" xml:space="preserve">
+    <value>دسته بندی  {0} ویرایش شد</value>
+  </data>
+  <data name="FAQCategory_Insert" xml:space="preserve">
+    <value>دسته بندی  {0} ثبت شد</value>
+  </data>
+  <data name="FAQ_Delete" xml:space="preserve">
+    <value>سوال  {0} حذف شد</value>
+  </data>
+  <data name="FAQ_Edit" xml:space="preserve">
+    <value>سوال  {0} ویرایش شد</value>
+  </data>
+  <data name="FAQ_Insert" xml:space="preserve">
+    <value>سوال  {0} ثبت شد</value>
+  </data>
+  <data name="Gallery_Delete" xml:space="preserve">
+    <value>گالری {0} حذف شد</value>
+    <comment>گالری</comment>
+  </data>
+  <data name="Gallery_Delete_Seller" xml:space="preserve">
+    <value>فروشنده {0} مربوط به گالری {1} حذف شد</value>
+    <comment>گالری</comment>
+  </data>
+  <data name="Gallery_Edit" xml:space="preserve">
+    <value>گالری {0} ویرایش شد</value>
+    <comment>گالری</comment>
+  </data>
+  <data name="Gallery_Edit_Seller" xml:space="preserve">
+    <value>فروشنده {0} مربوط به گالری {1} ویرایش شد</value>
+    <comment>گالری</comment>
+  </data>
+  <data name="Gallery_Insert" xml:space="preserve">
+    <value>گالری {0} ثبت شد</value>
+    <comment>گالری</comment>
+  </data>
+  <data name="Gallery_Insert_Seller" xml:space="preserve">
+    <value>فروشنده {0} برای گالری {1} ثبت شد</value>
+    <comment>گالری</comment>
+  </data>
+  <data name="Manager_Delete" xml:space="preserve">
+    <value>کاربر {0} حذف شد</value>
+    <comment>مدیران</comment>
+  </data>
+  <data name="Manager_Edit" xml:space="preserve">
+    <value>کاربر {0} ویرایش شد</value>
+    <comment>مدیران</comment>
+  </data>
+  <data name="Manager_Insert" xml:space="preserve">
+    <value>کاربر {0} ثبت شد</value>
+    <comment>مدیران</comment>
+  </data>
+  <data name="PaymentPendingConfirmation_Delete" xml:space="preserve">
+    <value>رسید پرداخت {0} مربوط به سند {1}  حذف شد</value>
+    <comment>پرداخت در انتظار تایید</comment>
+  </data>
+  <data name="PaymentPendingConfirmation_Insert" xml:space="preserve">
+    <value>رسید پرداخت {0} برای قسط {1} سند {2}  با مبلغ {3} تومان تایید شد</value>
+    <comment>پرداخت در انتظار تایید</comment>
+  </data>
+  <data name="PaymentPendingConfirmation_Insert_InstallmentPaymented" xml:space="preserve">
+    <value>رسید پرداخت {0} برای قسط {1} سند {2} با مبلغ  {3} تومان تایید شد و قسط به پرداخت شده تغییر یافت</value>
+    <comment>پرداخت در انتظار تایید</comment>
+  </data>
+  <data name="PaymentPendingRejection_Insert" xml:space="preserve">
+    <value>رسید پرداخت {0} برای سند {1} به علت {2} تایید نشد</value>
+  </data>
+  <data name="ProductCategory_Delete" xml:space="preserve">
+    <value>دسته بندی  {0} حذف شد</value>
+  </data>
+  <data name="ProductCategory_Edit" xml:space="preserve">
+    <value>دسته بندی  {0} ویرایش شد</value>
+  </data>
+  <data name="ProductCategory_Insert" xml:space="preserve">
+    <value>دسته بندی  {0} ثبت شد</value>
+  </data>
+  <data name="ProductGallery_Delete" xml:space="preserve">
+    <value>تصویر/ویدیو محصول  {0}  حذف شد</value>
+  </data>
+  <data name="ProductGallery_Insert" xml:space="preserve">
+    <value>تصویر/ویدیو برای محصول  {0}  ثبت شد</value>
+  </data>
+  <data name="Product_Delete" xml:space="preserve">
+    <value>محصول  {0} گالری {1} حذف شد</value>
+  </data>
+  <data name="Product_Edit" xml:space="preserve">
+    <value>محصول {0} گالری {1} ویرایش شد</value>
+  </data>
+  <data name="Product_Insert" xml:space="preserve">
+    <value>محصول  {0} برای گالری {1} ثبت شد</value>
+  </data>
+  <data name="RequestsToEditInformation_Delete" xml:space="preserve">
+    <value>درخواست  {0}  حذف شد</value>
+    <comment>درخواست های ویرایش اطلاعات</comment>
+  </data>
+  <data name="RequestsToEditInformation_Edit_Archived" xml:space="preserve">
+    <value>درخواست {0} آرشیو شد</value>
+    <comment>درخواست های ویرایش اطلاعات</comment>
+  </data>
+  <data name="Setting_Delete_GoldPrice" xml:space="preserve">
+    <value>اطلاعات نرخ طلا با قیمت {0} تومان برای طلای 18 عیار حذف شد</value>
+  </data>
+  <data name="Setting_Delete_SocialNetworks" xml:space="preserve">
+    <value>شبکه های اجتماعی {0} حذف شد</value>
+    <comment>شبکه های اجتماعی</comment>
+  </data>
+  <data name="Setting_Edit_DefaultTextMessages" xml:space="preserve">
+    <value>متن پیشفرض پیام ها ویرایش شد</value>
+    <comment>تنظیمات</comment>
+  </data>
+  <data name="Setting_Edit_LoanSettings" xml:space="preserve">
+    <value>تنظیمات وام ویرایش شد</value>
+    <comment>تنظیمات</comment>
+  </data>
+  <data name="Setting_Edit_Scripts" xml:space="preserve">
+    <value>اسکریپت ها ویرایش شد</value>
+    <comment>تنظیمات</comment>
+  </data>
+  <data name="Setting_Edit_SiteContent" xml:space="preserve">
+    <value>محتوای صفحه {0} ویرایش شد</value>
+    <comment>تنظیمات</comment>
+  </data>
+  <data name="Setting_Edit_SocialNetworks" xml:space="preserve">
+    <value>شبکه های اجتماعی {0} ویرایش شد</value>
+    <comment>شبکه های اجتماعی</comment>
+  </data>
+  <data name="Setting_Insert_GoldPrice" xml:space="preserve">
+    <value>اطلاعات نرخ طلا با قیمت {0} تومان برای طلای 18 عیار ثبت شد</value>
+  </data>
+  <data name="Setting_Insert_SocialNetworks" xml:space="preserve">
+    <value>شبکه های اجتماعی {0} ثبت شد</value>
+    <comment>شبکه های اجتماعی</comment>
+  </data>
+</root>

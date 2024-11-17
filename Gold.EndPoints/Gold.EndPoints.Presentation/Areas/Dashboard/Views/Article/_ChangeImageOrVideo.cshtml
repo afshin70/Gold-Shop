@@ -1,0 +1,82 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.ArticleViewModels;
+@using Gold.SharedKernel.DTO.FileAddress;
+@model CreateOrEditArticleMediaViewModel
+@{
+    Layout = null;
+}
+<div id="form_ChangeArticleImageOrVideo_section">
+    <div id="form_ChangeArticleImageOrVideo_section">
+        <form id="form_ChangeArticleImageOrVideo" action="/Dashboard/Article/ChangeArticleImageOrVideo" onsubmit="submitChangeArticleImageOrVideoForm(this, 'videoOrImage')" method="post">
+            <div class="modal-body">
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="IsVideo" value="@Model.IsVideo">
+                <div class="section row">
+                  @*  <div class="col-xs-12 form-group text-center">
+                        <h6>@($"{Captions.Title} {Captions.Article}: {Model.ArticleTitle}")</h6>
+                    </div>*@
+                    <div class="col-xs-12 form-group text-center">
+                        <h6>@(Model.IsVideo ? Captions.Video : Captions.Image) @Captions.Article @Model.ArticleTitle</h6>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.FileName))
+                    {
+                       
+                        <div class="col-xs-12 form-group" id="videoOrImage">
+
+                            @if (Model.IsVideo)
+                            {
+                                <video id="articleVideo" width="640" height="480" controls autostart="false">
+                                     <source id="fileSrc" src="@($"/Dashboard/Article/GetArticleVideo?videoName={Model.FileName}")" type="video/mp4">
+                                 </video>
+                            }
+                            else
+                            {
+                                <img id="fileSrc" style="max-width:500px;" src="@($"/Dashboard/Article/GetArticleImage?imageName={Model.FileName}")" />
+                            }
+                        </div>
+                    }
+                </div>
+               @* <hr />*@
+                <div class="section row">
+                    @if (Model.IsVideo)
+                    {
+                        <div class="col-xs-12 col-sm-3 col-md-3 form-group">
+                            <input type="hidden" asp-for="VideoFile" />
+                            <label asp-for="VideoFile" class="star"></label>
+                            <input asp-for="VideoFile" type="file" id="inputFile" class="form-control" accept=".mpeg,.mp4">
+                            <span asp-validation-for="VideoFile" class="text-danger"></span>
+                        </div>
+                        <div class="col-xs-12">
+                            <p>@(string.Format(UserMessages.VideoSizeDescription, "800", "450"))</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-xs-12 col-sm-3 col-md-3 form-group">
+                            <input type="hidden" asp-for="ImageFile" />
+                            <label asp-for="ImageFile" class="star"></label>
+                            <input asp-for="ImageFile" type="file" id="inputFile" class="form-control" accept=".png,.jpg,.jpeg">
+                            <span asp-validation-for="ImageFile" class="text-danger"></span>
+                        </div>
+                        <div class="col-xs-12 ">
+                            <p>@(string.Format(UserMessages.ImageSizeDescription, "800", "450"))</p>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div class="section row">
+                <div class="modal-footer text-right">
+                    <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+                    @if (Model.IsVideo)
+                    {
+                        <button style="display:@(string.IsNullOrEmpty(Model.FileName)?"none":"")" id="btnDeleteFile" type="button" onclick="removeArticleImageOrVideoForm('@UserMessages.AreYouSureForDelete',true,'@Model.Id')" class="btn bg-danger btn-labeled legitRipple"><span>@Captions.Delete @Captions.Video</span> <b><i class="fa fa-trash"></i></b></button>
+                    }
+                    else
+                    {
+                        <button style="display:@(string.IsNullOrEmpty(Model.FileName)?"none":"")" id="btnDeleteFile" type="button" onclick="removeArticleImageOrVideoForm('@UserMessages.AreYouSureForDelete',false,'@Model.Id')" class="btn bg-danger btn-labeled legitRipple"><span>@Captions.Delete @Captions.Image</span> <b><i class="fa fa-trash"></i></b></button>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+﻿@model List<CustomerReportModel>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="fa-IR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/themes/default/css/print.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="main">
+        <table border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td class="td-33 pb-15 right">
+                    </td>
+                    <td class="td-33 pb-15 center">
+                        <h3>@Captions.List @Captions.Customers</h3>
+                        @*<img src="~/Images/logo.png" />*@
+                    </td>
+                    <td class="td-33 pb-15 left rtl">
+                        <h3>@Captions.Date : @DateTime.Now.ToPersianDateString()</h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        @if (Model != null && Model.Any())
+        {
+            <table border="0" cellspacing="0" cellpadding="0" class="table-border-print color center">
+                <thead>
+                    <tr>
+                        <th class="">#</th>
+                        <th class=""><b>@Captions.Gender</b></th>
+                        <th class=""><b>@Captions.FullName</b></th>
+                        <th class=""><b>@Captions.Nationality</b></th>
+                        <th class=""><b>@Captions.BirthDate</b></th>
+                        <th class=""><b>@Captions.NationalCode</b></th>
+                        <th class=""><b>@Captions.Mobile</b></th>
+                        <th class=""><b>@Captions.FatherName</b></th>
+                        <th class=""><b>@Captions.JobTitle</b></th>
+                        @*<th class=""><b>@Captions.SanaCode</b></th>*@
+                        <th class=""><b>@Captions.EssentialTel</b></th>
+                        <th class=""><b>@Captions.RelationShipOfEssentialTel</b></th>
+                        <th class=""><b>@Captions.BankCardNumber</b></th>
+                        <th class=""><b>@Captions.CardNumberOwner</b></th>
+                        <th class=""><b>@Captions.City</b></th>
+                       @* <th class=""><b>@Captions.Address</b></th>
+                        <th class=""><b>@Captions.PostalCode</b></th>*@
+                        <th class=""><b>@Captions.Status</b></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        int row = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="">@row</td>
+                                <td class="">@item.Gender</td>
+                                <td class="">@item.FullName</td>
+                                <td class="">@item.Nationaity</td>
+                                <td class="">@item.BirthDate</td>
+                                <td class="">@item.NationalCode</td>
+                                <td class="">@item.Mobile</td>
+                                <td class="">@item.FatherName</td>
+                                <td class="">@item.JobTitle</td>
+                               @* <td class="">@item.SanaCode</td>*@
+                                <td class="">@item.EssentialTel</td>
+                                <td class="">@item.RelationShip</td>
+                                <td class="">@item.BankCardNo</td>
+                                <td class="">@item.BankCardOwnerName</td>
+                                <td class="">@item.CityName</td>
+                                @*<td class="">@item.Address</td>
+                                <td class="">@item.PostalCode</td>*@
+                                <td class="">@(item.IsActive ? Captions.Active : Captions.DeActive)</td>
+                            </tr>
+                            row++;
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+    <div class="clearfix"></div>
+</body>
+</html>

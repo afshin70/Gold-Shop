@@ -1,0 +1,47 @@
+﻿@model BootstrapAlertModel
+@{
+    if (Model is not null)
+    {
+        string alertClass = "";
+        switch (Model.Type)
+        {
+            case AlertType.Success:
+                alertClass = "alert-success";
+                break;
+            case AlertType.Warning:
+                alertClass = "alert-warning";
+                break;
+            case AlertType.Danger:
+                alertClass = "alert-danger";
+                break;
+            case AlertType.Info:
+                alertClass = "alert-info";
+                break;
+            case AlertType.Primary:
+                alertClass = "alert-primary";
+                break;
+            case AlertType.Secondary:
+                alertClass = "alert-secondary";
+                break;
+            case AlertType.Light:
+                alertClass = "alert-light";
+                break;
+            case AlertType.Dark:
+                alertClass = "alert-dark";
+                break;
+            default:
+                break;
+        }
+        <div class="alert @alertClass alert-dismissible">
+            @if (!string.IsNullOrEmpty(Model.Title))
+            {
+                <h4 class="alert-heading">@Model.Title</h4>
+                <hr>
+            }
+            @if (string.IsNullOrEmpty(Model.Message))
+            {
+                <p >@Model.Message</p>
+            }
+        </div>
+    }
+}

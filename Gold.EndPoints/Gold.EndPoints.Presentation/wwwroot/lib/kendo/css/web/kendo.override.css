@@ -1,0 +1,107 @@
+﻿
+
+/*---------------------kendo-----------------------*/
+.k-grid td.k-state-selected, .k-grid tr.k-state-selected > td {
+    background-color: #acbcc1 !important;
+    border-color: #ccc !important;
+}
+
+.k-colorpicker, .k-selected-color, .k-icon k-i-line {
+    width: 100% !important;
+}
+
+.k-selected-color {
+    height: 33px;
+}
+
+.k-rtl .k-grid tbody tr:nth-child(2n) td {
+    background: rgba(36, 45, 88, 0.05) none repeat scroll 0 0;
+}
+
+.k-textbox, .k-dropdown, .k-textbox:focus {
+    border: 1px solid #e3e3e3;
+}
+
+.k-filter-menu {
+    direction: rtl;
+}
+
+    .k-filter-menu .k-combobox, .k-filter-menu .k-datepicker, .k-filter-menu .k-timepicker, .k-filter-menu .k-datetimepicker, .k-filter-menu .k-numerictextbox, .k-filter-menu .k-dropdown, .k-filter-menu .k-autocomplete, .k-filter-menu .k-textbox {
+        width: 14.2em;
+    }
+
+[dir="rtl"] .mdc-list-item .mdc-list-item__start-detail, .mdc-list-item[dir="rtl"] .mdc-list-item__start-detail {
+    margin-left: 5px !important;
+    margin-right: 0;
+}
+
+.incell-field {
+    border: 1px solid silver;
+    background-color: white;
+    width: 50% !important;
+    padding: 5px;
+    min-height:20px;
+}
+
+
+
+.k-grid .k-edit-cell {
+    border: 1px solid silver;
+    background-color: white;
+    /*width: 50% !important;*/
+    padding: 5px;
+    font-family: "IRANSans" !important;
+}
+
+.k-edit-cell > .k-textbox, .k-edit-cell > .k-widget, .k-grid-edit-row > td > .k-textbox, .k-grid-edit-row > td > .k-widget, .k-grid-edit-row > td > .text-box {
+    width: 50%;
+    border: 1px solid silver;
+    padding: 5px;
+    font-family: IRANSans;
+    margin-right: 3px;
+    text-align:center;
+}
+
+
+.mdc-textfield--multiline .mdc-textfield__input {
+    line-height: 20px;
+}
+
+.k-pager-wrap .k-pager-numbers .k-state-selected {
+    margin-top: -0.28em;
+}
+
+.k-pager-numbers .k-state-selected {
+    border-radius: 0;
+}
+
+.k-rtl .k-grid-header .k-header {
+    background-color:#cdd1e2;
+   
+}
+.k-rtl .k-grid-header .k-header .k-link{
+ color:#333 !important;
+}
+.k-rtl .k-grid-header th.k-with-icon .k-link, .k-grid-header th.k-header > .k-link {
+    color: #fff;
+}
+
+.k-state-active {
+    color: red;
+    background-color: #647688 !important;
+}
+
+.k-grid table tr td, .k-header {
+    font-size: 13px;
+    border-left-width: 1px;
+    border-left-color: #ccc;
+}
+
+k-pager-wrap {
+    font-size: 11px;
+}
+
+.k-grid-toolbar {
+    background-color: #e9e9e9;
+    border: #e9e9e9;
+}

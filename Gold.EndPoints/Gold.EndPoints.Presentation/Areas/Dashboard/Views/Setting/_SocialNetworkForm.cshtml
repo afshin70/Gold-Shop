@@ -1,0 +1,49 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.SettingsViewModels
+@model SocialNetworkViewModel
+@{
+    Layout = null;
+}
+
+<form id="form_socialNetwork" action="/Dashboard/Setting/CreateOrEditSocialNetwork" onsubmit="submitSocialNetworkFormByRefreshGrid(this,gridName);" method="post">
+    <div class="panel-body">
+        <input type="hidden" asp-for="SocialNetworkId" />
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Title" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="Title" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Url" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="Url" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-link"></i></span>
+                </div>
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+				<label asp-for="Icon" class="star"></label> (<label>@Captions.SvgImageFormat</label>)
+                <input asp-for="Icon" type="file" id="inputFile" class="form-control" onchange="previewImage(this,'previewImg','btnImgDel')">
+               
+                @*<button type="button" onclick="removePreviewImage('previewImg',this,'inputFile')" id="btnImgDel" class="btn btn-danger btn-icon btn-rounded btn-del-img" style=" @(string.IsNullOrEmpty(Model?.IconUrl)?"display:none":"")"><i class="icon-menu7 fa fa-window-close"></i></button>*@
+                <img id="previewImg" src="@Model.IconUrl" class="img-responsive img-border" style="max-height:100px; @(string.IsNullOrEmpty(Model?.IconUrl)?"display:none":"")">
+                @*<span asp-validation-for="Icon" class="text-danger"></span>*@
+            </div>
+
+        </div>
+
+        
+    </div>
+
+    <div class="panel-footer text-right">
+        <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+        <button type="button" onclick="resetSocialNetworkForm()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+     </div>
+</form>

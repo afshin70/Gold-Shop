@@ -1,0 +1,61 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.DocumentModels
+@using Gold.ApplicationService.Utility.StaticData;
+
+@model List<CollateralModel>
+@{
+    Layout = null;
+}
+
+@if(Model!=null)
+{
+    <div class="k-rtl ">
+        <div class="k-grid k-widget k-display-block">
+            <div class="k-grid-header" style="padding-left: 17px;">
+                <div class="k-grid-header-wrap k-auto-scrollable">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="k-header td-5">#</th>
+                                <th class="k-header td-10">@Captions.Type</th>
+                                <th class="k-header td-40">@Captions.Description</th>
+                                <th class="k-header td-25">@Captions.Image</th>
+                                <th class="k-header td-20">@Captions.Operation</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="k-grid-content k-auto-scrollable" style="height: auto;">
+                <table class="k-selectable">
+                    <tbody>
+                        @if (Model is not null)
+                        {
+                            int row = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="td-5">@row</td>
+                                    <td class="td-10">@item.Type</td>
+                                    <td class="td-40">@item.Description</td>
+                                    <td class="td-25">
+                                        @if (!string.IsNullOrEmpty(item.ImageName))
+                                        {
+                                            <a target="_blank" href="@ImageAddress.CollateralImageUrl@item.ImageName"> <img src="@ImageAddress.CollateralImageUrl@item.ImageName" style="max-width:90%" /></a>
+                                        }
+                                    </td>
+                                    <td class="td-20">
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary" onclick='loadData("/Dashboard/Document/CreateOrEditCollateral?id=@item.Id&&documentId=@item.DocumentId", "form_collateral")'><i class="fa fa-edit"></i></button>
+                                            <button type="button" class="btn btn-danger" onclick='getRequestWithConfirmUpdateTargetElement("/Dashboard/Document/RemoveCollateral?id=@item.Id&documentId=@item.DocumentId", "@UserMessages.AreYouSureForDelete" , "collateralList" )'><i class="fa fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                row++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}

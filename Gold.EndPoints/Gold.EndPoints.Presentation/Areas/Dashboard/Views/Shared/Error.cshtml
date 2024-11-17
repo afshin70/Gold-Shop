@@ -1,0 +1,40 @@
+﻿@*@using Gold.ApplicationService.Contract.DTOs.Alert
+@using Gold.Resources
+
+@model string
+@{
+    ViewBag.Title = Captions.Error;
+    Layout = "_LayoutError";
+}
+
+
+<div class="text-center">
+    <br />
+    <br />
+    <br />
+    @if (Model == "404")
+    {
+        @await Html.PartialAsync("_MessageWithModel", new AlertModel
+        {
+            Text = UserMessages.PageNotFound,
+            Type = AlertType.Warning,
+            CloseButton = false,
+            ButtonText = Captions.ReturnToHomePage,
+            ButtonUrl = "/",
+            IconCssClass = "search"
+        })
+    }
+    else
+    {
+        @await Html.PartialAsync("_MessageWithModel", new AlertModel
+        {
+            Text = UserMessages.ErrorOccurredWhileProcessingPleaseContactSupportDepartment,
+            Type = AlertType.Danger,
+            CloseButton = false,
+            ButtonText = Captions.ReturnToHomePage,
+            ButtonUrl = "/"
+        })
+    }
+</div>
+
+*@

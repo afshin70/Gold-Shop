@@ -1,0 +1,56 @@
+﻿@model EditCustomerSummaryInfoViewModel
+@{
+    Layout = null;
+    List<SelectListItem> genderList = Enum.GetValues(typeof(GenderType)).Cast<GenderType>().Select(v => new SelectListItem
+            {
+                Text = v.GetDisplayName(),
+                Value = ((int)v).ToString()
+            }).ToList();
+}
+
+<form action="/Dashboard/Document/EditCustomerSummaryInfo" onsubmit="submitFormCustomerSummaryInfoAndReProcessStep1(this,'form_createOrEditCustomerSummaryInfo')">
+    <input type="hidden" asp-for="CustomerId" />
+    <div class="section row">
+        <div class="col-xs-12 col-sm-6 col-md-6 form-group">
+            <label asp-for="CustomerName" class="star"></label>
+            <div class="input-group">
+                <input asp-for="CustomerName" type="text" class="form-control" autocomplete="off">
+                <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+            </div>
+            <span asp-validation-for="CustomerName" class="text-danger"></span>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 form-group">
+            <label asp-for="CustomerMobile" class="star"></label>
+            <div class="input-group">
+                <input asp-for="CustomerMobile" type="text" class="form-control" onkeypress="return safeOnlyNumber($(this),event)">
+                <span class="input-group-addon"><i class="fa fa-date"></i></span>
+            </div>
+            <span asp-validation-for="CustomerMobile" class="text-danger"></span>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 form-group">
+            <label asp-for="Gender"></label>
+            <select asp-for="Gender" asp-items="@genderList" class="form-control Select2">
+                <option selected value="">@Captions.SelectIt</option>
+            </select>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 form-group">
+            <label asp-for="FatherName" class="star"></label>
+            <div class="input-group">
+                <input asp-for="FatherName" type="text" class="form-control">
+                <span class="input-group-addon"><i class="fa fa-date"></i></span>
+            </div>
+            <span asp-validation-for="FatherName" class="text-danger"></span>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-6 form-group">
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 form-group text-right">
+            <br />
+            <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.Edit</span> <b><i class="fa fa-check-circle"></i></b></button>
+
+        </div>
+    </div>
+
+</form>
+

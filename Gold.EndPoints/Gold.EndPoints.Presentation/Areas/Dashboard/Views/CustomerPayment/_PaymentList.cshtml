@@ -1,0 +1,66 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.DocumentModels
+
+@model List<PaymentModel>
+@{
+    Layout = null;
+}
+<div class="k-rtl ">
+    <div class="k-grid k-widget k-display-block">
+        <div class="k-grid-header" style="padding-left: 17px;">
+            <div class="k-grid-header-wrap k-auto-scrollable">
+                <table>
+                    <thead>
+                        <tr>
+                            <td class="k-header td-10">#</td>
+                            <th class="k-header td-20">@Captions.PaymentDate</th>
+                            <th class="k-header td-25">@Captions.PaymentAmount</th>
+                            <th class="k-header td-25">@Captions.ReceiptImage</th>
+                            <th class="k-header td-20">@Captions.PaymentRegisterDate</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="k-grid-content k-auto-scrollable" style="height: auto;">
+            <table class="k-selectable">
+                @if (Model != null)
+                {
+                    <tbody>
+                        @{
+                            int rowNumber = 1;
+                            long sumOfPayments = 0;
+                        }
+                        @foreach (var payment in Model)
+                        {
+                            <tr>
+                                <td class="td-10">@rowNumber</td>
+                                <td class="td-20">@payment.PaymentDate.GeorgianToPersian(ShowMode.OnlyDate)</td>
+                                <td class="td-25">@payment.Amount.ToString("N0")</td>
+                                <td class="td-25 text-center">
+                                    @if (!string.IsNullOrEmpty(payment.ImageName))
+                                    {
+                                        <a href="/Dashboard/Document/GetPaymentImage?imageName=@payment.ImageName" target="_blank"><img src="/Dashboard/Document/GetPaymentImage?imageName=@payment.ImageName" style="max-width:90%" /></a>
+                                    }
+                                </td>
+                                <td class="td-20">@payment.RegisterDate.GeorgianToPersian(ShowMode.OnlyDateAndTime)</td>
+                                
+                            </tr>
+                            rowNumber++;
+                            sumOfPayments += payment.Amount;
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="td-10 border-top"> </td>
+                            <td class="td-20 border-top"></td>
+                            <td class="td-25 border-top">@Captions.SumTotal : @sumOfPayments.ToString("N0") @Captions.Tooman</td>
+                            <td class="td-25 border-top"></td>
+                            <td class="td-20 border-top"></td>
+                        </tr>
+                    </tfoot>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+

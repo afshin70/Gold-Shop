@@ -1,0 +1,157 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.GoldPriceViewModels;
+@model GoldCalculatorViewModel
+
+@{
+    Layout = null;
+}
+<form id="goldCalculatorForm" action="/Home/CalculateGoldPrice" onsubmit="calculateGoldPrice(this)" method="post">
+    <div class="body-white py-1 px-2">
+        <table class="table factor-table mb-0">
+            <tbody>
+                <tr>
+                    <td>
+                        <h6 class="small">
+                            @Captions.GramsGold :
+                        </h6>
+                        <small class="text-danger error-input" id="GramsGoldPriceMessage">
+                            
+                        </small>
+                    </td>
+                    <td class="text-start">
+                        <span class="btn-outline-gray-gold px-2 py-1">
+                            <input autocomplete="off" asp-for="GramsGoldPrice" type="text" onkeyup="monyFormat(this)" onkeypress="return safeOnlyNumber($(this),event)" class="w-50 number-input">
+                            <small>
+                                @Captions.Tooman
+                            </small>
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h6 class="small">
+                            @Captions.Weight :
+                        </h6>
+                        <small class="text-danger error-input" id="WeightMessage">
+                            @*  * مبلغ وارد شده کمتر از حد مجاز است.*@
+                        </small>
+                    </td>
+                    <td class="text-start">
+                        <span class="btn-outline-gray-gold px-2 py-1">
+                            <input autocomplete="off" asp-for="Weight" onkeypress="floatNumber(event,'Weight')" type="text" class="w-50 float">
+                            <small>
+                                @Captions.Gram
+                            </small>
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h6 class="small">
+                            @Captions.ConstructionWages :
+                        </h6>
+                        <small class="text-danger error-input" id="WageMessage">
+                            @*  * مبلغ وارد شده کمتر از حد مجاز است.*@
+                        </small>
+                    </td>
+                    <td class="text-start">
+                        <span class="btn-outline-gray-gold px-2 py-1">
+                            <input autocomplete="off" asp-for="Wage" onkeypress="floatNumber(event,'Wage')" type="text" class="w-50 float percent">
+                            <small>
+                                @Captions.Percentage
+                            </small>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h6 class="small    ">
+                            @Captions.StoneValue :
+                        </h6>
+                        <small class="text-danger error-input" id="StonePriceMessage">
+                            @*  * مبلغ وارد شده کمتر از حد مجاز است.*@
+                        </small>
+                    </td>
+                    <td class="text-start">
+                        <span class="btn-outline-gray-gold px-2 py-1">
+                            <input autocomplete="off" asp-for="StonePrice" onkeyup="monyFormat(this)" onkeypress="return safeOnlyNumber($(this),event)" type="text" class="w-50  number-input">
+                            <small>
+                                @Captions.Tooman
+                            </small>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h6 class="small">
+                            @Captions.GalleryProfit :
+                        </h6>
+                        <small class="text-danger error-input" id="GalleryProfitMessage">
+                            @*  * مبلغ وارد شده کمتر از حد مجاز است.*@
+                        </small>
+                    </td>
+                    <td class="text-start">
+                        <span class="btn-outline-gray-gold px-2 py-1">
+                            <input autocomplete="off" asp-for="GalleryProfit" type="text" onkeypress="floatNumber(event,'GalleryProfit')" class="w-50 float percent">
+                            <small>
+                                درصد
+                            </small>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="border-bottom-0">
+                        <h6 class="small">
+                            @Captions.TaxValue :
+                        </h6>
+                    </td>
+                    <td class="text-start border-bottom-0">
+                        <span class="btn-outline-gray-gold px-2 py-1">
+                            <input autocomplete="off" asp-for="Tax" type="text" onkeypress="floatNumber(event,'Tax')" class="w-50 percent float">
+                            <small>
+                                @Captions.Percentage
+                            </small>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="border-bottom-0">
+                        <h6 class="text-center m-0 pt-2 text-small small fw-bold">
+                            @Captions.GoldPriceCalcDescription
+                        </h6>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row mx-0 px-3">
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary rounded-pill px-4 my-3">
+                @Captions.Calculate
+            </button>
+        </div>
+        <div class="col-12 fw-bold d-flex justify-content-between bg-primary-text mb-3">
+            <h6 class="my-1">@Captions.PureGoldPrice :</h6>
+            <span>
+                <b id="pureGoldPrice">
+                </b>
+                <small>
+                    @Captions.Tooman
+                </small>
+            </span>
+        </div>
+        <div class="col-12 fw-bold d-flex justify-content-between bg-primary-text">
+            <h6 class="my-1">@Captions.FinalInvoicePrice :</h6>
+            <span>
+                <b id="finalInvoicePrice">
+                </b>
+                <small>
+                    @Captions.Tooman
+                </small>
+            </span>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,126 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels.CustomerPymentsModel;
+@model List<CustomerPaymentModel>
+@{
+    Layout = null;
+    string confirmTypeClass = string.Empty;
+}
+@if (Model is not null)
+{
+    if (Model.Any())
+    {
+        <hr />
+        <div class="row mb-5">
+
+
+            @foreach (var payment in Model)
+            {
+                switch (payment.ConfirmType)
+                {
+                    case ConfirmStatusType.Pending:
+                        confirmTypeClass = "bg-warning";
+                        break;
+                    case ConfirmStatusType.Confirmation:
+                        confirmTypeClass = "bg-success text-white";
+                        break;
+                    case ConfirmStatusType.Rejection:
+                        confirmTypeClass = "bg-danger text-white";
+                        break;
+                }
+
+                <div class="col-12 col-sm-6">
+                    <div class="card mb-3">
+                        <div class="row mx-0 px-1 py-2  align-items-center">
+                            <div class="col-3 text-center">
+                                <div class="border border-primary  rounded overflow-hidden" style="max-width:120px;max-height:120px;">
+                                    <a href="/Document/GetCustomerPaymentImage?imageName=@payment.ImageName" target="_blank">
+                                        <img src="/Document/GetCustomerPaymentImage?imageName=@payment.ImageName" class="img-fluid" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <div class="card-body text-white small">
+                                    <div class="row">
+                                        <div class="col-12 d-flex justify-content-between">
+                                            @if (payment.PaymentAmount.HasValue)
+                                            {
+                                                <span>
+                                                    @Captions.Price: @(payment.PaymentAmount.Value > 0 ? payment.PaymentAmount.FormatMoney() : string.Empty) @Captions.Tooman
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span></span>
+                                            }
+                                            <span> @Captions.Status: <span class="badge @confirmTypeClass">@payment.ConfirmType.GetDisplayName()</span></span>
+                                        </div>
+                                        <div class="col-12 d-flex justify-content-between ">
+                                            @if (!string.IsNullOrEmpty(payment.PaymentDate))
+                                            {
+                                                <span> @Captions.PaymentTime: @payment.PaymentDate</span>
+                                            }
+                                            else
+                                            {
+                                                <span></span>
+                                            }
+                                            <span>@payment.PersianDate</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <hr>
+                                            <p>
+                                                @payment.Description
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(payment.AdminDescription))
+                            {
+                                <div class="col-12">
+                                    <hr>
+                                    <p class="card-text text-white small">
+                                        @Captions.DescriptionOfAdmin: @payment.AdminDescription
+                                    </p>
+                                </div>
+                            }
+                            <div class="col-12 container">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* <div class="col-12 col-sm-6">
+    <div class="card mb-3">
+    <div class="row mx-0 px-1 py-2  align-items-center">
+    <div class="col-3 text-center">
+    @if (@payment.ImageName.IsEmptyOrNull())
+    {
+    <img src="https://dummyimage.com/80.png/09f/fff" class="img-fluid rounded" alt="">
+    }
+    else
+    {
+    <a href="/Document/GetCustomerPaymentImage?imageName=@payment.ImageName" target="_blank">
+    <img src="/Document/GetCustomerPaymentImage?imageName=@payment.ImageName" class="img-fluid rounded" alt="" style="max-height:200px;">
+    </a>
+    }
+    </div>
+    <div class="col-9">
+    <div class="card-body">
+    <p style="font-size: 12px;" class="text-gray_light mb-1 text-start">
+    @payment.PersianDate
+    </p>
+    <p class="card-text text-white small">
+    @payment.Description
+    </p>
+    </div>
+    </div>
+    <div class="col-12 container">
+    </div>
+    </div>
+    </div>
+    </div>*@
+
+            }
+        </div>
+    }
+}

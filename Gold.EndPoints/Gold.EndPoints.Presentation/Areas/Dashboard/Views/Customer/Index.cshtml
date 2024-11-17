@@ -1,0 +1,142 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels
+@using Gold.SharedKernel.Contract;
+@{
+
+	ViewData["Title"] = Captions.Customers;
+	var model = new CreateOrEditCustomerViewModel() { Id = 0, IsActive = true, Proviances = ViewBag.Proviances };
+
+	ViewBag.SelectedMenu = (byte)ManagerPermission.Customers;
+	ModalModel addOrEditEssentialTelModel = new()
+			{
+				IsShowCloseButtonInFooter = false,
+				Id = "addOrEditEssentialTelModal",
+				IsShowCloseIcon = true,
+				Size = ModalSize.Larg,
+				Title = Captions.EssentialTels,
+			};
+	ModalModel addOrEditCardNumberModel = new()
+			{
+				IsShowCloseButtonInFooter = false,
+				Id = "addOrEditCardNumberModal",
+				IsShowCloseIcon = true,
+				Size = ModalSize.Larg,
+				Title = Captions.CustomerCardNumbers,
+			};
+	ModalModel profileImagesModel = new()
+			{
+				IsShowCloseButtonInFooter = false,
+				Id = "profileImagesModal",
+				IsShowCloseIcon = true,
+				Size = ModalSize.Larg,
+				Title = Captions.ProfileImages,
+			};
+}
+
+<div class="tabbable-custom">
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<a href="#tab_1_1" data-toggle="tab"> @Captions.Customer</a>
+		</li>
+		<li>
+			<a href="#tab_1_2" data-toggle="tab"> @Captions.SearchInCustomers</a>
+		</li>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane fade active in" id="tab_1_1">
+			<div class="panel panel-flat">
+				<div class="panel-heading">
+					<h6 class="panel-title">
+						<span> @Captions.Customer</span>
+					</h6>
+					<div class="heading-elements">
+						<ul class="icons-list">
+							<li><a data-action="collapse"></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div id="customerForm">
+					<partial name="_CreateOrEditCustomer" model="model" />
+				</div>
+			</div>
+			<partial name="_Modal" model="addOrEditEssentialTelModel" />
+			<partial name="_Modal" model="addOrEditCardNumberModel" />
+			<partial name="_Modal" model="profileImagesModel" />
+			<div class="panel panel-flat">
+				<div class="panel-heading">
+					<h6 class="panel-title">
+						<span>@Captions.List @Captions.Customers</span>
+					</h6>	<div class="heading-elements">
+						<button type="button" onclick="exportFile('/Dashboard/Customer/InitReportData',GetData(),'/Dashboard/Customer/ExportExcel')" class="btn btn-sm btn-labeled"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+						<button type="button" onclick="exportFile('/Dashboard/Customer/InitReportData',GetData(),'/Dashboard/Customer/ExportPdf')" class="btn  btn-sm btn-labeled"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+						
+						<ul class="icons-list left-align">
+							<li><a data-action="collapse"></a></li>
+						</ul>
+					</div>
+				</div>
+				<div id="customersList">
+					<partial name="_CustomerList" />
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="tab_1_2">
+
+			<div id="searchForm">
+				<partial name="_SearchByPhoneNumberForm" />
+			</div>
+
+			<div id="searchByPhoneNumberSection">
+				<partial name="_SearchByPhoneNumberList" />
+			</div>
+
+			<div id="searchByBankCardNumberSection" style="display:none">
+				<partial name="_SearchByBankCardNumberList" />
+			</div>
+			@*<div class="panel panel-flat">
+			<div class="panel-heading">
+			<h6 class="panel-title">
+			<span> @Captions.Search</span>
+			</h6>
+			<div class="heading-elements">
+			<ul class="icons-list">
+			<li><a data-action="collapse"></a></li>
+			</ul>
+			</div>
+			</div>
+			<div>
+			<partial name="_SearchCustomers" model="model" />
+			</div>
+			</div>*@
+		</div>
+	</div>
+</div>
+<div class="clearfix margin-bottom-20"> </div>
+
+
+
+
+@section HeaderScripts{
+	<script>
+		var gridName = "grid_customersGrid";
+
+	</script>
+    }
+@section Stylesheet{
+	<link href="~/lib/persiandatetimepicker/persiandatepicker.min.css" rel="stylesheet" />
+}
+@section Scripts{
+	<script src="~/lib/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+	<script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('select').select2();
+		});
+	</script>
+
+	
+	<script src="~/themes/default/js/plugins/forms/styling/switchery.min.js"></script>
+	<script src="~/lib/persiandatetimepicker/persiandatepicker.min.js"></script>
+	<script src="~/scripts/dashboard/customers.js" asp-append-version="true"></script>
+
+    }

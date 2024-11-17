@@ -1,0 +1,47 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.SiteContent;
+@using Gold.Domain.Enums
+@model SiteContentViewModel
+@{
+    ViewBag.SelectedMenu = (byte)ManagerPermission.SiteContent;
+    ViewData["Title"] = Captions.SiteContent;
+}
+
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <span> @Captions.SiteContent</span>
+        </h6>
+        <div class="heading-elements">
+            <ul class="icons-list ">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="form_siteContent">
+        @Html.Partial("_SiteContentForm",Model)
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
+    <script src="~/lib/ckeditor/config.js"></script>
+
+    <script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+    <script src="~/lib/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select').select2();
+        });
+    </script>
+    <script>
+        //$(document).ready(function () {
+        //    var editor = CKEDITOR.replace('TextEditor');
+        //    editor.on('change', function (evt) {
+        //        document.getElementById('Text').value = editor.getData()
+        //    });
+        //});
+    </script>
+
+    <script src="~/scripts/dashboard/siteContent.js" asp-append-version="true"></script>
+
+ }

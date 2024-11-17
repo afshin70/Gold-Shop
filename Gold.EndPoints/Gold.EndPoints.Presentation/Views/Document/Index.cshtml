@@ -1,0 +1,167 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels;
+@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels.DocumentModels;
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels;
+@using Gold.SharedKernel.Enums;
+@model List<DocumentInfoModel>
+@{
+    ViewData["Title"] = Captions.Documents;
+    ViewBag.SelectedMenuIcon = SiteSelectedIcon.Profile;
+    string documentPaymentStateClass = string.Empty;
+}
+<style>
+    .bg-loan-success{
+        background-color: #087e08 !important
+    }
+     .bg-loan-danger{
+        background-color: #8d1e14 !important
+    }
+    .bg-loan-warning {
+        background-color: #e3bb42 !important
+    }
+</style>
+<div class="container mt-2 mb-5">
+    <div class="title-section mb-4 mt-2 text-end">
+        <h5 class="fw-bold">
+            @Captions.Documents
+        </h5>
+    </div>
+    <div class="row dir-rtl mb-5">
+        @if (Model is not null)
+        {
+            foreach (var document in Model)
+            {
+                if (document.DocumentPaymentState.HasValue)
+                {
+                    switch (document.DocumentPaymentState.Value)
+                    {
+                        case DocumentPaymentStatus.UnpaidOverdueInstallment:
+                            documentPaymentStateClass = "bg-loan-danger";
+                            break;
+                        case DocumentPaymentStatus.DocumentWithPaymentPending:
+                            documentPaymentStateClass = "bg-loan-warning";
+                            break;
+                        case DocumentPaymentStatus.UnsettledDocumentWithOutOverdueInstallments:
+                            documentPaymentStateClass = "bg-loan-success";
+                            break;
+
+                    }
+                }
+
+                <div class="col-12 col-md-6 mb-3 ">
+                    <div class="card overflow-hidden">
+                        <div class="card-body @documentPaymentStateClass">
+                            <div class="row">
+                                <div class="col-12  d-flex justify-content-between">
+                                    <h5 class="card-title">@Captions.Document @document.Number</h5>
+                                    <p class="card-text text-justify">
+                                        @document.PersianDate
+                                    </p>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end" style="background-color:">
+                                    @if (document.Status == DocumentStatus.Active)
+                                    {
+                                        <a href="/Document/Payment/@document.Id" target="_blank" class="btn btn-primary mx-2">
+                                            @Captions.RegisterPayment
+                                        </a>
+                                    }
+                                    @if (document.Status == DocumentStatus.Active)
+                                    {
+                                        <button class="btn btn-primary mx-2" onclick="loadDataInModal('/Document/InstantSettlement/@document.Id','instantSettlementModal')">
+                                            @Captions.InstantSettlement
+                                        </button>
+                                    }
+                                    <button class="btn btn-primary mx-2" onclick="loadDataInModal2('/Document/DocDetail/@document.Id','documentModal')">
+                                        @Captions.Show
+                                    </button>
+                                    @if (document.HasCollateralImageUrl)
+                                    {
+                                        <button class="btn btn-primary mx-2" onclick="loadDataInModal('/Document/GetCollateralImage/@document.Id','collateralImageModal')">@Captions.Collateral</button>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                documentPaymentStateClass = string.Empty;
+            }
+        }
+    </div>
+</div>
+
+@{
+    //ModalModel collateralImageModel = new()
+    //        {
+    //            IsShowCloseButtonInFooter = false,
+    //            Id = "collateralImageModal",
+    //            IsShowCloseIcon = false,
+    //            Size = ModalSize.None,
+    //            Title = $"{Captions.Image} {Captions.Collateral}",
+    //        };
+    ModernModalModel collateralImageModel = new()
+            {
+                Id = "collateralImageModal",
+                Size=ModernModalSize.Lg,
+                 Title = $"{Captions.Image} {Captions.Collateral}",
+            };
+
+    //ModalModel docDetailModel = new()
+    //        {
+    //            IsShowCloseButtonInFooter = false,
+    //            Id = "docDetailModal",
+    //            IsShowCloseIcon = true,
+    //            Size = ModalSize.None,
+    //            Modal_Dialog_Class = "modal-dialog-scrollable",
+    //            // Title = $"{Captions.Detail} {Captions.Document}",
+    //            IsShowHeader = false
+    //        };
+
+    //ModalModel instantSettlementModel = new()
+    //        {
+    //            IsShowCloseButtonInFooter = false,
+    //            Id = "instantSettlementModal",
+    //            IsShowCloseIcon = true,
+    //            Size = ModalSize.Larg,
+    //            Title = $"{Captions.InstantSettlement}",
+    //            IsShowHeader = true
+    //        }; 
+            
+            ModernModalModel instantSettlementModel = new()
+            {
+                Id = "instantSettlementModal",
+                Size = ModernModalSize.Lg,
+                 Title = $"{Captions.InstantSettlement}",
+            };
+
+}
+@*<partial name="_Modal" model="collateralImageModel" />*@
+<partial name="_ModernModal" model="collateralImageModel" />
+<partial name="_DocDetailModal" />
+@*<partial name="_Modal" model="instantSettlementModel" />*@
+<partial name="_ModernModal" model="instantSettlementModel" />
+
+
+@section Header {
+    <link href="~/sitetheme/css/persian-datepicker.min.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script src="~/scripts/timetools.min.js"></script>
+    <script src="~/sitetheme/js/persian-date.min.js"></script>
+    <script src="~/sitetheme/js/persian-datepicker.min.js"></script>
+    <script src="~/scripts/site/persiancalenderconfig.min.js"></script>
+    @* <script>
+        $(document).ready(function () {
+            getAllPayments(@documentInfo?.DocumentId)
+        })
+    </script>*@
+
+    <script>
+        function showContent(content = '', targetElement) {
+            if (document.getElementById(targetElement) != undefined)
+                document.getElementById(targetElement).innerHTML = `<p>${content}</p>`;
+        }
+    </script>
+
+}
+

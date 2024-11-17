@@ -1,0 +1,26 @@
+﻿@using Gold.ApplicationService.Contract.Abstractions;
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.SiteContent;
+@using Gold.Domain.Enums;
+@model ContactUsViweModel
+@inject ISettingService _settingService
+@{
+    ViewData["Title"] = Captions.BrancheList;
+    var contentResult = await _settingService.GetSettingAsync<string>(SettingType.SiteContent_BrancheList);
+}
+
+<div class="container mt-2 mb-5 pb-4">
+    <div class="row mx-0 dir-rtl">
+        <div class="title-section mb-4 mt-2 text-end">
+            <h5>
+                @* <i class="fa-light fa-cubes"></i>*@
+                @Captions.BrancheList
+            </h5>
+        </div>
+        @if (contentResult.IsSuccess)
+        {
+            <div class="col-12 text-light g-border">
+                @Html.Raw(contentResult.Data)
+            </div>
+        }
+    </div>
+</div>

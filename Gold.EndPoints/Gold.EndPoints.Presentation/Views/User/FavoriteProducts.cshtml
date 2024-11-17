@@ -1,0 +1,49 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.ProductModels;
+@model List<ProductForShowInSiteModel>
+@{
+    ViewData["Title"] = $"{Captions.Favorites}";
+}
+<div class="container mb-5">
+    <div dir="rtl" class="row mx-0 product-area">
+        <div class="title-section mb-4 mt-2 text-end">
+            <h5>
+                <i class="fa-light fa-bookmark"></i>
+                @Captions.Favorites
+            </h5>
+        </div>
+        <div class="col-12 col-lg-10  mobile-p-0 margin-auto mb-3">
+            <div class="row mx-0 product-list-area mobile-p-0">
+                @if (Model is not null)
+                {
+                    if (Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <!-- Start of Product Card -->
+                            <div dir="rtl" class="col-4 col-lg-3" id="@($"productItem{item.Id}")">
+                                <div class="product @(item.IsSold?"saled":"")">
+                                    <img onclick="getProductInfo('@item.Id')" class="product-img" src="@($"/Product/Image/{item.ImageName}")" alt="@item.Title">
+                                </div>
+                            </div>
+                            <!-- End of Product Card -->
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Product info Modal -->
+<partial name="_ProductInfoModal" />
+<partial name="_ContactInfoModal" />
+<partial name="_PhotoGalleryModal" />
+
+@section Header {
+    <link href="~/lib/simple-slide/slide.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script src="~/scripts/site/user.js"></script>
+ }

@@ -1,0 +1,122 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels.DocumentViewModels
+
+@model CreateOrEditPaymentViewModel
+@{
+    Layout = null;
+    string currentPersianDate = DateTime.Now.GeorgianToPersian(ShowMode.OnlyDate);
+    var persianPaymentDate = Model.PersianPaymentDate ?? Model.InstallmentDate.GeorgianToPersian(ShowMode.OnlyDate);
+
+
+    string status = string.Empty;
+    if (Model.SumOfRemainAmount < 0)
+        status = Captions.Creditor;
+    else if (Model.SumOfRemainAmount > 0)
+        status = Captions.Debtor;
+
+    string accountStatusToCurrentInstallmentValue = (Math.Abs(Model.SumOfRemainAmount) > 0 ? Math.Abs(Model.SumOfRemainAmount).ToString("N0") + " " + Captions.Tooman : Captions.FullPayment) + $" {status}";
+}
+<div id="paymentForm">
+    <div class="section row">
+        <div class="col-xs-12 form-group">
+            <h6>
+                <lable class="col-xs-12 col-sm-6 form-group">@Captions.DocumentNumber : @Model.DocumentNumber</lable>
+                <lable class="col-xs-12 col-sm-6 form-group">@Captions.InstallmentDate : @Model.InstallmentDate.GeorgianToPersian(ShowMode.OnlyDate)</lable>
+                <lable class="col-xs-12 col-sm-6 form-group">@Captions.InstallmentNumebr : @Model.InstallmentNumber @Captions.From @Model.InstallmentCount</lable>
+                <lable class="col-xs-12 col-sm-6 form-group">@Captions.InstallmentPrice : @Model.InstallmentAmount.ToString("N0") @Captions.Tooman</lable>
+                <lable class="col-xs-12 col-sm-6 form-group">@Captions.AccountStatusToCurrentInstallment : @accountStatusToCurrentInstallmentValue</lable>
+            </h6>
+        </div>
+
+    </div>
+    <hr />
+    <div id="div_createOrEditPayment">
+
+        <div id="form_createOrEditPayment">
+            <form action="/Dashboard/Document/CreateOrEditPayment" onsubmit="submitPaymentModalFormAndUpdateTarget(this, 'paymentList',documentId,'createOrEditPayment')">
+                <input asp-for="PaymentId" type="hidden" />
+                <input asp-for="InstallmentId" type="hidden" />
+                <input asp-for="IsDeletePaymentImage" type="hidden" />
+                <div class="section row">
+
+                    <div class="col-xs-12 col-sm-6 form-group">
+                        <label asp-for="PersianPaymentDate" class="col-xs-12 col-sm-12 star"></label>
+                        <div class="input-group" style="width:100%;">
+                            <input asp-for="PersianPaymentDate" value="@persianPaymentDate" onchange="fillPaymentDescriptionWithDelayDays()" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate','#createOrEditPayment');" onkeypress="return safeOnlyNumber($(this),event)" class="form-control date" autocomplete="off" />
+                        </div>
+                        <span asp-validation-for="PersianPaymentDate" class="text-danger"></span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 form-group">
+                        <label asp-for="PaymentAmount" class="col-xs-12 col-sm-12 star"></label>
+                        <div class="input-group">
+                            <input asp-for="PaymentAmount" onchange="fillPaymentDescriptionWithDelayDays()" onkeyup="monyFormat(this)" class="form-control" maxlength="15" onkeypress="return safeOnlyNumber($(this),event)" />
+                            <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
+                        </div>
+                        <span asp-validation-for="PaymentAmount" class="text-danger"></span>
+                    </div>
+                    <div class="col-xs-12  col-sm-6 form-group">
+                        <label asp-for="ImageFile" class="col-xs-12 col-sm-12"></label>
+                        <input asp-for="ImageFile" type="file" id="inputFile" class="form-control" accept="image/png,image/jpg,image/gif" onchange="previewImage(this,'previewImg','btnImgDel')">
+                        <button type="button" onclick="removePreviewImage('previewImg',this,'inputFile','IsDeletePaymentImage')" id="btnImgDel" class="btn btn-danger btn-icon btn-rounded btn-del-img" style=" @(string.IsNullOrEmpty(Model?.ImageUrl)?"display:none":"")"><i class="icon-menu7 fa fa-window-close"></i></button>
+                        <img id="previewImg" src="@Model?.ImageUrl" class="img-responsive img-border" style="max-height:100px; @(string.IsNullOrEmpty(Model?.ImageUrl)?"display:none":"")">
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 form-group">
+                        <div class="input-group">
+                            <label asp-for="IsPayInstallment"></label>
+                            <div class="checkbox checkbox-switchery">
+                                <label>
+                                    <input type="checkbox" onchange="togleShowElement(this,'installmntOptions')" onclick="fillPaymentDescriptionWithDelayDays()" class="switchery" asp-for="IsPayInstallment">
+                                </label>
+                            </div>
+                        </div>
+                        <span asp-validation-for="IsPayInstallment" class="text-danger"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="installmntOptions" style="display:none">
+                    <div class="section row">
+                        <div class="col-xs-12 col-sm-6 form-group">
+                            <label asp-for="DelayDay" class="col-xs-12 col-sm-12 star">@($"{Captions.Delay}({Captions.Day})")<span id="delayDayDescription"></span></label>
+                            <div class="input-group">
+                                <input asp-for="DelayDay" type="tel"  class="form-control" maxlength="3" onchange="fillPaymentDescriptionWithDelayDays(false)" onkeypress="return safeOnlyNumber($(this),event)" />
+                                <span class="input-group-addon"><i class="	fa fa-calculator"></i></span>
+                            </div>
+                            <span asp-validation-for="DelayDay" class="text-danger"></span>
+                        </div>
+                        </div>
+                    <div class="section row">
+                        <div class="col-xs-12 col-sm-6  form-group">
+                            <label asp-for="Description" class="col-xs-12 col-sm-12"></label>
+                            <div class="input-group">
+                                <textarea asp-for="Description" rows="4" class="form-control" autocomplete="off"></textarea>
+                                <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                            </div>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="col-xs-12 col-sm-6  form-group">
+                            <label asp-for="CustomerMessageContent" class="col-xs-12 col-sm-12 star"></label>
+                            <div class="input-group">
+                                <textarea asp-for="CustomerMessageContent" rows="4" class="form-control" autocomplete="off"></textarea>
+                                <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                            </div>
+                            <span asp-validation-for="CustomerMessageContent" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="section row">
+                    <div class="modal-footer text-right">
+                        <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.Register</span> <b><i class="fa fa-check-circle"></i></b></button>
+                        <button type="button" onclick="clear_form_createOrEditPayment()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div id="paymentList">
+            <partial name="_PaymentList" model="Model.Payments" />
+        </div>
+    </div>
+
+</div>

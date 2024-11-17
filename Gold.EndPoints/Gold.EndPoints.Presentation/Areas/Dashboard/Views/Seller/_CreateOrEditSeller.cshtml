@@ -1,0 +1,130 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.SellerViewModels;
+
+@model CreateOrEditSellerViewModel
+@{
+    Layout = null;
+}
+<form id="form_createOrEditSeller" action="/Dashboard/Seller/CreateOrEditSeller" onsubmit="submitByRefreshGrid(this, gridNameSeller,resetSellerForm)">
+    <div class="panel-body">
+        <input asp-for="SellerId" type="hidden" />
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="FullName" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="FullName" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="GalleryId" class="star"></label>
+                <select asp-for="GalleryId" asp-items="@Model.Galleries" class="form-control Select2">
+                    <option value="-1">@Captions.SelectIt</option>
+                </select>
+                <span asp-validation-for="GalleryId" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Mobile" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="Mobile" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                </div>
+                <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="UserName" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="UserName" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                </div>
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Password" class="@(Model.SellerId == 0?"star":"")"></label>
+                <div class="input-group">
+                    <input asp-for="Password" type="password" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-eye-slash active password-icon"></i></span>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="ConfirmPassword" class="@(Model.SellerId == 0?"star":"")"></label>
+                <div class="input-group">
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-eye-slash active password-icon"></i></span>
+                </div>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="ProductRegisterPerHourCount" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="ProductRegisterPerHourCount" type="text" class="form-control" onkeypress="return safeOnlyNumber($(this),event)">
+                    <span class="input-group-addon"><i class="fa fa-clock"></i></span>
+                </div>
+                <span asp-validation-for="ProductRegisterPerHourCount" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <input type="hidden" asp-for="IsDeleteImage" />
+                <label asp-for="Image"></label>
+                <input asp-for="Image" type="file" id="inputFile" class="form-control" onchange="previewImage(this,'previewImg','btnImgDel')">
+                <button type="button" onclick="removePreviewImage('previewImg',this,'inputFile','IsDeleteImage')" id="btnImgDel" class="btn btn-danger btn-icon btn-rounded btn-del-img" style=" @(string.IsNullOrEmpty(Model?.ImageName)?"display:none":"")"><i class="icon-menu7 fa fa-window-close"></i></button>
+                <span asp-validation-for="Image" class="text-danger"></span>
+                <img id="previewImg" src="@Model?.ImageNameUrl" style="max-height:100px; @(string.IsNullOrEmpty(Model?.ImageName)?"display:none":"")">
+            </div>
+           
+            <div class="col-xs-12 col-sm-6 col-md-1 form-group">
+                <div class="input-group">
+                    <label asp-for="HasAccessToRegisterProduct"></label>
+                    <div class="checkbox checkbox-switchery">
+                        <label>
+                            <input type="checkbox" class="switchery" asp-for="HasAccessToRegisterProduct">
+                        </label>
+                    </div>
+                </div>
+                <span asp-validation-for="HasAccessToRegisterProduct" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-1 form-group">
+                <div class="input-group">
+                    <label asp-for="IsActive"></label>
+                    <div class="checkbox checkbox-switchery">
+                        <label>
+                            <input type="checkbox" class="switchery" asp-for="IsActive">
+                        </label>
+                    </div>
+                </div>
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+			</div> <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+				<div class="input-group">
+					<label asp-for="HasAccessToRegisterLoan"></label>
+					<div class="checkbox checkbox-switchery">
+						<label>
+							<input type="checkbox" class="switchery" asp-for="HasAccessToRegisterLoan">
+						</label>
+					</div>
+				</div>
+				<span asp-validation-for="HasAccessToRegisterLoan" class="text-danger"></span>
+			</div>
+		</div>
+
+        <div class="section row">
+            @if (Model != null)
+            {
+                if (Model.SellerId > 0)
+                {
+                    <div id="alertDialog" class="col-xs-12 col-sm-6 col-md-12 form-group">
+                        <div class="alert alert-warning">
+                            <p>@UserMessages.IfYouNotChangePasswordLeaveEmptyInput</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+    </div><div class="panel-footer text-right">
+        <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+        <button type="button" onclick="resetSellerForm()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+    </div>@*onclick="loadData('/Dashboard/Seller/CreateOrEditSeller?id=0', 'form_seller')"*@
+</form>

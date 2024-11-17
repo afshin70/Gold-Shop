@@ -1,0 +1,67 @@
+﻿@model ModernModalModel
+
+@if (Model is not null)
+{
+    string modalSize = string.Empty;
+
+    switch (Model.Size)
+    {
+        case ModernModalSize.Lg:
+            modalSize = "modal-lg";
+            break;
+        case ModernModalSize.Sm:
+            modalSize = "modal-sm";
+            break;
+        case ModernModalSize.Md:
+            modalSize = "modal-md";
+            break;
+        case ModernModalSize.Xl:
+            modalSize = "modal-xl";
+            break;
+        default:
+            modalSize = string.Empty;
+            break;
+    }
+
+    <div class="modal fade @Model.ExtraClass" id="@Model.Id" @(Model.DisableClickOutside?"data-bs-backdrop='static'":string.Empty) tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog @modalSize modal-dialog-centered modal-dialog-scrollable">
+            <div dir="rtl" class="modal-content">
+                <div class="modal-header d-flex">
+                    @if (Model.IsShowHeader)
+                    {
+                        <h5 class="modal-title d-flex" id="exampleModalLabel">
+                            @if (Model.IsHtmlHeader)
+                            {
+                                @Html.Raw(Model.HeaderHtmlContent)
+                            }
+                            @if (!string.IsNullOrEmpty(Model.Title))
+                            {
+                                <span>@Model.Title</span>
+                            }
+                            @if (Model.IsShowBookmarkButtonInHeader)
+                            {
+                                <i class="fa-light fa-bookmark ms-3" onclick="@Model.BookmarkButtonJsFn"></i>
+                            }
+                            @if (Model.IsShowShareButtonInHeader)
+                            {
+                                <i data-href="@Model.ShareUrl" data-title="@Model.ShareUrlTitle" class="fa-light fa-share-nodes"> </i>
+                            }
+                        </h5>
+                    }
+                    @if (Model.IsShowCloseIcon)
+                    {
+                        <button type="button" class="btn-close p-0 me-auto ms-0" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fa-solid align-top fa-close"></i>
+                        </button>
+                    }
+                </div>
+                <div id="@($"{Model.Id}_body")" class="modal-body pt-0">
+                    @if (!string.IsNullOrEmpty(Model.BodyContent))
+                    {
+                        <text>@Html.Raw(Model.BodyContent)</text>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

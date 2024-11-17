@@ -1,0 +1,282 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.SendMessageViewModels;
+@using Gold.ApplicationService.Contract.Abstractions;
+@using Gold.ApplicationService.Contract.Interfaces;
+@using Gold.SharedKernel.Tools;
+@model SendMessageViewModel
+
+@inject ICustomerService _customerService
+@inject IGalleryService _galleryService
+
+@{
+    var docStatusList = _customerService.GetDocumentStatusSelectListItems(1);
+    var collateralsTypesList = await _customerService.GetCollateralsTypeSelectListItemsAsync();
+
+    var genderList = EnumHelper<GenderType>.GetAsList().Select(x => new SelectListItem
+            {
+                Text = x.GetDisplayName().ToString(),
+                Value = x.ToString()
+            }).ToList();
+    var accountStatusList = EnumHelper<AccountStatusType>.GetAsList().Select(x => new SelectListItem
+            {
+                Text = x.GetDisplayName().ToString(),
+                Value = x.ToString()
+            }).ToList();
+    var documentStatusList = EnumHelper<DocumentStatus>.GetAsList().Select(x => new SelectListItem
+            {
+                Selected=x==DocumentStatus.Active,
+                Text = x.GetDisplayName().ToString(),
+                Value = x.ToString()
+            }).ToList();
+
+    var nationalityList = EnumHelper<NationalityType>.GetAsList().Select(x => new SelectListItem
+            {
+                Text = x.GetDisplayName().ToString(),
+                Value = x.ToString()
+            }).ToList();
+
+    //List<byte> dayList = new List<byte>();
+    //for (byte i = 1; i <= 29; i++)
+    //    dayList.Add(i);
+    string currentPersianDate = DateTimeTools.GeorgianToPersian(DateTime.Now, ShowMode.OnlyDate);
+
+    List<byte> dayList = new List<byte>();
+    for (byte i = 1; i <= 31; i++)
+        dayList.Add(i);
+
+    List<byte> monthList = new List<byte>();
+    for (byte i = 1; i <= 12; i++)
+        monthList.Add(i);
+
+
+    List<int> yearList = new List<int>();
+    for (int i = 1300; i <= int.Parse(currentPersianDate.Split('/')[0]); i++)
+        yearList.Add(i);
+
+    var documentDayList = dayList.Where(x => x <= 29).Select(x => new SelectListItem
+            {
+                Text = x.ToString(),
+                Value = x.ToString()
+            }).ToList();
+
+    var birthDayList = dayList.Select(x => new SelectListItem
+            {
+                Text = x.ToString(),
+                Value = x.ToString()
+            }).ToList();
+
+    var birthDateMonthList = monthList.Select(x => new SelectListItem
+            {
+                Text = x.ToString(),
+                Value = x.ToString()
+            }).ToList();
+
+    var birthDateYearList = yearList.Select(x => new SelectListItem
+            {
+                Text = x.ToString(),
+                Value = x.ToString()
+            }).ToList();
+
+    var galleryList = await _galleryService.GetAllGalleriesAsync();
+    Layout = null;
+}
+
+
+<form id="" action="/Dashboard/SendMessage/Send" onsubmit="submitFormAndGetResult(this, 'customerList')" method="post">
+    <div class="panel-body">
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="FullName"></label>
+                <div class="input-group">
+                    <input asp-for="FullName" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="GenderType"></label>
+                <select asp-for="GenderType" asp-items="genderList" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="GenderType" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="NationalityType"></label>
+                <select asp-for="NationalityType" asp-items="nationalityList" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="NationalityType" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="UserStatus"></label>
+                <select asp-for="UserStatus" class="form-control Select2">
+                    <option  value="">@Captions.All</option>
+                    <option value="false">@Captions.DeActive</option>
+                    <option selected value="true">@Captions.Active</option>
+                </select>
+                <span asp-validation-for="UserStatus" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="FromRegisterDate"></label>
+                <div class="input-group">
+                    <input asp-for="FromRegisterDate" type="text" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="FromRegisterDate" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="ToRegisterDate"></label>
+                <div class="input-group">
+                    <input asp-for="ToRegisterDate" type="text" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="ToRegisterDate" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="FromBirthDateDay"></label>
+                <select asp-for="FromBirthDateDay" asp-items="birthDayList" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="FromBirthDateDay" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="ToBirthDateDay"></label>
+                <select asp-for="ToBirthDateDay" asp-items="birthDayList" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="ToBirthDateDay" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="FromBirthDateMonth"></label>
+                <select asp-for="FromBirthDateMonth" asp-items="birthDateMonthList" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="FromBirthDateMonth" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="ToBirthDateMonth"></label>
+                <select asp-for="ToBirthDateMonth" asp-items="birthDateMonthList" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="ToBirthDateMonth" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="FromBirthDateYear"></label>
+                <select asp-for="FromBirthDateYear" asp-items="birthDateYearList" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="FromBirthDateYear" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="ToBirthDateYear"></label>
+                <select asp-for="ToBirthDateYear" asp-items="birthDateYearList" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="ToBirthDateYear" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="AccountStatusType"></label>
+                <select asp-for="AccountStatusType" asp-items="accountStatusList" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="AccountStatusType" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="DocumentStatus"></label>
+                <select asp-for="DocumentStatus" asp-items="documentStatusList" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="DocumentStatus" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="CollateralTypeId"></label>
+                <select asp-for="CollateralTypeId" asp-items="collateralsTypesList.Data" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="CollateralTypeId" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="GalleryId"></label>
+                <select asp-for="GalleryId" asp-items="galleryList.Data" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="GalleryId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="UnpaidInstallmentFromDate"></label>
+                <div class="input-group">
+                    <input asp-for="UnpaidInstallmentFromDate" type="text" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="UnpaidInstallmentFromDate" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="UnpaidInstallmentToDate"></label>
+                <div class="input-group">
+                    <input asp-for="UnpaidInstallmentToDate" type="text" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="UnpaidInstallmentToDate" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="DocumentFromDate"></label>
+                <div class="input-group">
+                    <input asp-for="DocumentFromDate" type="text" onchange="DocumentDateValidate(this)" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="DocumentFromDate" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="DocumentToDate"></label>
+                <div class="input-group">
+                    <input asp-for="DocumentToDate" type="text" onchange="DocumentDateValidate(this)" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="DocumentToDate" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="FromInstallmentAmount" class="col-xs-12 col-sm-12 "></label>
+                <div class="input-group">
+                    <input asp-for="FromInstallmentAmount" onkeyup="monyFormat(this)" class="form-control" onkeypress="return safeOnlyNumber($(this),event)" />
+                    <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
+                </div>
+                <span asp-validation-for="FromInstallmentAmount" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 form-group">
+                <label asp-for="ToInstallmentAmount" class="col-xs-12 col-sm-12 "></label>
+                <div class="input-group">
+                    <input asp-for="ToInstallmentAmount" onkeyup="monyFormat(this)" class="form-control" onkeypress="return safeOnlyNumber($(this),event)" />
+                    <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
+                </div>
+                <span asp-validation-for="ToInstallmentAmount" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+    <div class="panel-footer text-right">
+        <button type="submit" class="btn btn-info btn-labeled"><span>@Captions.Search</span> <b><i class="fa fa-search"></i></b></button>
+   </div>
+</form>
+
+
+
+@section Stylesheet{
+    <link href="~/lib/persiandatetimepicker/persiandatepicker.min.css" rel="stylesheet" />
+}
+@section Scripts{
+    <script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+    <script src="~/lib/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="~/lib/persiandatetimepicker/persiandatepicker.min.js"></script>
+    
+ }

@@ -1,0 +1,56 @@
+﻿@*@using Eskele.Core.Models.Identity.UserProfile
+@using Eskele.Services.Identity
+@using Microsoft.AspNetCore.Identity
+@inject IUserService _userService*@
+
+@{
+    //long userId = 0;
+    //if (User.Identity.IsAuthenticated)
+    //   userId = User.Identity.GetUserId<long>();
+    //UserProfileImageModel userInfo = await _userService.GetProfileImageAsync(userId);
+}
+
+<div class="sidebar-user-material">
+    <div class="category-content">
+        <div class="sidebar-user-material-content">
+            @*<a href="#">
+                @if (userInfo.PictureId < 1)
+                {
+                    <img src="~/logo/profile/default.jpg" class="img-circle img-responsive" alt="avatar" />
+                }
+                else
+                {
+                    <img src="~/Download/UserProfile/@($"{userInfo.PictureId}{userInfo.ImageProfileExtension}")" alt="avatar" class="img-circle img-responsive" />
+                }
+            </a>*@
+            <h6 class="CompanyNameId"></h6>
+            <span class="text-size-small">@*Santa Ana, CA*@</span>
+        </div>
+
+        <div class="sidebar-user-material-menu">
+            <a href="#user-nav" data-toggle="collapse">
+                <span>@Captions.MyAccount</span> <i class="caret"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="navigation-wrapper collapse" id="user-nav">
+        <ul class="navigation">
+            <li>
+                <a onclick="loadDataInModal('/ChangeUserPassword','changePasswordModal')">
+                    <i class="icon-key"></i> <span>@Captions.ChangePassword</span>
+                </a>
+            </li>
+            @*<li><a href="#"><i class="icon-coins"></i> <span>My balance</span></a></li>
+                <li><a href="#"><i class="icon-comment-discussion"></i> <span><span class="badge bg-teal-400 pull-right">58</span> Messages</span></a></li>*@
+            <li class="divider"></li>
+            @*<li><a href="#"><i class="icon-cog5"></i> <span>Account settings</span></a></li>*@
+            <li>
+                <a href="/LogOut">
+                    <i class="icon-switch2"></i> <span>@Captions.SignOut</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+

@@ -1,0 +1,58 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels.CustomerPaymentsViewModel
+@model RejectionCustomerPaymentViewModel
+@{
+	Layout = null;
+	string currentPersianDate = DateTime.Now.GeorgianToPersian(ShowMode.OnlyDate);
+}
+<div class="section row">
+	<div class="col-xs-12 form-group">
+		<h6>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.DocumentNumber : @Model.DocumentNumber</lable>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.InstallmentPrice : @Model.InstallmentAmount.ToString("N0") @Captions.Tooman</lable>
+			<lable class="col-xs-12 col-sm-6  form-group">@Captions.PaymentRegisterTime : @Model.RegisterPaymentDateTime</lable>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.CustomerDescription : @Model.CustomerDescription</lable>
+		</h6>
+	</div>
+
+</div>
+<hr />
+
+<div class="row" id="div_createOrEditPayment">
+
+	<div id="form_createOrEditPayment">
+		@if (Model.StatusType==ConfirmStatusType.Rejection)
+		{
+				<div class="section row">
+					<div class="col-xs-12 col-sm-12 col-md-12 form-group">
+						<label asp-for="Description" class="col-xs-12 col-sm-12 star"></label>
+						<div class="input-group">
+							<textarea disabled asp-for="Description" class="form-control " rows="3" autocomplete="off"></textarea>
+							<span class="input-group-addon"><i class="fa fa-pen"></i></span>
+						</div>
+					</div>
+				</div>
+
+		}else
+		{
+			<form action="/Dashboard/CustomerPayment/RejectPayment" onsubmit="submitRejectionPaymentModalFormAndUpdateTarget(this, 'rejectionustomerPaymentModal','grid_paymentsInPendingConfirmationGrid')">
+			<input asp-for="CustomerPaymentId" type="hidden" />
+			<div class="section row">
+				<div class="col-xs-12 col-sm-12 col-md-12 form-group">
+					<label asp-for="Description" class="col-xs-12 col-sm-12 star"></label>
+					<div class="input-group">
+						<textarea asp-for="Description" class="form-control " rows="3" autocomplete="off"></textarea>
+						<span class="input-group-addon"><i class="fa fa-pen"></i></span>
+					</div>
+					<span asp-validation-for="Description" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="section row">
+				<div class="modal-footer text-right">
+					<button type="submit" class="btn btn-danger btn-labeled"><span>@Captions.Rejection</span> <b><i class="fa fa-check-circle"></i></b></button>
+				</div>
+			</div>
+		</form>	
+		}
+		
+	</div>
+</div>

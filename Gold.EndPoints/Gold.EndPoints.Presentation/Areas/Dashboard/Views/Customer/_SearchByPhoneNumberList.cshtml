@@ -1,0 +1,87 @@
+﻿@model SearchCustomerByPhoneNumberViewModel
+@{
+    Layout = null;
+}
+
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <span>@Captions.List @Captions.PhoneNumber</span>
+        </h6>
+        <div class="heading-elements">
+            <button type="button" onclick="exportFile('/Dashboard/Customer/InitSearchByPhoneNumberReportData',GetCustomerByPhoneNumberData(),'/Dashboard/Customer/SearchByPhoneNumberExportExcel')" class="btn  btn-labeled"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+            <button type="button" onclick="exportFile('/Dashboard/Customer/InitSearchByPhoneNumberReportData',GetCustomerByPhoneNumberData(),'/Dashboard/Customer/SearchByPhoneNumberExportPdf')" class="btn btn-labeled"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+
+            <ul class="icons-list left-align">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="k-rtl ">
+            @(Html.Kendo().Grid<CustomerPhoneNumberModel>()
+                .Name("grid_customersByPhoneNumberGrid")
+                .Columns(columns =>
+                {
+                    columns.Bound("").ClientTemplate("#= renderRecordNumber(data,'grid_customersByPhoneNumberGrid') #")
+                    .Title("#")
+                    .Width(40);
+
+                    columns.Bound(c => c.FullName)
+                    .Sortable(true)
+                    .Title(Captions.FullName)
+                    .Filterable(true)
+                    .Width(90);
+
+                    columns.Bound(c => c.Mobile)
+                    .Sortable(true)
+                    .Title(Captions.Mobile)
+                    .Filterable(true)
+                    .Width(90);
+
+                    columns.Bound(c => c.EssentialTel)
+                    .Sortable(true)
+                    .Title(Captions.EssentialTel)
+                    .Filterable(true)
+                    .Width(100);
+
+                    columns.Bound(c => c.EssentialTelRatio)
+                    .Sortable(false)
+                    .Title(Captions.EssentialTelRatio)
+                    .Filterable(false)
+                    .Width(100);
+                })
+                .Sortable()
+                .Selectable()
+                .Scrollable(x => x.Height("auto"))
+                .Filterable()
+                .HtmlAttributes(new { @class = "" })
+                .Pageable(pageable => pageable
+                .PageSizes(new[] { 10, 50, 100, 500 })
+                .Info(true)
+                .Enabled(true)
+                .PreviousNext(true)
+                .Input(true)
+                .Numeric(true)
+                .ButtonCount(8)
+                .Refresh(true)
+                )
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .Sort(x => x.Add(y => y.FullName))
+                .Read(read => read.Action("CustomerByPhoneNumberList_Read", "Customer").Data("GetCustomerByPhoneNumberData"))
+                ).Events(ev => ev.DataBound("onDataBound"))
+                )
+        </div>
+
+
+        <script>
+            function GetCustomerByPhoneNumberData() {
+                return {
+                    PhoneNumber: $("#PhoneNumber").val()
+                }
+            }
+        </script>
+    </div>
+</div>
+

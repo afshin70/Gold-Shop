@@ -1,0 +1,136 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels.CustomerPymentsModel
+@{
+    Layout = null;
+}
+
+<div class="k-rtl ">
+    @(Html.Kendo().Grid<PaymentReceiptsInPendingConfirmationModel>()
+        .Name("grid_paymentsInPendingConfirmationGrid")
+        .Columns(columns =>
+        {
+            columns.Bound("").ClientTemplate("#=renderRecordNumber(data,gridName) #")
+            .Title("#")
+            .Width(40);
+
+            columns.Bound(c => c.DocumentNumber)
+            .Sortable(true)
+            .Title(Captions.DocumentNumber)
+            .Filterable(true)
+            .Width(75);
+
+            columns.Bound(c => c.FullName)
+            .Sortable(true)
+            .Title(Captions.FullName)
+            .Filterable(true)
+            .Width(100);
+
+            columns.Bound(c => c.PersianDocumentDate)
+            .Sortable(false)
+            .Title(Captions.DocumentDate)
+            .Filterable(false)
+            .Width(75);
+
+            columns.Bound(c => c.InstallmentAmount)
+            .Sortable(true)
+            .ClientTemplate("#=GetPriceStyle(InstallmentAmount)#")
+            .Title(Captions.InstallmentPrice)
+            .Filterable(true)
+            .Width(80);
+
+            columns.Bound(c => c.PersianPayDate)
+            .Sortable(false)
+            .Title(Captions.PayDateTime)
+            .ClientTemplate(
+            "#if(PersianPayDate!=null){#" +
+            "<div class=\"text-center\"><span>#=PersianPayDate#</span><br><span>#=PersianPayTime#</span></div>" +
+            "#}#"
+            )
+            .Filterable(false)
+            .Width(67);
+
+            columns.Bound(c => c.PayAmount)
+            .Sortable(true)
+            .ClientTemplate(
+            "#if(PayAmount!=null){#" +
+            "<div class=\"text-center\"><span>#=GetPriceStyle(PayAmount)#</span></div>" +
+            "#}#"
+            )
+            .Title(Captions.PayAmount)
+            .Filterable(true)
+            .Width(80);
+
+            columns.Bound(c => c.ImageName)
+            .Sortable(false)
+            .Filterable(false)
+            .Title(Captions.ReceiptImage)
+            .ClientTemplate(
+            "#if(ImageName!=null){#" +
+            $"<div class='text-center'><a href='/Dashboard/CustomerPayment/GetCustomerPaymentImage?imageName=#=ImageName#' target='_blank' title='{Captions.ReceiptImage}'>{Captions.ViewReceipt}</a></div></>" +
+            "#}#"
+            )
+            .Width(80);
+
+            columns.Bound(c => c.PersianRegisterDate)
+            .Sortable(false)
+            .Title(Captions.RegisterDate)
+            .Filterable(false)
+            .Width(80);
+
+            columns.Bound(c => c.StatusDescription)
+            .Sortable(false)
+            .Title(Captions.Status)
+            .Filterable(false)
+            .Width(75);
+
+            columns.Bound(c => c.Id)
+            .ClientTemplate("<div class='text-center'>" +
+            "#if(StatusType==1){#" +
+            $"<button class='btn bg-warning' onclick='loadDataInModal(\"/Dashboard/CustomerPayment/RejectPayment?id=#=Id#\",\"rejectionustomerPaymentModal\")'  title='{Captions.Rejection}'><i class='fas fa-times-circle'></i></button>" +
+            "#}else{#" +
+            $"<button class='btn btn-info' onclick='loadDataInModal(\"/Dashboard/CustomerPayment/RejectPayment?id=#=Id#\",\"rejectionustomerPaymentModal\")'  title='{Captions.Rejection}'><i class='fa fa-eye'></i></button>" +
+            "#}#"+
+            "#if(StatusType==1){#"+
+            $"<button class='btn btn-success' onclick='loadDataInModal(\"/Dashboard/CustomerPayment/ConfirmPayment?id=#=Id#\",\"confirmCustomerPaymentModal\")'  title='{Captions.Detail}'><i class='fa fa-check'></i></button>" +
+           "#}#"+
+            $"<button class='btn btn-danger' onclick='getRequestWithConfirmRefreshGrid(\"/Dashboard/CustomerPayment/RemoveCustomerPayment?id=#=Id#\",\"{UserMessages.AreYouSureForDelete}\",gridName)' title='{Captions.Delete}'><i class='fa fa-trash'></i></button>" +
+            "</div>")
+            .Title(Captions.Operation)
+            .Width(150)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+        })
+        .Sortable()
+        .Selectable()
+        .Scrollable(x => x.Height("auto"))
+        .Filterable()
+        .HtmlAttributes(new { @class = "" })
+        .Pageable(pageable => pageable
+        .PageSizes(new[] { 10, 50, 100, 500 })
+        .Info(true)
+        .Enabled(true)
+        .PreviousNext(true)
+        .Input(true)
+        .Numeric(true)
+        .ButtonCount(8)
+        .Refresh(true)
+        )
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Read(read => read.Action("PendingConfirmationList_Read", "CustomerPayment").Data("GetData"))
+        ).Events(ev => ev.DataBound("onDataBound"))
+        )
+</div>
+<script>
+    function GetData() {
+        return {
+
+            DocumentDay: $("#DocumentDay").val(),
+            DocumentNumber: $("#DocumentNumber").val(),
+            FromDate: $("#FromDate").val(),
+            ToDate: $("#ToDate").val(),
+            ConfirmStatus: $("#ConfirmStatus").val()
+        }
+    }
+</script>

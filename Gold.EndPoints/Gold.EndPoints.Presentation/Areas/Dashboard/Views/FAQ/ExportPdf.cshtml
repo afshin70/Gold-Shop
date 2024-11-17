@@ -1,0 +1,64 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.FAQModels;
+
+@model List<FAQModel>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="fa-IR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/themes/default/css/print.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="main">
+        <table border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td class="td-33 pb-15 right">
+                    </td>
+                    <td class="td-33 pb-15 center">
+                        <h3>@Captions.List @Captions.FAQ</h3>
+                        @*<img src="~/Images/logo.png" />*@
+                    </td>
+                    <td class="td-33 pb-15 left rtl">
+                        <h3>@Captions.Date : @DateTime.Now.ToPersianDateString()</h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        @if (Model != null && Model.Any())
+        {
+            <table border="0" cellspacing="0" cellpadding="0" class="table-border-print color center">
+                <thead>
+                    <tr>
+                        <th class="">#</th>
+                        <th class=""><b>@Captions.Question</b></th>
+                        <th class=""><b>@Captions.Answer</b></th>
+                        <th class=""><b>@Captions.Category</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        int row = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="">@row</td>
+                                <td class="">@item.Question</td>
+                                <td class="">@item.Answer</td>
+                                <td class="">@item.Category</td>
+                            </tr>
+                            row++;
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+    <div class="clearfix"></div>
+</body>
+</html>

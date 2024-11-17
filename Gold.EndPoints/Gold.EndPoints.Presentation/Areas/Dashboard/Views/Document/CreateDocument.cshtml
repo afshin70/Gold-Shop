@@ -1,0 +1,572 @@
+﻿@using Gold.ApplicationService.Contract.Abstractions;
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels.DocumentViewModels;
+@using Gold.ApplicationService.Contract.Interfaces
+@using Gold.SharedKernel.Tools;
+@inject IGalleryService _galleryService
+@inject ICustomerService _customerService
+@inject IProvinceService _provinceService
+@model CreateDocumentViewModel
+@{
+    ViewData["Title"] = Captions.NewDocument;
+    //Layout = null;
+    var galleriesResult = await _galleryService.GetActiveGalleriesAsync(0);
+    var collateralTypes = await _customerService.GetCollateralTypesAsync(0);
+    string currentPersianDate = DateTimeTools.GeorgianToPersian(DateTime.Now, ShowMode.OnlyDate);
+
+    List<SelectListItem> nationalityList = Enum.GetValues(typeof(NationalityType)).Cast<NationalityType>().Select(v => new SelectListItem
+            {
+                Selected = (v == NationalityType.Iranian),
+                Text = v.GetDisplayName(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
+    List<SelectListItem> genderList = Enum.GetValues(typeof(GenderType)).Cast<GenderType>().Select(v => new SelectListItem
+            {
+                Text = v.GetDisplayName(),
+                Value = ((int)v).ToString()
+            }).ToList();
+    var provinceListResult = await _provinceService.GetAllProvincesSelectListItemAsync(0, default);
+    ViewBag.SelectedMenu = (byte)ManagerPermission.NewDocument;
+}
+
+<ul class="stepy-header">
+    <li id="step1_li" style="cursor: default;" class="stepy-active"><div>1</div><span>@Captions.DocumentBasicInformation</span></li>
+    <li id="step2_li" style="cursor: default;" class=""><div>2</div><span>@Captions.DocumentOwnerInformation</span></li>
+    <li id="step3_li" style="cursor: default;" class=""><div>3</div><span>@Captions.DocumentInformation</span></li>
+    <li id="step4_li" style="cursor: default;" class=""><div>4</div><span>@Captions.PreviewAndRegister</span></li>
+</ul>
+<form id="frmCreateDocument">
+    <div id="step1" style="" class="panel panel-flat">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <span> @Captions.DocumentBasicInformation</span>
+            </h6>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="section row">
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label class="star">@Captions.DocumentNumber</label>
+                    <div class="input-group">
+                        <input id="DocumentNumber" type="tel" class="form-control" onkeypress="return safeOnlyNumber($(this),event)" autocomplete="off" maxlength="8">
+                        <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                    </div>
+                    <span id="DocumentNumber_val" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="section row">
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label class="star">@Captions.DocumentDate</label>
+                    <div class="input-group">
+                        <input id="DocumentDate" type="text" onchange="DocumentDateValidate(this)" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" autocomplete="off" class="form-control">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                    <span id="DocumentDate_val" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="section row">
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label asp-for="Nationality" class="star"></label>
+                    <select asp-for="Nationality" asp-items="@nationalityList" class="form-control Select2">
+                        <option selected value="">@Captions.SelectIt</option>
+                    </select>
+                </div>
+            </div>
+            <div class="section row">
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label class="star">@Captions.National_Identification_Code</label>
+                    <div class="input-group">
+                        <input id="NationalCode" type="text" class="form-control" autocomplete="off">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    </div>
+                    <span id="NationalCode_val" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer text-right">
+            <button type="button" onclick="processStep1('@UserMessages.ConfirmDocDateMessageForCreate')" class="btn btn-success btn-labeled"><span>@Captions.Continue</span> <b><i class="fa fa-check-circle"></i></b></button>
+        </div>
+    </div>
+
+
+    <div id="step2-1" style="display:none" class="panel panel-flat">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <span> @Captions.DocumentOwnerInformation</span>
+            </h6>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="overflow-auto">
+                <table class="sanad">
+                    <tr>
+                        <td class="col-xs-4"><label class="col-xs-6 col-md-4">@Captions.FullName :</label> <label id="step2_1_fullname">-</label></td>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-4">@Captions.National_Identification_Code :</label> <label id="step2_1_nationalCode"></label></td>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-4">@Captions.FatherName :</label> <label id="step2_1_fatherName"></label></td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-4">@Captions.Mobile :</label><label id="step2_1_mobile"></label></td>
+                        <td class="col-xs-4"><label class="col-xs-6 col-md-4">@Captions.EssentialTel :</label><label id="step2_1_essentialTel"></label></td>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-5">@Captions.EssentialTelRatio :</label><label id="step2_1_essentialTelRatio"></label></td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-4">@Captions.City :</label><label id="step2_1_province"></label><label id="step2_1_city"></label></td>
+                        <td class="col-xs-8" colspan="2"><label class="col-xs-6 col-md-2">@Captions.Address :</label><label id="step2_1_address"></label></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="section row">
+                <div class="col-xs-12  form-group" id="step2_1_div_documents">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer text-right">
+            <button type="button" onclick="processStep2_1()" class="btn btn-success btn-labeled"><span>@Captions.Continue</span> <b><i class="fa fa-check-circle"></i></b></button>
+            <button type="button" onclick='editCustomerInfo("editCustomerInfo")' class="btn btn-info btn-labeled"> @Captions.EditCustomer<b><i class="fa fa-pen"></i></b></button>
+            <button type="button" onclick="showStep1()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Back</span> <b><i class="fa fa-times-circle"></i></b></button>
+        </div>
+    </div>
+
+    <div id="step2-2" style="display:none" class="panel panel-flat">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <span> @Captions.DocumentOwnerInformation</span>
+            </h6>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="section row">
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label class="star">@Captions.FullName</label>
+                    <div class="input-group">
+                        <input id="FullName" type="text" class="form-control" autocomplete="off" maxlength="100">
+                        <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label class="">@Captions.Gender</label>
+                    <select id="Gender" asp-items="@genderList" class="form-control Select2">
+                        <option selected value="">@Captions.SelectIt</option>
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label class="star">@Captions.FatherName</label>
+                    <div class="input-group">
+                        <input id="FatherName" name="FatherName" type="text" class="form-control" maxlength="100">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label class="star">@Captions.Mobile</label>
+                    <div class="input-group">
+                        <input id="Mobile" type="tel" onkeypress="return safeOnlyNumber($(this),event)" class="form-control" maxlength="11">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label class="star">@Captions.EssentialTel</label>
+                    <div class="input-group">
+                        <input id="EssentialTel" type="tel" onkeypress="return safeOnlyNumber($(this),event)" class="form-control" maxlength="50">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label>@Captions.EssentialTelRatio</label>
+                    <div class="input-group">
+                        <input id="EssentialTelRatio" type="text" class="form-control" maxlength="100" autocomplete="off">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label class="">@Captions.BirthDate</label>
+                    <div class="input-group">
+                        <input id="BirthDate" type="text" maxlength="10" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" autocomplete="off" class="form-control date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label class="">@Captions.JobTitle</label>
+                    <div class="input-group">
+                        <input id="JobTitle" type="text" class="form-control" autocomplete="off" maxlength="100">
+                        <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label class="">@Captions.PostalCode</label>
+                    <div class="input-group">
+                        <input id="PostalCode" type="tel" class="form-control" onkeypress="return safeOnlyNumber($(this),event)" autocomplete="off" maxlength="10">
+                        <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label>@Captions.Province</label>
+                    <select id="proviances" asp-items="@provinceListResult.Data" class="form-control Select2" onchange="fillSelectList('proviances', 'CityId', '/Dashboard/BaseData/Cities')">
+                        <option selected value="">@Captions.SelectIt</option>
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label>@Captions.City</label>
+                    <select id="CityId" class="form-control Select2">
+                        <option value="">@Captions.SelectIt</option>
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label>@Captions.Address</label>
+                    <div class="">
+                        <textarea id="Address" class="form-control" rows="2" cols="70" maxlength="500" autocomplete="off"> </textarea>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label asp-for="CardNumber"></label>
+                    <div class="input-group">
+                        <input asp-for="CardNumber" type="text" class="form-control number" maxlength="19" onkeypress="return maskInput('0000-0000-0000-0000')" autocomplete="off">
+                        <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label asp-for="CardNumberOwner"></label>
+                    <div class="input-group">
+                        <input asp-for="CardNumberOwner" type="text" class="form-control" autocomplete="off">
+                        <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer text-right">
+            <button type="button" onclick="processStep2_2()" class="btn btn-success btn-labeled"><span>@Captions.Continue</span> <b><i class="fa fa-check-circle"></i></b></button>
+            <button type="button" onclick="showStep1()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Back</span> <b><i class="fa fa-times-circle"></i></b></button>
+        </div>
+    </div>
+
+    <div id="step3" style="display:none" class="panel panel-flat">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <span> @Captions.DocumentInformation</span>
+            </h6>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="overflow-auto">
+                <table class="sanad">
+                    <tr>
+                        <td class="col-xs-4"><label class="col-xs-6 col-md-4">@Captions.FullName :</label> <label id="lable_fullname"></label></td>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-4">@Captions.National_Identification_Code :</label> <label id="lable_nationalCode"></label></td>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-4">@Captions.Date :</label> <label id="lable_documentDate"></label></td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-4">@Captions.Mobile :</label><label id="lable_mobile"></label></td>
+                        <td class="col-xs-4"><label class="col-xs-6 col-md-4">@Captions.EssentialTel :</label><label id="lable_essentialTel"></label></td>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-4">@Captions.DocumentNumber :</label><label id="lable_documentNumebr"></label></td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-4">
+                            <label class="col-xs-12 col-sm-3 star">@Captions.Remain (@Captions.Tooman)</label> <div class="col-xs-12 col-sm-9">
+                                <div class="input-group">
+                                    <input id="RemainAmount" onkeyup="monyFormat(this)" oninput="factorAmountCalculator()" onkeypress="return safeOnlyNumber($(this),event)" maxlength="15" name="RemainAmount" type="text" class="form-control">
+                                    <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
+                                </div>
+                                <span class="text-danger" id="RemainAmountValResult"></span>
+                            </div>
+                        </td>
+                        <td class="col-xs-4">
+                            <label class="col-xs-12 col-sm-3 star">@Captions.Prepayment (@Captions.Tooman)</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="input-group">
+                                    <input type="text" onkeyup="monyFormat(this)" oninput="factorAmountCalculator()" onkeypress="return safeOnlyNumber($(this),event)" id="PrepaymentAmount" maxlength="15" name="PrepaymentAmount" class="form-control">
+                                    <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
+                                </div>
+                                <span class="text-danger" id="PrepaymentAmountValResult"></span>
+                            </div>
+                        </td>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-4">@Captions.InvoiceAmount (@Captions.Tooman) :</label><label id="factorAmount"></label></td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-4">
+                            <label class="col-xs-12 col-sm-3 star">@Captions.InstallmentCount</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="input-group">
+                                    <input type="tel" id="InstallmentCount" onchange="InstallmentCountValidate()" oninput="InstallmentAmountCalculator()" onkeypress="return safeOnlyNumber($(this),event)" maxlength="3" name="InstallmentCount" class="form-control">
+                                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                                </div>
+                                <span class="text-danger" id="InstallmentCountValResult"></span>
+                            </div>
+                        </td>
+                        <td class="col-xs-4">
+                            <label class="col-xs-12 col-sm-3 star">@Captions.InstallmentAmount (@Captions.Tooman)</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="input-group">
+                                    <input type="text" id="InstallmentAmount" onkeyup="monyFormat(this)" onkeypress="return safeOnlyNumber($(this),event)" maxlength="15" name="InstallmentAmount" class="form-control">
+                                    <input type="hidden" id="InstallmentAmountSystem" name="InstallmentAmountSystem" class="form-control">
+                                    <span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
+                                </div>
+                                <span class="text-danger" id="InstallmentAmountValResult"></span>
+                            </div>
+                        </td>
+                        <td class="col-xs-4" rowspan="2">
+                            <div class="col-xs-12 text-left">
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#guaranteeModal" title="@Captions.Detail">
+                                    <i class="fa fa-info"></i>
+                                </button>
+                            </div>
+                            <label class="col-xs-6 col-md-4">@Captions.Collateral :</label>
+                            <div>
+                                <label id="step3_Installments">
+
+                                </label>
+                            </div>
+                            <div id="guaranteeFileList">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-4">
+                            <label class="col-xs-12 col-sm-3 star">@Captions.Gallery</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <select id="Gallery" asp-items="galleriesResult.Data" onchange="fillSelectList('Gallery', 'Seller', '/Dashboard/BaseData/GallerySellersForRegisterDocument')" class="form-control Select2">
+                                    <option value="">@Captions.SelectIt</option>
+                                </select>
+                                <span class="text-danger"></span>
+                            </div>
+                        </td>
+                        <td class="col-xs-4">
+                            <label class="col-xs-12 col-sm-3 star">@Captions.Seller</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <select id="Seller" class="form-control Select2">
+                                    <option value="">@Captions.SelectIt</option>
+                                </select>
+                                <span class="text-danger"></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <label class="col-xs-12 col-sm-1">@Captions.DescriptionForAdmins</label>
+                            <div class="col-xs-12 col-sm-7">
+                                <div class="input-group">
+                                    <textarea id="AdminDescription" name="AdminDescription" class="form-control"></textarea>
+                                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                                </div>
+                            </div>
+                        </td>
+                </table>
+            </div>
+        </div>
+        <div class="panel-footer text-right">
+            <button type="button" onclick="processStep3()" class="btn btn-success btn-labeled"><span>@Captions.Continue</span> <b><i class="fa fa-check-circle"></i></b></button>
+            <button type="button" onclick="backToStep2()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Back</span> <b><i class="fa fa-times-circle"></i></b></button>
+        </div>
+    </div>
+
+    <div id="step4" style="display:none" class="panel panel-flat">
+        <div class="panel-heading">
+            <h6 class="panel-title">
+                <span> @Captions.PreviewAndRegister</span>
+            </h6>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="overflow-auto">
+                <table class="sanad">
+                    <tr>
+                        <td class="col-xs-4"><label class="col-xs-6 col-md-6">@Captions.FullName :</label><label id="step4_fullname"></label></td>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-6">@Captions.National_Identification_Code :</label> <label id="step4_nationalcode"></label></td>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-6">@Captions.Date :</label> <label id="step4_docDate"></label></td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-6">@Captions.Mobile :</label><label id="step4_mobile"></label></td>
+                        <td class="col-xs-4"><label class="col-xs-6 col-md-6">@Captions.EssentialTel :</label><label id="step4_essentiatel"></label></td>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-6">@Captions.DocumentNumber :</label><label id="step4_docNumber"></label></td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-6">@Captions.InvoiceAmount :</label><label id="step4_factorAmount"></label> @Captions.Tooman</td>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-6">@Captions.Prepayment :</label><label id="step4_prePaymentAmount"></label> @Captions.Tooman</td>
+                        <td class="col-xs-4"> <label class="col-xs-6 col-md-6">@Captions.Remaining :</label><label id="step4_remainAmount"></label> @Captions.Tooman</td>
+
+                    </tr>
+                    <tr>
+                        <td class="col-xs-4">
+                            <label class="col-xs-6 col-md-6">@Captions.InstallmentsCount :</label><label id="step4_installmentCount"></label>
+                        </td>
+                        <td class="col-xs-4">
+                            <label class="col-xs-6 col-md-6">@Captions.InstallmentsAmount :</label><label id="step4_installmentAmount"></label> @Captions.Tooman
+                        </td>
+                        <td class="col-xs-4" rowspan="2">
+                            <label class="col-xs-6 col-md-6">@Captions.Collateral :</label>
+                            <div>
+                                <label id="step4_Installments">
+
+                                </label>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-4">
+                            <label class="col-xs-6 col-md-6">@Captions.Gallery :</label><label id="step4_gallery"></label>
+                        </td>
+                        <td class="col-xs-4">
+                            <label class="col-xs-6 col-md-6">@Captions.Seller :</label><label id="step4_seller"></label>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="no-padding" colspan="3">
+                            <table class="sanad-detail">
+                                <thead>
+                                    <tr>
+                                        <td class="td-5">#</td>
+                                        <td class="td-10">@Captions.InstallmentsDate</td>
+                                        <td class="td-10">@Captions.PaymentDate</td>
+                                        <td class="td-10">@Captions.Delay (@Captions.Day)</td>
+                                        <td class="td-10">@Captions.PaidAmount (@Captions.Tooman)</td>
+                                        <td class="td-10">@Captions.IsPaid</td>
+                                        <td class="td-45">@Captions.Description</td>
+                                    </tr>
+                                </thead>
+                                <tbody id="installment_list">
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <br />
+                            <label class="col-xs-12 col-sm-2">@Captions.DescriptionForAdmins :</label><label id="step4_adminDesription"></label>
+
+                        </td>
+                </table>
+            </div>
+        </div>
+        <div class="panel-footer text-right">
+            <button type="button" onclick="processStep4()" id="btnSubmit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+            <button type="button" onclick="showStep3()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Back</span> <b><i class="fa fa-times-circle"></i></b></button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="guaranteeModal" tabindex="-1" role="dialog" aria-labelledby="guaranteeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="guaranteeModalLabel">@Captions.CollateralDetail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="Row" />
+                    <div class="section row">
+                        <input id="gurranteeId" value="" type="hidden" />
+                        <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                            <label class="col-xs-12 col-sm-12 star">@Captions.CollateralType</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <select id="guranteeType" asp-items="collateralTypes.Data" class="form-control Select2">
+                                    <option value="">@Captions.SelectIt</option>
+                                </select>
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                            <label class="col-xs-12" for="guranteeDescription">@Captions.Description</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="input-group">
+                                    <textarea class="form-control" id="guranteeDescription" autocomplete="off"></textarea>
+                                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                                </div>
+                            </div>
+                            <span id="guranteeDescriptionValResult" class="text-danger"></span>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                            <label class="col-xs-12">@Captions.Image</label>
+                            <input type="file" id="guranteeFile" class="form-control" onchange="previewImage(this,'guranteeImageFile','btnImgDel')">
+                            <img id="guranteeImageFile" class="img-responsive img-border" style="max-height:100px;">
+                            <span id="guranteeFileValResult" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="section row">
+                        <div class="modal-footer text-right">
+                            <button type="button" onclick="addGuarantee()" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+                            <button type="button" onclick="clear_form_gurantee()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+                        </div>
+                    </div>
+                    <div class="k-rtl ">
+                        <div class="k-grid k-widget k-display-block">
+                            <div class="k-grid-header" style="padding-left: 17px;">
+                                <div class="k-grid-header-wrap k-auto-scrollable">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="k-header td-5">#</th>
+                                                <th class="k-header td-10">@Captions.Type</th>
+                                                <th class="k-header td-40">@Captions.Description</th>
+                                                <th class="k-header td-25">@Captions.Image</th>
+                                                <th class="k-header td-20">@Captions.Operation</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="k-grid-content k-auto-scrollable" style="height: auto;">
+                                <table class="k-selectable">
+                                    <tbody id="guranteeListtableBoody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+@{
+    ModalModel editCustomerInfoModel = new()
+            {
+                IsShowCloseButtonInFooter = false,
+                Id = "editCustomerInfo",
+                IsShowCloseIcon = true,
+                Size = ModalSize.Larg,
+                Title = Captions.EditCustomer,
+            };
+}
+<partial name="_Modal" model="editCustomerInfoModel" />
+
+@section Stylesheet{
+    <link href="~/lib/persiandatetimepicker/persiandatepicker.min.css" rel="stylesheet" />
+}
+@section Scripts{
+
+    <script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+    <script src="~/lib/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="~/lib/persiandatetimepicker/persiandatepicker.min.js"></script>
+    <script src="~/scripts/dashboard/document.js" asp-append-version="true"></script>
+ }

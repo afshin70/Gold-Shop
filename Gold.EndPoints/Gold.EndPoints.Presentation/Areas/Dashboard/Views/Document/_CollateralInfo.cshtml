@@ -1,0 +1,14 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.DocumentModels
+@model List<CollateralInfoModel>
+@{
+    Layout = null;
+}
+
+@if (Model is not null)
+{
+    foreach (var collateral in Model)
+    {
+        <text>@collateral.Type - @collateral.Description</text>
+        <br />
+    }
+}

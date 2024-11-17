@@ -1,0 +1,56 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels.DocumentViewModels
+
+@model CreateOrEditCollateralViewModel
+@{
+    Layout = null;
+}
+<div id="form_collateral">
+    <form action="/Dashboard/Document/CreateOrEditCollateral" onsubmit="submitFormCollateral(this, 'collateralDetailModal','collateralList')">
+        <input asp-for="CollateralId" type="hidden" />
+        <input asp-for="DocumentId" type="hidden" />
+        <input type="hidden" asp-for="IsDeleteImage" />
+        <div class="section row">
+            <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                <label asp-for="CollateralTypeId" class="col-xs-12 col-sm-12 star"></label>
+                <div class="col-xs-12 col-sm-9">
+                    <select asp-for="CollateralTypeId" asp-items="Model.CollateralTypes" class="form-control Select2">
+                        <option value="">@Captions.SelectIt</option>
+                    </select>
+                    <span asp-validation-for="CollateralTypeId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                <label asp-for="Description" class="col-xs-12 col-sm-12"></label>
+                <div class="col-xs-12 col-sm-9">
+                    <div class="input-group">
+                        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                        <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                    </div>
+                </div>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+
+                <label asp-for="ImageFile" class="col-xs-12 col-sm-12"></label>
+                <input asp-for="ImageFile" type="file" id="inputFile1" class="form-control" accept="image/png,image/jpg,image/gif" onchange="previewImage(this,'previewImg1','btnImgDel1')">
+                <button type="button" onclick="removePreviewImage('previewImg1',this,'inputFile1','IsDeleteImage')" id="btnImgDel1" class="btn btn-danger btn-icon btn-rounded btn-del-img" style=" @(string.IsNullOrEmpty(Model?.ImageName)?"display:none":"")"><i class="icon-menu7 fa fa-window-close"></i></button>
+                <img id="previewImg1" src="@Model?.ImageUrl" onclick="changeInpueState('IsDeletedImageName', 'true')" class="img-responsive img-border" style="max-height:100px; @(string.IsNullOrEmpty(Model?.ImageName)?"display:none":"")">
+                
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            
+            </div>
+        </div>
+        <div class="section row">
+            <div class="modal-footer text-right">
+                <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+                <button type="button" onclick="clear_form_collateral()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+            </div>
+        </div>
+    </form>
+</div>
+@if (Model.Collaterals.Any())
+{
+    <div id="collateralList">
+        <partial name="_CollateralList" model="Model.Collaterals" />
+    </div>
+}

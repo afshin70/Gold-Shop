@@ -1,0 +1,42 @@
+﻿@using Gold.Resources
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+     <meta name="author" content="@Captions.AraPendar" />
+    <meta property="og:image" content="~/Content/icons/logo.png" />
+    <link href="~/themes/default/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/css/core.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/css/colors.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/css/components.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/css/icons/icomoon/styles.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/fonts/IRANSans/css/fonts.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/css/icons/fontawesome/css/all.min.css" rel="stylesheet" />
+    @*<link href="~/themes/default/sweetalert/dist/sweetalert.min.css" rel="stylesheet" asp-append-version="true" />*@
+    <link href="~/themes/default/css/custom.min.css" rel="stylesheet" asp-append-version="true" />
+</head>
+<body class="login-container login-cover pace-done">
+    <div id="main" class="animated fadeIn">
+        <div class="page-container">
+            <!-- Page content -->
+            <div class="page-content">
+                <!-- Main content -->
+                <div class="content-wrapper">
+                    <!-- Content area -->
+                    <div class="content">
+                        <div class="col-md-8 col-md-offset-2">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.UserModels;
+
+@{
+    ViewData["Title"] = Captions.EditInformationRequest;
+    var statusList = new List<SelectListItem>
+    {
+    new SelectListItem{Text=Captions.All,Value=""},
+    new SelectListItem{Text=Captions.Archive,Value="false"},
+    new SelectListItem{Selected=true,Text=Captions.Active,Value="true"},
+    };
+
+    ViewBag.SelectedMenu = (byte)ManagerPermission.RequestsToEditInformation;
+}
+
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <div class=" col-xs-6 col-sm-4 col-md-4 "><h6 class="panel-title"> <span> @Captions.EditInformationRequest</span></h6></div>
+            <div class="col-xs-5 col-sm-4 col-md-4 text-left">
+                <select id="isActive" asp-items="statusList" class="form-control Select2" onchange="refreshGrid('grid_editInformationRequestGrid')">
+                </select>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="heading-elements">
+            <button type="button" onclick="exportFile('/Dashboard/EditInformation/InitReportData',GetData(),'/Dashboard/EditInformation/ExportExcel')" class="btn  btn-labeled"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+            <button type="button" onclick="exportFile('/Dashboard/EditInformation/InitReportData',GetData(),'/Dashboard/EditInformation/ExportPdf')" class="btn  btn-labeled"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+
+            <ul class="icons-list left-align">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="">
+        <div class="k-rtl ">
+            @(
+                Html.Kendo().Grid<EditInformationRequestModel>()
+                .Name("grid_editInformationRequestGrid")
+                .Columns(columns =>
+                {
+                    columns.Bound("").ClientTemplate("#= renderRecordNumber(data,'grid_editInformationRequestGrid') #")
+                    .Title("#")
+                    .Width(40);
+
+                    columns.Bound(c => c.FullName)
+                    .Sortable(true)
+                    .Title(Captions.Name)
+                    .Width(90)
+                    .Filterable(true);
+
+                    columns.Bound(c => c.NationalCode)
+                    .Sortable(true)
+                    .Title(Captions.NationalCode)
+                    .Width(90)
+                    .Filterable(true);
+
+                    columns.Bound(c => c.PersianRequestDate)
+                    .Sortable(true)
+                    .Title(Captions.RequestDate)
+                    .Filterable(true)
+                    .Width(120);
+
+                    columns.Bound(c => c.Message)
+                    .Sortable(true)
+                    .Title(Captions.Message)
+                    .Filterable(true)
+                    .Width(400);
+
+                    columns.Bound(c => c.ImageName)
+                    .Sortable(false)
+                    .Filterable(false)
+                    .Title(Captions.DocumentImage)
+                    .ClientTemplate("# if (ImageName != null) { #" +
+                    $"<div class='text-center'><a href='/Dashboard/EditInformation/GetEditInformationRequestImage?imageName=#=ImageName#' target='_blank'   title='{Captions.DocumentImage}'>{Captions.View}</a></div>" +
+                    "# } else { #" +
+                    "" +
+                    "# } #")
+                    .Width(80);
+
+
+                    columns.Bound(c => c.IsActive)
+                    .Title(Captions.Status)
+                    .ClientTemplate($"<div class='text-center'><span class=\"badge #=(IsActive?'badge-success':'badge-danger')#\"> #=(IsActive?'{Captions.Active}':'{Captions.Archive}')#</span></div>")
+                    .Sortable(true)
+                    .Filterable(false)
+                    .Width(70);
+
+                    columns.Bound(c => c.Id)
+                    .ClientTemplate($"<div class='text-center'><button class='btn btn-primary' onclick='getRequestWithConfirmRefreshGrid(\"/Dashboard/EditInformation/ArchiveEditInformationRequest?id=#=Id#\",\"{UserMessages.AreYouSureForArchive}\",\"grid_editInformationRequestGrid\")'  title='{Captions.Archive}'><i class='fa fa-download'></i></button>" +
+                    $"<button class='btn btn-danger' onclick='getRequestWithConfirmRefreshGrid(\"/Dashboard/EditInformation/RemoveEditInformationRequest?id=#=Id#\",\"{UserMessages.AreYouSureForDelete}\",\"grid_editInformationRequestGrid\")' title='{Captions.Delete}'><i class='fa fa-trash'></i></button></div>")
+                    .Title(Captions.Operation)
+                    .Width(95)
+                    .Filterable(false)
+                    .Sortable(false)
+                    .Groupable(false);
+
+                })
+                .Sortable()
+                .Selectable()
+                .Scrollable(x => x.Height("auto"))
+                .Filterable()
+                .HtmlAttributes(new { @class = "" })
+                .Pageable(pageable => pageable
+                .PageSizes(new[] { 10, 50, 100, 500 })
+                .Info(true)
+                .Enabled(true)
+                .PreviousNext(true)
+                .Input(true)
+                .Numeric(true)
+                .ButtonCount(8)
+                .Refresh(true)
+                )
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .Read(read => read.Action("EditInformationRequests_Read", "EditInformation").Data("GetData"))
+                ).Events(ev => ev.DataBound("onDataBound"))
+                )
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select').select2();
+        });
+    </script>
+    <script>
+        function GetData() {
+            return {
+                isActive: $("#isActive").val(),
+            }
+        }
+    </script>
+}

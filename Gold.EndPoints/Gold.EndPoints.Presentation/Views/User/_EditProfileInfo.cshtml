@@ -1,0 +1,117 @@
+﻿@using Gold.ApplicationService.Contract.Abstractions;
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels;
+@model CustomerProfileViewModel
+@inject IProvinceService _provinceService
+@{
+	//int provinceId = (Model is null ? 0 : Model.ProvinceId == null ? 0 : Model.ProvinceId.Value);
+	string cityName = "شیراز";
+	List<SelectListItem> Provinces = new List<SelectListItem>();
+	List<SelectListItem> Cities = new List<SelectListItem>();
+
+	int cityId = (Model is null ? 0 : Model.CityId == null ? 0 : Model.CityId.Value);
+	if (Model is not null)
+	{
+		if (Model.CityId.HasValue)
+		{
+			Provinces = _provinceService.GetProviancesWithSelectedCityAsync(cityId).Result.Data;
+			Cities = _provinceService.GetCitiesOfProvinceWithSelectedCityAsync(cityId).Result.Data;
+		}
+		else
+		{
+			Provinces = _provinceService.GetProviancesWithSelectedCityAsync(cityName).Result.Data;
+			Cities = _provinceService.GetCitiesOfProvinceWithSelectedCityAsync(cityName).Result.Data;
+		}
+	}else
+	{
+		Provinces = _provinceService.GetProviancesWithSelectedCityAsync(cityName).Result.Data;
+		Cities = _provinceService.GetCitiesOfProvinceWithSelectedCityAsync(cityName).Result.Data;
+	}
+
+	
+	
+}
+
+<form href="/Profile" onsubmit="submitCustomerProfile(this)" id="editProfileInfoForm">
+    <div class="row">
+		<div class="col-12 col-sm-6 mb-3">
+			<label class="small mb-2 text-white">@Captions.ProfileImage</label>
+			<div class="inputfile-box">
+				<input asp-for="ProfileImage" type="file" id="file" class="inputfile" onchange="uploadFile(this)" style="display: none;">
+				<label for="file" class="row mx-0">
+					<span id="file-name" class="col form-control"></span>
+					<span class="btn btn-primary col-auto px-5 ">
+						<i class="fa fa-upload" aria-hidden="true"></i> @Captions.Select
+					</span>
+				</label>
+			</div>
+		</div>
+		<div class="col-12 col-sm-6 mb-3 mt-4">
+			<button type="button" class="btn btn-primary mt-2" onclick="loadDataInModal('/User/AddBankCardNumbers','bankCardNumberModal')"><i class="fa fa fa-plus"></i></button>
+			<label class="small mb-2 text-white">@Captions.BankCardNumbers</label>
+		</div>
+
+		<div class="col-12 col-sm-6 mb-3">
+            <label class="small mb-2 text-white">@Captions.Province</label>
+			<select class="form-control js-example-basic-single" name="state" id="proviances" asp-items="Provinces" onchange="fillSelectList('proviances', 'CityId', '/Dashboard/BaseData/Cities')">
+                <option selected value="">@Captions.SelectIt</option>
+            </select>
+            <span asp-validation-for="ProvinceId" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-sm-6 mb-3">
+            <label class="small mb-2 text-white">@Captions.City</label>
+            <select class="form-control js-example-basic-single" asp-items="Cities" asp-for="CityId">
+                <option selected value="">@Captions.SelectIt</option>
+            </select>
+            <span asp-validation-for="CityId" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-sm-6 mb-3">
+            <label asp-for="JobTitle" class="small mb-2 text-white"></label>
+            <input asp-for="JobTitle" class="form-control" />
+            <span asp-validation-for="JobTitle" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-sm-6 mb-3">
+            <label asp-for="BirthDate" class="small mb-2 text-white"></label>
+			<input asp-for="BirthDate"  class="form-control pwt-datepicker-input-element date" />
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
+        </div>
+		<div class="col-12 col-sm-6 mb-3">
+			<label asp-for="PostalCode" class="small mb-2 text-white"></label>
+			<input asp-for="PostalCode" type="tel" onkeypress="return safeOnlyNumber($(this),event)" class="form-control dir-rtl" />
+			<span asp-validation-for="PostalCode" class="text-danger"></span>
+		</div>
+		<div class="col-12 col-sm-6 mb-3">
+			<label asp-for="SanaCode" class="small mb-2 text-white"></label>
+			<input asp-for="SanaCode" class="form-control" />
+			<span asp-validation-for="SanaCode" class="text-danger"></span>
+		</div>
+		<div class="col-12 col-sm-6 mb-3">
+			<label asp-for="Address" class="small mb-2 text-white"></label>
+			<textarea asp-for="Address" class="form-control"></textarea>
+			<span asp-validation-for="Address" class="text-danger"></span>
+
+		</div>
+		
+	</div>
+	<div class="col-12">
+		<button type="submit" class="btn btn-primary">@Captions.Register</button>
+	</div>
+
+</form>
+
+@section Header {
+
+	<link href="~/sitetheme/css/select2.min.css" rel="stylesheet" />
+}
+@section Scripts {
+
+	<script src="~/sitetheme/js/select2.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('.js-example-basic-single').select2();
+		});
+	</script>
+
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

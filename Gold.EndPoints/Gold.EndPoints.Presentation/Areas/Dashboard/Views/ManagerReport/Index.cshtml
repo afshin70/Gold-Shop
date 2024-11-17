@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = Captions.ManagerOperationReport;
+    ViewBag.SelectedMenu = (byte)ManagerPermission.ManagersActivityReport;
+}
+
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <span> @Captions.ManagerOperationReport</span>
+        </h6>
+        <div class="heading-elements">
+            <ul class="icons-list">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <partial name="_ManagerOperationSearchForm" />
+    </div>
+</div>
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <span>@Captions.List @Captions.ManagerOperationReport</span>
+        </h6>
+        <div class="heading-elements">
+               <button type="button" onclick="exportFile('/Dashboard/ManagerReport/InitReportData',GetData(),'/Dashboard/ManagerReport/ExportExcel')" class="btn  btn-labeled"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+    <button type="button" onclick="exportFile('/Dashboard/ManagerReport/InitReportData',GetData(),'/Dashboard/ManagerReport/ExportPdf')" class="btn  btn-labeled"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+
+            <ul class="icons-list left-align">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <partial name="_ManagerOperationList" />
+    </div>
+</div>
+@section Stylesheet{
+    <link href="~/lib/persiandatetimepicker/persiandatepicker.min.css" rel="stylesheet" />
+}
+
+@section Scripts{
+
+    <script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select').select2();
+        });
+    </script>
+    <script src="~/lib/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="~/lib/persiandatetimepicker/persiandatepicker.min.js"></script>
+    
+ }

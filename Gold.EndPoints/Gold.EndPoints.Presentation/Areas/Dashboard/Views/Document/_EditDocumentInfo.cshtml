@@ -1,0 +1,106 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels.DocumentViewModels
+@using Gold.SharedKernel.Tools;
+@model EditDocumentViewModel
+@{
+	Layout = null;
+	string currentPersianDate = DateTimeTools.GeorgianToPersian(DateTime.Now, ShowMode.OnlyDate);
+}<form action="/Dashboard/Document/EditDocument" onsubmit="editDocument(this,'@UserMessages.AreYouSureForEditDocument')">
+<div class="overflow-auto">
+	
+		<input type="hidden" asp-for="DocumentId" /><table class="sanad">
+
+			<tr>
+				<td class="col-xs-4"><label class="col-xs-6 col-md-4">@Captions.FullName :</label> <label>@Model.FullName</label></td>
+				<td class="col-xs-4">
+					<label asp-for="DocumentDate" class="col-xs-12 col-sm-3 star"></label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="input-group">
+							<input asp-for="DocumentDate" type="text" onchange="DocumentDateValidate(this)" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+						</div>
+						<span asp-validation-for="DocumentDate" class="text-danger"></span>
+					</div>
+				</td>
+				<td class="col-xs-4">
+					<label asp-for="DocumentNo" class="col-xs-12 col-sm-3 star"></label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="input-group">
+							<input asp-for="DocumentNo" type="text" onkeypress="return safeOnlyNumber($(this),event)" maxlength="15" class="form-control">
+							<span class="input-group-addon"><i class="fa fa-pen"></i></span>
+						</div>
+						<span asp-validation-for="DocumentNo" class="text-danger"></span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="col-xs-4">
+					<label asp-for="RemainAmount" class="col-xs-12 col-sm-3 star"></label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="input-group">
+							<input asp-for="RemainAmount" type="text" onkeyup="monyFormat(this)" oninput="InstallmentAmountCalculatorInEditDocument()" onkeypress="return safeOnlyNumber($(this),event)" maxlength="15" class="form-control">
+							<span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
+						</div>
+						<span asp-validation-for="RemainAmount" class="text-danger"></span>
+					</div>
+				</td>
+				<td class="col-xs-4">
+					<label asp-for="PrepaymentAmount" class="col-xs-12 col-sm-3 star"></label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="input-group">
+							<input asp-for="PrepaymentAmount" type="text" onkeyup="monyFormat(this)" oninput="InstallmentAmountCalculatorInEditDocument()" onkeypress="return safeOnlyNumber($(this),event)" maxlength="15" class="form-control">
+							<span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
+						</div>
+						<span asp-validation-for="PrepaymentAmount" class="text-danger"></span>
+					</div>
+				</td>
+				<td class="col-xs-4"> <label class="col-xs-6 col-md-4">@Captions.InvoiceAmount :</label><label id="factorAmount">@Model.InvoiceAmount.ToString("N0") @Captions.Tooman</label></td>
+			</tr>
+			<tr>
+				<td class="col-xs-4">
+					<label asp-for="InstallmentCount" class="col-xs-12 col-sm-3 star"></label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="input-group">
+							<input asp-for="InstallmentCount" type="text" oninput="InstallmentAmountCalculatorInEditDocument()" onkeypress="return safeOnlyNumber($(this),event)" maxlength="3" class="form-control">
+							<span class="input-group-addon"><i class="fa fa-pen"></i></span>
+						</div>
+						<span asp-validation-for="InstallmentCount" class="text-danger"></span>
+					</div>
+				</td>
+				<td class="col-xs-4">
+					<label asp-for="InstallmentAmount" class="col-xs-12 col-sm-3 star"></label>
+					<div class="col-xs-12 col-sm-9">
+						<div class="input-group">
+							<input asp-for="InstallmentAmount" onchange="proccessInstallmentAmount()" type="text" onkeyup="monyFormat(this)" onkeypress="return safeOnlyNumber($(this),event)" maxlength="15" class="form-control">
+							<input  id="InstallmentAmountSystem" value="@Model.InstallmentAmount" type="hidden">
+							<span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
+						</div>
+						<span asp-validation-for="InstallmentAmount" class="text-danger"></span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="col-xs-4">
+					<label asp-for="GalleryId" class="col-xs-12 col-sm-3 star"></label>
+					<div class="col-xs-12 col-sm-9">
+						<select asp-for="GalleryId" asp-items="Model.Galleries" onchange="fillSelectList('GalleryId', 'SellerId', '/Dashboard/BaseData/GallerySellersForRegisterDocument')" class="form-control Select2">
+						</select>
+						<span asp-validation-for="GalleryId" class="text-danger"></span>
+					</div>
+				</td>
+				<td class="col-xs-4">
+					<label asp-for="SellerId" class="col-xs-12 col-sm-3 star"></label>
+					<div class="col-xs-12 col-sm-9">
+						<select asp-for="SellerId" asp-items="Model.Sellers" class="form-control Select2">
+						</select>
+						<span asp-validation-for="SellerId" class="text-danger"></span>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+		<div class="panel-footer text-right">
+			<button type="submit" class="btn btn-success btn-labeled"><span>@Captions.Edit</span> <b><i class="fa fa-check-circle"></i></b></button>
+		</div>
+
+	</form>
+

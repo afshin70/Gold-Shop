@@ -1,0 +1,24 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels.DocumentViewModels;
+@model EditDocumentDescriptionViewModel
+@{
+	Layout = null;
+}
+<div class="row">
+	<form id="form_createOrEditCustomer" action="/Dashboard/Document/EditDocumentDescription" onsubmit="submitFormAndCloseModalWithGetResult(this, 'adminDescriptionModal','adminDesription')" method="post">
+		<div class="panel-body">
+			<input asp-for="Id" type="hidden" />
+			<div class="section row">
+				<div class="col-xs-12 col-sm-12 col-md-12 form-group">
+					<label asp-for="Description"></label>
+					<div class="input-group">
+						<textarea asp-for="Description" class="form-control" rows="3" cols="50"> </textarea>
+					</div>
+					<span asp-validation-for="Description" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer text-right">
+			<button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+		</div>
+	</form>
+</div>

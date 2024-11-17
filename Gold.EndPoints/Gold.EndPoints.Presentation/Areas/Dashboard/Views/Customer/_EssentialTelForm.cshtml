@@ -1,0 +1,49 @@
+﻿@model EssentialTelViewModel
+@{
+    Layout = null;
+}
+<div id="form_essentialTelListAndForm_section">
+    <div id="form_essentialTel_section">
+        <form id="form_essentialTel" action="/Dashboard/Customer/AddOrEditEssentialNumber" onsubmit="submitFormAndShowModal2(this, 'addOrEditEssentialTelModal')" method="post">
+            <div class="modal-body">
+                <input type="hidden" asp-for="CustomerId" />
+                <input type="hidden" asp-for="EssentialTelId" />
+                <div class="section row">
+                    <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                        <label asp-for="Tel" class="star"></label>
+                        <div class="input-group">
+                            <input asp-for="Tel" type="tel" class="form-control" autocomplete="off" onkeypress="return safeOnlyNumber($(this),event)">
+                            <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+                        </div>
+                        <span asp-validation-for="Tel" class="text-danger"></span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                        <label asp-for="RelationShip"></label>
+                        <div class="input-group">
+                            <input asp-for="RelationShip" type="text" class="form-control">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        </div>
+                        <span asp-validation-for="RelationShip" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="section row">
+                <div class="modal-footer text-right">
+                    <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+                    @*<button type="button" onclick="emptyInupts(['Tel','RelationShip'])" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>*@
+                    <button type="button" onclick="emptyEssentialTelForm()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="table_EssentialTels">
+        @if (Model.EssentialTels.Any())
+        {
+            <partial name="_EssentialTelList" model="Model.EssentialTels" />
+        }
+    </div>
+</div>
+
+
+
+

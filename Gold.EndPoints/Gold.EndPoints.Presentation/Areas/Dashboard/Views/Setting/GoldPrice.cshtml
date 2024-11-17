@@ -1,0 +1,48 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.SettingsViewModels;
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.GoldPriceViewModels;
+@model GoldPriceViewModel
+@{
+	ViewData["Title"] = Captions.GoldPrice;
+	ViewBag.SelectedMenu = (byte)ManagerPermission.GoldPrice;
+}
+
+
+<div class="panel panel-flat">
+	<div class="panel-heading">
+		<h6 class="panel-title">
+			<span> @Captions.GoldPrice</span>
+		</h6>
+		<div class="heading-elements">
+			<ul class="icons-list">
+				<li><a data-action="collapse"></a></li>
+			</ul>
+		</div>
+	</div>
+	<partial name="_GoldPriceForm" model="Model" />
+</div>
+<div class="panel panel-flat">
+	<div class="panel-heading">
+		<h6 class="panel-title">
+			<span>@Captions.List @Captions.GoldPrice</span>
+		</h6>
+		<div class="heading-elements">
+			<button type="button" onclick="exportFile('/Dashboard/Setting/InitGoldPriceReportData',GetData(),'/Dashboard/Setting/ExportGoldPricesExcel')" class="btn btn-labeled"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+			<button type="button" onclick="exportFile('/Dashboard/Setting/InitGoldPriceReportData',GetData(),'/Dashboard/Setting/ExportGoldPricesPdf')" class="btn btn-labeled"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+			<ul class="icons-list left-align">
+				<li><a data-action="collapse"></a></li>
+			</ul>
+		</div>
+	</div>
+	<partial name="_GoldPriceList" />
+</div>
+@section HeaderScripts{
+	<script>
+		var gridName = "grid_goldPrice";
+	</script>
+    }
+
+@section Scripts{
+    
+	<script src="~/scripts/dashboard/settings.js" asp-append-version="true"></script>
+	
+ }

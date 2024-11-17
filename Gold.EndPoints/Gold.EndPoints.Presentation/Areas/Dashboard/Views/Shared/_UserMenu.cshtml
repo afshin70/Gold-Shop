@@ -1,0 +1,70 @@
+﻿@*@using Eskele.Core.Models.Identity.UserProfile
+@using Eskele.Core.Extensions
+@using Microsoft.AspNetCore.Identity
+@using Eskele.PublicResources
+@using Eskele.Core.Domain.Identity
+@inject Eskele.Services.Identity.IUserService _userService*@
+
+@*@{
+    long userId = 0;
+    if (User.Identity.IsAuthenticated)
+        //userId = User.Identity.GetUserId<long>();
+        //UserProfileImageModel userInfo = await _userService.GetProfileImageAsync(userId);
+    }*@
+<a class="dropdown-toggle" data-toggle="dropdown">
+    <img src="~/logo/profile/default.jpg" alt="avatar" />
+    @*@if (userInfo.PictureId < 1)
+    {
+    <img src="~/logo/profile/default.jpg" alt="avatar" />
+    }
+    else
+    {
+    <img src="~/Download/Files/@($"{userInfo.PictureId}{userInfo.ImageProfileExtension}")" alt="avatar" />
+    }*@
+    @*<img src="assets/images/placeholder.jpg" alt="">*@
+    @{
+        //string title = "";
+        //switch (User.Identity.GetGender())
+        //{
+        //    case Eskele.Core.Domain.Identity.Gender.Male:
+        //        title = "جناب آقای";
+        //        break;
+        //    case Eskele.Core.Domain.Identity.Gender.Female:
+        //        title = "سرکار خانم";
+        //        break;
+        //}
+    }
+
+    <span> @User.GetName()</span>
+
+    <i class="caret"></i>
+</a>
+
+
+<ul class="dropdown-menu dropdown-menu-right">
+    @if (User.Identity != null)
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+
+            <li>
+                <a onclick="loadDataInModal('/ChangeUserPassword','changePasswordModal')">
+                    <i class="icon-key"></i>
+                    <span>تغییر رمز عبور</span>
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="/LogOut">
+                    <i class="icon-switch2"></i>
+                    <span>خروج</span>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li><a href="">ثبت نام</a></li>
+            <li><a href="">ورود</a></li>
+        }
+    }
+</ul>

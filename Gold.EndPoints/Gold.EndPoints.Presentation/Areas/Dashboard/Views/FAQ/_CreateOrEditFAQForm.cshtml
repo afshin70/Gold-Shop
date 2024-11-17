@@ -1,0 +1,40 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.FAQViewModels;
+
+@model CreateOrEditFAQViewModel
+@{
+    Layout = null;
+    
+}
+<form id="CreateOrEditFAQForm" action="/Dashboard/FAQ/CreateOrEditFAQ" onsubmit="submitByRefreshGrid(this, fAQGridName,resetFAQ)" method="post">
+    <div class="panel-body">
+        <input asp-for="Id" type="hidden" />
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 form-group">
+                <label asp-for="FaqCategoryId" class="star"></label>
+                <select name="FaqCategoryId" id="FaqCategoryId" asp-items="Model.Categories" onchange="refreshGrid('grid_FAQGrid')" class="form-control Select2">
+                </select>
+                <span asp-validation-for="FaqCategoryId" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 form-group">
+                <label asp-for="Question" class="star"></label>
+                <input asp-for="Question" type="text" class="form-control" autocomplete="off">
+                <span asp-validation-for="Question" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 form-group">
+                <label asp-for="Answer" class="star"></label>
+                <input asp-for="Answer" type="hidden" />
+                <textarea id="AnswerEditor">@Html.Raw(Model.Answer)</textarea>
+                <span asp-validation-for="Answer" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer text-right">
+        <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+        <button type="reset" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+    </div>
+</form>

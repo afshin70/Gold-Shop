@@ -1,0 +1,112 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels.CustomerPymentsModel;
+@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels.DocumentModels;
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels.CustomerPaymentsViewModel;
+
+@model CustomerPaymentViewModel
+@{
+	DocumentInfoForCustomerPayment documentInfo = ViewBag.DocumentInfoForCustomerPayment;
+	ViewData["Title"] = $"{Captions.RegisterPayment} {Captions.Installment}";
+	ViewBag.SelectedMenuIcon = SiteSelectedIcon.Profile;
+}
+<div class="container mt-2 mb-5 dir-rtl">
+	<div class="title-section mb-4 mt-2 text-end">
+		<h5 class="fw-bold">
+			@Captions.RegisterPayment @Captions.Installment
+		</h5>
+	</div>
+	<div class="row">
+		@if (documentInfo is not null)
+		{
+
+			<div class="col-12 col-md-4 mb-3 text-white text-end text-md-center p-md-3">
+				<span class="fw-light small">
+					@Captions.DocumentDate:
+				</span>
+				<span class="fw-bold">
+					@documentInfo.PersianDocumentDate
+				</span>
+			</div>
+			<div class="col-12 col-md-4 mb-3 text-white text-end text-md-center p-md-3">
+				<span class="fw-light small">
+					@Captions.DocumentNumber :
+				</span>
+				<span class="fw-bold">
+					@documentInfo.DocumentNo
+				</span>
+			</div>
+			<div class="col-12 col-md-4 mb-3 text-white text-end text-md-center p-md-3">
+				<span class="fw-light small">
+					@Captions.InstallmentPrice:
+				</span>
+				<span class="fw-bold">
+					@documentInfo.InstallmentAmount.ToString("N0")
+				</span>
+				@Captions.Tooman
+			</div>
+		}
+	</div>
+
+	<form action="/Document/Payment" class="mb-5" onsubmit="submitCustomerPayment(this,'@Model.DocumentId','@UserMessages.AreYouSureForRegisterRecipt')">
+		<input asp-for="DocumentId" type="hidden" />
+		<div class="row">
+			<div class="col-12 col-sm-4 mb-3">
+				<label asp-for="PayDate" class="small mb-2 text-white"></label>
+				<input asp-for="PayDate" class="form-control pwt-datepicker-input-element date "  autocomplete="off" />
+				<span asp-validation-for="PayDate" class="text-danger"></span>
+			</div>
+			<div class="col-12 col-sm-4 mb-3">
+				<label asp-for="PayTime" class="small mb-2 text-white" ></label>
+				<input asp-for="PayTime" class="form-control time " data-val-regex-pattern="((([0-1][0-9])|(2[0-3]))(:[0-5][0-9])(:[0-5][0-9])?)" onfocusout="timeValidate(this)" autocomplete="off" />
+				<span asp-validation-for="PayTime" class="text-danger"></span>
+			</div>
+			<div class="col-12 col-sm-4 mb-3">
+				<label asp-for="PayAmount" class="small mb-2 text-white"  >@Captions.Amount_Tooman</label>
+				<input asp-for="PayAmount" class="form-control money-format" onkeypress="return safeOnlyNumber($(this),event)" autocomplete="off" />
+				<span asp-validation-for="PayAmount" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 col-sm-6 mb-3">
+				<label class="small mb-2 text-white">@Captions.PaymentReciptImage</label>
+				<div class="inputfile-box">
+					<input asp-for="PaymentReceiptImage" type="file" id="file" class="inputfile" onchange="uploadFile(this)" style="display: none;">
+					<label for="file" class="row mx-0">
+						<span id="file-name" class="col form-control"></span>
+						<span class="btn btn-primary col-auto px-5 ">
+							<i class="fa fa-upload" aria-hidden="true"></i> @Captions.Select
+						</span>
+					</label>
+				</div>
+			</div>
+
+			<div class="col-12  col-sm-6 mb-3">
+				<label class="small mb-2 text-white">@Captions.Description</label>
+				<textarea asp-for="Description" cols="30" rows="5" class="form-control" placeholder="@Captions.Description"></textarea>
+			</div>
+		</div>
+		<button type="submit" id="submitPayment" class="btn btn-primary">@Captions.SubmitInformation</button>
+		<button type="reset" onclick="$('#file-name').html('')" class="btn btn-outline-gray_light">@Captions.Cancel</button>
+	</form>
+
+	<div id="allPayments"></div>
+</div>
+
+@section Header {
+	<link href="~/sitetheme/css/persian-datepicker.min.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script src="~/scripts/timetools.min.js"></script>
+	<script src="~/sitetheme/js/persian-date.min.js"></script>
+	<script src="~/sitetheme/js/persian-datepicker.min.js"></script>
+	<script src="~/scripts/site/persiancalenderconfig.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			getAllPayments(@documentInfo?.DocumentId)
+			document.getElementById('PayDate').value='';
+			document.getElementById('PayTime').value = '';
+		})
+	</script>
+
+}
+

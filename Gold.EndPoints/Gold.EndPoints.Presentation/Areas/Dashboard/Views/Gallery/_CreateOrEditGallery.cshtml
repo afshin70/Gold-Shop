@@ -1,0 +1,84 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.GalleryViewModels
+
+@model CreateOrEditGalleryViewModel
+@{
+	Layout = null;
+}
+<form id="form_createOrEditCustomer" action="/Dashboard/Gallery/CreateOrEditGallery" onsubmit="submitByRefreshGrid(this, gridNameGallery,resetGalleryForm)" method="post">
+	<div class="panel-body">
+		<input asp-for="Id" type="hidden" />
+		<div class="section row">
+			<div class="col-xs-12 col-sm-6 col-md-4 form-group">
+				<label asp-for="Name" class="star"></label>
+				<div class="input-group">
+					<input asp-for="Name" type="text" class="form-control" autocomplete="off">
+					<span class="input-group-addon"><i class="fa fa-pen"></i></span>
+				</div>
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+
+			<div class="col-xs-12 col-sm-6 col-md-4 form-group">
+				<label asp-for="Tel"></label>
+				<div class="input-group">
+					<input asp-for="Tel" type="text" class="form-control" autocomplete="off">
+					<span class="input-group-addon"><i class="fa fa-pen"></i></span>
+				</div>
+				<span asp-validation-for="Tel" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="section row">
+			<div class="col-xs-12 col-sm-6 col-md-4 form-group">
+				<label asp-for="Address"></label>
+
+				<div class="input-group">
+					<textarea asp-for="Address" class="form-control" rows="2" cols="70"> </textarea>
+					<span class="input-group-addon"><i class="fa fa-pen"></i></span>
+
+				</div>
+				<span asp-validation-for="Address" class="text-danger"></span>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 form-group">
+				<div class="input-group">
+					<label>@Captions.Status</label>
+					<div class="checkbox checkbox-switchery">
+						<label>
+							<input type="checkbox" class="switchery" asp-for="IsActive">
+						</label>
+					</div>
+				</div>
+				<span asp-validation-for="IsActive" class="text-danger"></span>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 form-group">
+				<div class="input-group">
+					<label>@Captions.HasInstallmentSale</label>
+					<div class="checkbox checkbox-switchery">
+						<label>
+							<input type="checkbox" class="switchery" asp-for="HasInstallmentSale">
+						</label>
+					</div>
+				</div>
+				<span asp-validation-for="HasInstallmentSale" class="text-danger"></span>
+			</div>
+
+		</div>
+	
+		<div class="section row">
+
+			
+			<div class="col-xs-12 col-sm-6 col-md-8 form-group">
+				<label asp-for="PurchaseDescription"></label>
+
+				<input asp-for="PurchaseDescription" type="hidden" />
+				@*<textarea asp-for="PurchaseDescription" class="form-control" rows="2" cols="70"> </textarea>*@
+				<div id="PurchaseDescriptionEditor"></div>
+
+
+				<span asp-validation-for="PurchaseDescription" class="text-danger"></span>
+			</div>
+		</div>
+	</div>
+	<div class="panel-footer text-right">
+		<button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+		<button type="button" onclick="resetGalleryForm()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+	</div>
+</form>

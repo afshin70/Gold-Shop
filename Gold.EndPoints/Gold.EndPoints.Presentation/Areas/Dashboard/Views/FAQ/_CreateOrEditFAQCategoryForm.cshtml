@@ -1,0 +1,25 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.FAQViewModels;
+
+@model CreateOrEditFAQCategoryViewModel
+@{
+	Layout = null;
+}
+<form id="" action="/Dashboard/FAQ/CreateOrEditFAQCategory" onsubmit="submitByRefreshGrid(this, fAQCategoryGridName,resetFAQCategory)" method="post">
+	<div class="panel-body">
+		<input asp-for="Id" type="hidden" />
+		<div class="section row">
+			<div class="col-xs-12 col-sm-6 col-md-4 form-group">
+				<label asp-for="Title" class="star"></label>
+				<div class="input-group">
+					<input asp-for="Title" type="text" class="form-control" autocomplete="off">
+					<span class="input-group-addon"><i class="fa fa-pen"></i></span>
+				</div>
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+		</div>
+	</div>
+	<div class="panel-footer text-right">
+		<button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+		<button type="reset" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+	</div>
+</form>

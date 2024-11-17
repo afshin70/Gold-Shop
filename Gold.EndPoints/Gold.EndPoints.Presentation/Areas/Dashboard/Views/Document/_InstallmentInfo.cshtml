@@ -1,0 +1,60 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.DocumentModels
+@model InstallmentInfo
+
+@{
+    Layout = null;
+}
+<table class="sanad-detail">
+    <tr>
+        <td class="td-50 no-border-top">
+            <div class="col-xs-7 col-md-4 no-padding">@Captions.AmountPaid :</div> <b> @Math.Abs(Model.TotalPayedAmount).ToString("N0") @Captions.Tooman</b>
+        </td>
+        <td class="no-border-top">
+            <div class="col-xs-7 col-md-4 no-padding">@Captions.ReturnedAmount :</div><b>@Model.ReturnedAmount.ToString("N0") @Captions.Tooman</b>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="col-xs-7 col-md-4 no-padding">@Captions.InstallmentRemainAmount :</div> <b>@Math.Abs(Model.InstallmentRemainAmount).ToString("N0") @Captions.Tooman @(Model.InstallmentRemainAmount == 0 ? string.Empty : (Model.InstallmentRemainAmount < 0 ? $"{Captions.Creditor}" : $"{Captions.Debtor}"))</b>
+        </td>
+        <td class="no-border-bottom">
+            <div class="col-xs-7 col-md-4 no-padding">@Captions.DiscountAmount :</div> <b>@Model.DiscountAmount.ToString("N0") @Captions.Tooman</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="td-50 no-border-top">
+            <div class="col-xs-7 col-md-4 no-padding">@Captions.TotalDelay :</div> <b>@Model.TotalDelayDay @Captions.Day</b>
+        </td>
+        <td>
+            <div class="col-xs-7 col-md-4 no-padding">@Captions.InstantSettlementAmount :</div> <b>@Math.Abs(Model.InstantSettlementAmount).ToString("N0") @Captions.Tooman @(Model.InstantSettlementAmount == 0 ? string.Empty : (Model.InstantSettlementAmount < 0 ? $"{Captions.Creditor}" : string.Empty))</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="td-50 no-border-top">
+            <div class="col-xs-7 col-md-4 no-padding">@Captions.TotalDelayAmount :</div> <b>@Model.DelayAmount.FormatMoney() @Captions.Tooman</b>
+        </td>
+        <td>
+            <div class="col-xs-7 col-md-4 no-padding">@Captions.Price @Captions.TotalRemain :</div> <b>@Math.Abs(Model.TotalRemainAmount).ToString("N0") @Captions.Tooman @(Model.TotalRemainAmount == 0 ? string.Empty : (Model.TotalRemainAmount < 0 ? $"{Captions.Creditor}" : $"{Captions.Debtor}"))</b>
+
+        </td>
+    </tr>
+    <tr>
+        <td class="td-50 no-border-top">
+            <div class="col-xs-7 col-md-4 no-padding">@Captions.TodayDelay :</div> <b>@Model.TodayTotalDelayDay @Captions.Day</b>
+        </td>
+        <td>
+        
+            <div class="col-xs-7 col-md-4 no-padding">@Captions.DeliveryDate :</div> <b>@(Model.DeliveryDate.HasValue ? Model.DeliveryDate.Value.TryGeorgianToPersian(ShowMode.OnlyDate) : "")</b>
+        </td>
+    </tr>
+    <tr>
+		<td class="td-50 no-border-bottom">
+            <div class="col-xs-7 col-md-4 no-padding">@Captions.TodayDelayAmount :</div><b>@Model.TodayDelayAmount.ToString("N0") @Captions.Tooman</b>
+        </td>
+        <td class="no-border-bottom">
+            <div class="col-xs-7 col-md-4 no-padding">@Captions.SettleDate :</div> <b>@(Model.SettleDate.HasValue ? Model.SettleDate.Value.TryGeorgianToPersian(ShowMode.OnlyDate) : "")</b>
+        </td>
+    </tr> 
+  
+</table>
+

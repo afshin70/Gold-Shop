@@ -1,0 +1,104 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.ArticleModels;
+@model List<ArticleForShowInSiteModel>
+@{
+	ViewData["Title"] = Captions.LearningArticle;
+}
+
+<div class="container mt-2 mb-5">
+	<div class="row mx-0 dir-rtl">
+		<div class="col-12 col-md-8 text-primary">
+			<h5>
+				<i class="fa-light fa-book-open"></i>
+				@Captions.LearningArticle
+			</h5>
+		</div>
+		<div class="col-12 col-md-4">
+			<div dir="ltr" class="input-group input-group-search input-group-sm mb-3">
+				<input type="text" class="form-control " id="searchTerm" onkeypress="search(this)" placeholder="@Captions.SearchIt">
+				<span class="input-group-text input-group-search-icon" id="basic-addon1">
+					<i class="fa-solid fa-search"></i>
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<div id="listArea" class="row mx-0 dir-rtl">
+		@if (Model.Any())
+		{
+			foreach (var item in Model)
+			{
+				<div class="col-12 col-md-6 mb-3">
+					<div class="card learn-card-area" onclick="getPostInfo('@item.Id')">
+						<div class="card-body w-100">
+							<div class="row">
+								<div class="col-4 @(item.HasVideo ? "learn-img-media" : "")">
+									<img src="/Article/ThumbnailImage/@item.ImageFileName" class="img-article" alt="@item.Title">
+								</div>
+								<div class="col-8 learn-title">
+									<a href="#">
+										@item.Title
+									</a>
+									<button class="btn btn-primary mb-3 mb-md-0 small rounded-pill">
+										@Captions.ReadMore ...
+										<b>
+											<i class="fa-regular fa-sparkles me-1"></i>
+										</b>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		}
+		else
+		{
+			<div class="col-12  mb-3 text-light text-center">
+				<h3>@Captions.NoItemsForShow</h3>
+			</div>
+		}
+	</div>
+</div>
+<div class="modal fade" id="blogContentInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+		<div dir="rtl" class="modal-content">
+			<div class="modal-header pb-1 border-bottom-0">
+				<div class="row mx-0 w-100">
+					<div class="col">
+						<h5 class="modal-title" id="exampleModalLabel">
+							<i id="postShareButton" data-href=""
+							   data-title=""
+							   class="fa-light fa-share-nodes">
+							</i>
+						</h5>
+					</div>
+					<div class="col-auto px-0">
+						<button type="button" class="btn-close shadow-none p-0 me-auto ms-0" data-bs-dismiss="modal" aria-label="Close">
+							<i class="fa-solid fa-close"></i>
+						</button>
+					</div>
+					<div class="col-12">
+						<h5 class="text-primary mt-4" id="postTitle">
+						</h5>
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-12 blog-info-media-area ">
+						<div id="imageOrVideo">
+
+							@* <embed type="image/jpg" src="./assets/image/traning.png" class="mb-4">
+							<!--                        <embed type="video/mp4" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4" class="mb-4">-->*@
+						</div>
+						<div id="postDescription"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts{
+	<script src="~/scripts/site/article.js" asp-append-version="true"></script>
+}

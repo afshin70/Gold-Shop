@@ -1,0 +1,38 @@
+﻿@model EssentialTelViewModel
+@{
+    Layout = null;
+}
+<div id="form_essentialTel_section">
+    <form id="form_essentialTel" action="/Dashboard/Document/AddOrEditEssentialNumber" method="post" onsubmit="submitFormAndShowModal3(this, 'editCustomerInfo','form_createOrEditCustomerEssentialTel')">
+        <input type="hidden" asp-for="EssentialTelId" />
+        <input type="hidden" asp-for="CustomerId" />
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Tel" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="Tel" type="tel" class="form-control" onkeypress="return safeOnlyNumber($(this),event)" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                </div>
+                <span asp-validation-for="Tel" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="RelationShip"></label>
+                <div class="input-group">
+                    <input asp-for="RelationShip" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                </div>
+                <span asp-validation-for="RelationShip" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group text-right">
+                <br />
+                <button type="submit" class="btn btn-success btn-labeled"><span>@(Model.EssentialTelId > 0 ? Captions.Edit : Captions.Add)</span> <b><i class="fa fa-check-circle"></i></b></button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="table_EssentialTels">
+    @if (Model.EssentialTels.Any())
+    {
+        <partial name="_EssentialTelList" model="Model.EssentialTels" />
+    }
+</div>

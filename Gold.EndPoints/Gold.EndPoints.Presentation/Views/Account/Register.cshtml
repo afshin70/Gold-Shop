@@ -1,0 +1,88 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.AuthenticationViewModels.RegisterCustomerViewModels;
+@using Gold.Resources;
+@model RegisterCustomerBaseInfoViewModel
+@{
+    ViewData["Title"] = Captions.RegisterInSite;
+    ViewData["IsShowBackgroundImage"] = true;
+
+    List<SelectListItem> nationalityList = Enum.GetValues(typeof(NationalityType)).Cast<NationalityType>().Where(x=>x!=NationalityType.IranianWithOutNationalCode).Select(v => new SelectListItem
+            {
+                Selected = (v == NationalityType.Iranian),
+                Text = v.GetDisplayName(),
+                Value = ((int)v).ToString()
+            }).ToList();
+}
+
+<div class="container">
+    <div id="loginArea" class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-9 col-lg-5">
+            <div class="card shadow overflow-hidden">
+                <div class="card-body">
+                    <form action="/Account/Register" method="post" asp-antiforgery="true" class="dir-rtl p-1">
+                        <div class="title-section mb-4 mt-2 text-center">
+                            <h5 class="fw-bold">
+                                @Captions.RegisterInSite
+                            </h5>
+                        </div>
+
+                        <div class="row pb-3">
+                            <div class="col-12 mb-2">
+                                <select class="form-control js-example-basic-single" onchange="changeNatText()" asp-for="NationalityType" asp-items="nationalityList" tabindex="1">
+                                </select>
+                                <span asp-validation-for="NationalityType" class="text-danger"></span>
+                            </div> 
+                            
+                            <div class="col-12 mb-2">
+                                <input asp-for="NationalCode" type="text" class="form-control" placeholder="@Captions.NationalCode" autocomplete="off" tabindex="2" onkeypress="return safeOnlyNumber($(this),event)">
+                                <span asp-validation-for="NationalCode" class="text-danger fs-12"></span>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <input asp-for="Mobile" type="tel" class="form-control dir-rtl" placeholder="@Captions.Mobile" autocomplete="off" tabindex="3" onkeypress="return safeOnlyNumber($(this),event)" maxlength="11">
+                                <span asp-validation-for="Mobile" class="text-danger fs-12"></span>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <div class="input-group mb-1 dir-ltr">
+                                    <button class="btn btn-primary border-left" tabindex="4" type="button" onclick="refreshImage('captcha')">
+                                        <i class="fa-solid fa-arrows-rotate align-middle"></i>
+                                        <!-- <img class="reset-icon" src="./assets/image/reset-svgrepo-com.svg" alt="reset icon"> -->
+                                    </button>
+                                    <img id="captcha" class="secret-code-img" src="/Captcha/GetImage/@Captions.CaptchaPage_RegisterICustomernSite" alt="secret code">
+                                    <input asp-for="Captcha" tabindex="4" type="tel" class="form-control border-right" placeholder="@Captions.SecurityCode" autocomplete="off" onkeypress="return safeOnlyNumber($(this),event)" tabindex="3">
+                                </div>
+                                <span asp-validation-for="Captcha" class="text-danger fs-12"></span>
+                            </div>
+
+                            <hr>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary px-5" tabindex="5">@Captions.OkAndContinue</button>@*onclick="login()"*@
+                                <a href="/login" class="btn btn-outline-gray_light" data-bs-dismiss="modal" tabindex="5">@Captions.Back</a>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Header {
+
+    <link href="~/sitetheme/css/select2.min.css" rel="stylesheet" />
+}
+@section Scripts {
+
+    <script src="~/sitetheme/js/select2.min.js"></script>
+    <script src="~/lib/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+        
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

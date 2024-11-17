@@ -1,0 +1,32 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels;
+@model EditInformationRequestViewModel
+
+@{
+    Layout = null;
+}
+<div class="container bg-dark rounded dir-rtl">
+    <form action="/EditInformationRequest" onsubmit="submitModalFormEditInformetionWithConfirm(this,'editInfoModal','@UserMessages.AreYouSure')">
+        <div class="row">
+            <div class="col-12   mb-3">
+                <label class="small mb-2 text-white">@Captions.DiscrepancyOfInfoDescruiption</label>
+                <textarea asp-for="Description" cols="30" rows="5" class="form-control" placeholder="@Captions.Description"></textarea>
+            </div>
+            <div class="col-12  mb-3">
+                <label class="small mb-2 text-white">@Captions.DocumentImage</label>
+                <div class="inputfile-box">
+                    <input asp-for="Image" type="file" id="file" class="inputfile" onchange="uploadFile(this)" style="display: none;">
+                    <label for="file" class="row mx-0">
+                        <span id="file-name" class="col form-control"></span>
+                        <span class="btn btn-primary col-auto px-5 ">
+                            <i class="fa fa-upload" aria-hidden="true"></i> @Captions.Select
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 pb-5">
+            <button type="submit" class="btn btn-primary">@Captions.Register</button>
+            <button type="button" data-bs-dismiss="modal" class="btn btn-outline-gray_light">@Captions.Cancel</button>
+        </div>
+    </form>
+</div>

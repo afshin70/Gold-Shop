@@ -1,0 +1,57 @@
+﻿@model ModalModel
+@if (Model is not null)
+{
+    string modalSize = string.Empty;
+    switch (Model.Size)
+    {
+        case ModalSize.Larg:
+            modalSize = "modal-lg";
+            break;
+        case ModalSize.Small:
+            modalSize = "modal-sm";
+            break;
+        default:
+            modalSize =string.Empty;
+            break;
+    }
+    <div class="modal fade @Model.ExtraClass" id="@Model.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" @(Model.DisableClickOutside?"data-bs-backdrop='static'":string.Empty)>
+        <div class="modal-dialog dir-rtl @Model.Modal_Dialog_Class @modalSize">
+            <div class="modal-content">
+                @if (Model.IsShowHeader)
+                {
+                    <div class="modal-header">
+                         @if (Model.IsHtmlHeader)
+                            {
+                                @Html.Raw(Model.HeaderHtmlContent)
+                            }
+                        @if (!string.IsNullOrEmpty(Model.Title))
+                        {
+                            <h5 class="modal-title" id="exampleModalLabel">@Model.Title</h5>
+                        }
+                        @if (Model.IsShowCloseIcon)
+                        {
+                            <button type="button" class="btn-close me-auto ms-0" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-close text-white"></i></button>
+                        }
+
+                    </div>
+                }
+                <div class="modal-body" id="@($"{Model.Id}_body")">
+                    @if (!string.IsNullOrEmpty(Model.BodyContent))
+                    {
+                        <text>@Html.Raw(Model.BodyContent)</text>
+                    }
+                </div>
+                @if (Model.IsShowFooter)
+                {
+                    <div class="modal-footer">
+                        @if (Model.IsShowCloseButtonInFooter)
+                        {
+                            <button type="button" class="@Model.CloseButtonClass" data-bs-dismiss="modal">@Model.CloseButtonName</button>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+}

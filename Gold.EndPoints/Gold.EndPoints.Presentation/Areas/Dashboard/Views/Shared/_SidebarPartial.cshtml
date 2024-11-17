@@ -1,0 +1,83 @@
+﻿@using Gold.ApplicationService.Contract.Abstractions;
+@inject IAuthenticationManager authManager;
+@{
+    List<ManagerPermission> managerPermissions = EnumHelper<ManagerPermission>.GetAsList();
+    var adminPanelMenusResult = await authManager.GetAdminPanelMenuListAsync();
+    var userType = User.GetUserType();
+    var currentManagerPermissions = User.GetManagerPermissionIds();
+}
+<ul class="navigation navigation-main navigation-accordion">
+    @{
+        foreach (var menue in adminPanelMenusResult.Data)
+        {
+            @if (userType == UserType.Manager)
+            {
+                if (menue.AdminMenus.Any(x => currentManagerPermissions.Contains(x.Id)))
+                {
+                    <li>
+                        <a class="accordion-toggle" href="#">
+                            <i class="@menue.IconName"></i>
+                            <span class="sidebar-title">@menue.Title</span>
+                        </a>
+                        <ul>
+                            @foreach (var subMenu in menue.AdminMenus)
+                            {
+                                if (currentManagerPermissions.Any(x => x == subMenu.Id))
+                                {
+                                    <li class="@(ViewBag.SelectedMenu==subMenu.Id?"active":"")">
+                                        <a href="@Url.Action(subMenu.ActionName,subMenu.ControllerName)">
+                                                <i class="@subMenu.IconName"></i>
+                                                <span class="sidebar-title">@subMenu.Title</span>
+                                            </a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </li>
+                }
+            }
+            else if (userType == UserType.Admin)
+            {
+                <li>
+                    <a class="accordion-toggle" href="#">
+                        <i class="@menue.IconName"></i>
+                        <span class="sidebar-title">@menue.Title</span>
+                    </a>
+                    <ul>
+                        @foreach (var subMenu in menue.AdminMenus)
+                        {
+                            <li class="@(ViewBag.SelectedMenu==subMenu.Id?"active":"")">
+                                <a href="@Url.Action(subMenu.ActionName,subMenu.ControllerName)">
+                                    <i class="@subMenu.IconName"></i>
+                                    <span class="sidebar-title">@subMenu.Title</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+            else if (userType == UserType.Seller & menue.Title=="مدیریت")
+            {
+                var admiMenus = menue.AdminMenus.Where(x => x.ControllerName == "Product" & x.ActionName == "Index").ToList();
+                <li>
+                    <a class="accordion-toggle" href="#">
+                        <i class="@menue.IconName"></i>
+                        <span class="sidebar-title">@menue.Title</span>
+                    </a>
+                    <ul>
+                        @foreach (var subMenu in admiMenus)
+                        {
+                            <li class="@(ViewBag.SelectedMenu==subMenu.Id?"active":"")">
+                                <a href="@Url.Action(subMenu.ActionName,subMenu.ControllerName)">
+                                    <i class="@subMenu.IconName"></i>
+                                    <span class="sidebar-title">@subMenu.Title</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+
+        }
+    }
+</ul>

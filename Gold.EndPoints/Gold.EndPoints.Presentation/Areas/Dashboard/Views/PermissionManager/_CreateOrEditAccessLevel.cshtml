@@ -1,0 +1,79 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.AccessLevelViewModels;
+
+
+@model CreateOrEditAccessLevelViewModel
+@{
+	Layout = null;
+}
+
+<form action="/Dashboard/PermissionManager/AddOrEditAccessLevel" onsubmit="submitFormAndCloseModalWitRefreshGrid(this,'addOrEditAccessLevelModal',gridName)">
+	<div class="panel-body">
+		<input asp-for="AccessLevelId" type="hidden" />
+		<div class="section row">
+			<div class="col-xs-12 col-sm-6 col-md-4 form-group">
+				<label asp-for="Title" class="star"></label>
+				<div class="input-group">
+					<input asp-for="Title" type="text" class="form-control" autocomplete="off">
+					<span class="input-group-addon"><i class="fa fa-pen"></i></span>
+				</div>
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+		</div>
+		@{
+			bool sw = false;
+		}
+		@if (Model.AdminMenuGroups is not null)
+		{
+			foreach (var menuGroup in Model.AdminMenuGroups)
+			{
+				@if (sw)
+				{
+					<hr class="no-margin" />
+				}
+				sw = true;
+				<div class="section row">
+					<h5>@menuGroup.Title</h5>
+				</div>
+				<div class="section row">
+
+					@if (menuGroup.AdminMenus is not null)
+					{
+						foreach (var menu in menuGroup.AdminMenus)
+						{
+							<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 form-group">
+								<div class="input-group">
+									<div class="checkbox checkbox-switchery">
+										<label>
+											@if (Model != null)
+											{
+												if (Model.AdminMenuIds is not null)
+												{
+													@if (Model.AdminMenuIds.Any(x => x == menu.Id))
+													{
+														<input type="checkbox" checked class="switchery" name="AdminMenuIds" value="@menu.Id">
+													}
+													else
+													{
+														<input type="checkbox" class="switchery" name="AdminMenuIds" value="@menu.Id">
+													}
+													@menu.Title
+												}
+											}
+										</label>
+									</div>
+								</div>
+								<span asp-validation-for="AdminMenuIds" class="text-danger"></span>
+							</div>
+						}
+					}
+				</div>
+			}
+		}
+
+	</div>
+	<div class="panel-footer text-right">
+		<button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+		<button type="button" onclick="loadDataInModal('/Dashboard/PermissionManager/AddOrEditAccessLevel?id=0','addOrEditAccessLevelModal')" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+	</div>
+</form>
+

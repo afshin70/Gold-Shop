@@ -1,0 +1,80 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels.CustomerPaymentsViewModel
+@using Gold.SharedKernel.Tools;
+@model PaymentReceiptsInPendingConfirmationSearchViewModel
+
+@{
+    List<byte> dayList = new List<byte>();
+    for (byte i = 1; i <= 29; i++)
+        dayList.Add(i);
+
+    var documentDayList = dayList.Select(x => new SelectListItem
+            {
+                Text = x.ToString(),
+                Value = x.ToString()
+            }).ToList();
+
+    string currentPersianDate = DateTimeTools.GeorgianToPersian(DateTime.Now, ShowMode.OnlyDate);
+
+    var confirmStatusList = EnumHelper<ConfirmStatusType>.GetAsList().Where(x => x != ConfirmStatusType.Confirmation).Select(item => new SelectListItem
+            {
+                Selected=item==ConfirmStatusType.Pending,
+                Text = item.GetDisplayName(),
+                Value = (item).ToString()
+            }).ToList();
+
+    Layout = null;
+}
+
+
+<form id="form_DocumentReport">
+    <div class="panel-body">
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="DocumentDay"></label>
+                <select asp-for="DocumentDay" asp-items="documentDayList" class="form-control Select2">
+                    <option selected value="">@Captions.All</option>
+                </select>
+                <span asp-validation-for="DocumentDay" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="DocumentNumber"></label>
+                <div class="input-group">
+                    <input asp-for="DocumentNumber" type="tel" onkeypress="return safeOnlyNumber($(this),event)" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="DocumentNumber" class="text-danger"></span>
+            </div>
+			<div class="col-xs-12 col-sm-6 col-md-4 form-group">
+				<label asp-for="ConfirmStatus"></label>
+				<select asp-for="ConfirmStatus" asp-items="@confirmStatusList" class="form-control Select2">
+					<option selected value="">@Captions.All</option>
+				</select>
+				<span asp-validation-for="ConfirmStatus" class="text-danger"></span>
+			</div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="FromDate"></label>
+                <div class="input-group">
+                    <input asp-for="FromDate" type="text" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="FromDate" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="ToDate"></label>
+                <div class="input-group">
+                    <input asp-for="ToDate" type="text" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="ToDate" class="text-danger"></span>
+            </div>
+       
+          
+        </div>
+    </div>
+    <div class="panel-footer text-right">
+        <button type="button" onclick="refreshGrid(gridName)" class="btn btn-info btn-labeled"><span>@Captions.Search</span> <b><i class="fa fa-search"></i></b></button>
+     </div>
+</form>
+
+
+

@@ -1,0 +1,91 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels.DocumentModels;
+@model CustomerDocumentDetailModel
+@{
+    Layout = null;
+    int row = 1;
+}
+<div class="modal-header border-bottom-0 px-1 pb-0">
+    <div class="row mx-0 w-100">
+        <div id="message-area" class="col pe-5 mb-3 pt-4">
+            <div id="message-area-body">
+                <p>
+                    @Html.Raw(Model.DocumentLastCustomerMessage.Replace("\r\n","<br/>"))
+                </p>
+            </div>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn-close text-white me-auto m-0 p-0" data-bs-dismiss="modal"
+                    aria-label="Close">
+                <i class="fa fa-close text-white"></i>
+            </button>
+        </div>
+        <div class="col-12 sticky-box-shadow pb-1" onclick="showContent('@Model.DocumentLastCustomerMessage.Replace("\r\n","<br/>")','message-area-body')">
+            <table class="table document-info-header-table mb-0 text-primary text-center table-borderless">
+                <tbody class="document-info-header">
+                    <tr class="mb-0">
+                        <th>@Captions.DocumentDate:</th>
+                        <th>@Captions.InstallmentAmount:</th>
+                        <th>@Captions.InstallmentCount:</th>
+                        <th>@Captions.DocumentNumber:</th>
+                    </tr>
+                    <tr>
+                        <td>@Model.DocumentDate</td>
+                        <td>@Model.InstallmentAmount.FormatMoney()</td>
+                        <td>@Model.InstallmentCount</td>
+                        <td>@Model.DocumentNo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-body pt-0 px-1">
+    <div class="row mx-0">
+        <div class="col-12">
+            <table class="table document-info-table document-info-table-title mb-0 text-primary text-center table-borderless">
+                <thead>
+                    <tr class="mb-0 text-dark sticky-box-shadow pb-3 ">
+                        <th>
+                            <span>@Captions.Row</span>
+                        </th>
+                        <th>
+                            <span>@Captions.InstallmentDate</span>
+                        </th>
+                        <th>
+                            <span>@Captions.PaymentDate</span>
+                        </th>
+                        <th>
+                            <span>
+                                @Captions.PaymentAmount
+                                <small>
+                                    (@Captions.Tooman)
+                                </small>
+                            </span>
+                        </th>
+                        <th>
+                            <span>
+                                @Captions.Delay
+                                <small>
+                                    (@Captions.Day)
+                                </small>
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="document-info-row">
+                    @foreach (var item in Model.Installments)
+                    {
+                        <tr onclick="showContent('@item.CustomerMessage.Replace("\r\n","<br/>")','message-area-body')" class="@item.InstallmentStateClass">
+                            <td>@row</td>
+                            <td>@item.PersianInstallmentDate</td>
+                            <td>@item.PersianPaymentDate</td>
+                            <td>@(item.PaymentAmount > 0 ? item.PaymentAmount.FormatMoney() : string.Empty)</td>
+                            <td>@item.Delay</td>
+                        </tr>
+                        row++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

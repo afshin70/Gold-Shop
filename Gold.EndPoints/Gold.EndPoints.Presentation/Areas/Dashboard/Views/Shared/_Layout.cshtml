@@ -1,0 +1,203 @@
+﻿
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fa" class="dir-rtl" dir="rtl">
+<head>
+    @* Meta, title, CSS, favicons, etc. *@
+    <meta charset="utf-8" />
+    @{
+        var title = ViewData["Title"];
+    }
+    <title>@(title == null ? "" : $" {title}")</title>
+
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="@Captions.AraPendar" />
+    <meta property="og:image" content="~/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="~/favicon.ico" rel="shortcut icon">
+    <link href="~/themes/default/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/css/core.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/css/colors.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/css/components.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/css/icons/icomoon/styles.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/css/icons/fontawesome/css/all.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/fonts/IRANSans/css/fontiran.css" rel="stylesheet" />
+    <link href="~/themes/default/fonts/IRANSans/css/fonts.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/css/icons/fontawesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/themes/default/plugins/sweetalert/dist/sweetalert.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/css/custom.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/themes/default/js/plugins/bootstrap-toastr/toastr-rtl.min.css" rel="stylesheet" />
+    <link href="~/themes/default/plugins/calendar/css/persian-datepicker.min.css" rel="stylesheet" />
+
+    <link href="~/lib/kendo/css/web/ArapendarKendo/kendo.css" rel="stylesheet" />
+    <link href="~/lib/kendo/css/web/ArapendarKendo/kendo.common.css" rel="stylesheet" />
+    <link href="~/lib/kendo/css/web/ArapendarKendo/kendo.rtl.css" rel="stylesheet" />
+    <link href="~/lib/kendo/css/web/ArapendarKendo/kendo.override.css" rel="stylesheet" />
+    <link href="~/themes/default/css/Override.css" rel="stylesheet"  asp-append-version="true" />
+
+
+    @RenderSection("Stylesheet", required: false)
+
+   @* <script type="text/javascript" src="~/themes/default/js/plugins/loaders/pace.min.js"></script>*@
+    <script type="text/javascript" src="~/themes/default/js/core/libraries/jquery.min.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script src="~/lib/kendo/js/jszip.min.js"></script>
+    <script src="~/lib/kendo/js/kendo.all.min.js"></script>
+    <script src="~/lib/kendo/js/kendo.filter.min.js"></script>
+    <script src="~/lib/kendo/js/kendo.filtercell.min.js"></script>
+    <script src="~/lib/kendo/js/kendo.filtermenu.min.js"></script>
+    <script src="~/lib/kendo/js/kendo.all.override.min.js"></script>
+    <script src="~/lib/kendo/js/kendo.aspnetmvc.min.js"></script>
+
+    <script type="text/javascript" src="~/themes/default/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/themes/default/js/plugins/loaders/blockui.min.js"></script>
+    @RenderSection("HeaderScripts", required: false)
+    
+@*    <script src="~/themes/default/plugins/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="~/themes/default/js/plugins/bootstrap-toastr/toastr.min.js"></script>
+
+    <script src="~/themes/default/js/pages/BaseJs.js" asp-append-version="true"></script>
+    <script src="~/themes/default/js/custom.js" asp-append-version="true"></script>
+    <script src="~/themes/default/js/mainJS.js" asp-append-version="true"></script>
+
+    <script type="text/javascript" src="~/themes/default/js/core/app.min.js"></script>
+    <script type="text/javascript" src="~/themes/default/js/plugins/ui/ripple.min.js"></script>*@
+
+</head>
+<body class="sidebar-xs">
+    <div class="navbar navbar-inverse header-highlight ">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                <b class="CompanyNameId">Shiraz Gold Shop</b>
+            </a>
+
+            <ul class="nav navbar-nav visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            <ul class="nav navbar-nav">
+                <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+
+            <p class="navbar-text">
+				<span class="label bg-success">ONLINE</span>@*کاربر @User.GetUserTypeFaName()*@
+            </p>
+
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown dropdown-user">
+                        @await Html.PartialAsync("_UserMenu")
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+
+            <!-- Main sidebar -->
+            <div class="sidebar sidebar-main ">
+                <div class="sidebar-content">
+                    <!-- Main navigation -->
+                    <div class="sidebar-category sidebar-category-visible">
+                        <!-- User menu -->
+                        @await Html.PartialAsync("~/Areas/Dashboard/Views/Shared/_LoginPartial.cshtml")
+                        <!-- /user menu -->
+                        <div class="category-content no-padding">
+                            @await Html.PartialAsync("~/Areas/Dashboard/Views/Shared/_SidebarPartial.cshtml")
+                        </div>
+                    </div>
+                    <!-- /main navigation -->
+
+                </div>
+            </div>
+            <!-- /main sidebar -->
+            <!-- Main content -->
+            <div class="content-wrapper">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="navbar navbar-default navbar-fixed-bottom footer">
+        <ul class="nav navbar-nav visible-xs-block">
+            <li><a class="text-center collapsed" data-toggle="collapse" data-target="#footer"><i class="icon-circle-up2"></i></a></li>
+        </ul>
+        <div class="navbar-collapse collapse" id="footer">
+            <div class="navbar-text">
+                &copy; @DateTime.UtcNow.Year. @Captions.DesignAndSupport: <a href="http://AraPendar.com" class="navbar-link" target="_blank">@Captions.AraPendar</a>
+            </div>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">@Captions.SiteVersion </a></li>@*@SystemSetting.Version*@
+                </ul>
+            </div>
+        </div>
+    </div>
+    @{
+        ModalModel changePasswordModel = new()
+            {
+                IsShowCloseButtonInFooter = false,
+                Id = "changePasswordModal",
+                IsShowCloseIcon = true,
+                Size = ModalSize.Small,
+                Title = Captions.ChangePassword,
+            };
+    }
+    <partial name="_Modal" model="changePasswordModel" />
+
+    <!-- /footer -->
+    @*Widget Javascript*@
+   @* <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery.getJSON('@Url.Action("GetCompanyName", "NoAuthorizeAction")',
+                function (data) {
+                    var title = data.title;
+                    var imgPath = data.imgPath;
+                    if (title.length == 0) {
+                        title =''; 
+                    }
+                    if (imgPath.length == 0) {
+                        imgPath = "/logo/company/default/logo.png";
+                    }
+                    $(".CompanyNameId").html(title);
+                    var titleDefult = document.title.split('|')[1];
+                    document.title = title + " | " + titleDefult;
+                    $('#imgLogo').prop("src", imgPath);
+                    $('#imgLogo').prop("title", title);
+            })
+        });
+        $('[data-popup=tooltip-custom]').tooltip({
+            template: '<div class="tooltip"><div class="bg-teal"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div></div>'
+        });
+    </script>*@
+
+    
+   
+    <script src="~/themes/default/plugins/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="~/themes/default/js/plugins/bootstrap-toastr/toastr.min.js"></script>
+
+    <script src="~/themes/default/js/pages/BaseJs.js" asp-append-version="true"></script>
+    <script src="~/themes/default/js/custom.js" asp-append-version="true"></script>
+    <script src="~/themes/default/js/mainJS.js" asp-append-version="true"></script>
+
+    <script type="text/javascript" src="~/themes/default/js/core/app.min.js"></script>
+    <script type="text/javascript" src="~/themes/default/js/plugins/ui/ripple.min.js"></script>
+    <script src="~/Scripts/Dashboard/Layout.js" asp-append-version="true"></script>
+    <script src="~/scripts/Dashboard/global-mine.min.js" asp-append-version="true"></script>
+    @*END: PAGE SCRIPTS*@
+    @RenderSection("Scripts", required: false)
+     
+</body>
+</html>

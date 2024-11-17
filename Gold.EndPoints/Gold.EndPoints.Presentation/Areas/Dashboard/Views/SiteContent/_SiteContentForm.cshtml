@@ -1,0 +1,35 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.SiteContent;
+@using Gold.Domain.Enums
+@model SiteContentViewModel
+@{
+    Layout = null;
+}
+<form id="" action="/Dashboard/SiteContent/CreateOrEditContent" onsubmit="submitSiteContentFormAndGetResult(this)" method="post">
+    <div class="panel-body">
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 form-group">
+                <label asp-for="ContentType"></label>
+                <select name="ContentType" id="ContentType" asp-items="Model.ContentTypes" class="form-control Select2" onchange="loadSiteContentBySelectList('/Dashboard/SiteContent/CreateOrEditContent','ContentType')">
+                </select>
+                <span asp-validation-for="ContentType" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 form-group">
+                <label asp-for="Text"></label>
+                <input asp-for="Text" type="hidden" />
+                <textarea id="TextEditor">@Html.Raw(Model.Text)</textarea>
+                @*<div id="TextEditor"></div>*@
+            @*    <div class="input-group">
+                    <textarea asp-for="Text" class="form-control" rows="6"></textarea> <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>*@
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer text-right">
+        <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+        @*<button type="button" onclick="$('#form_scriptSettings').trigger('reset');" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>*@
+    </div>
+</form>
+

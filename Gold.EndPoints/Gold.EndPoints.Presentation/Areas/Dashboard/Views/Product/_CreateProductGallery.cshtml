@@ -1,0 +1,55 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.ProductViewModels.ProdctGalleryViewModels;
+@model CreateProductGalleryViewModel
+@{
+    Layout = null;
+}
+<div id="form_createProductGalleryForm_section">
+    <div id="form_essentialTel_section">
+        <form id="form_essentialTel" action="/Dashboard/Product/CreateProductGallery" onsubmit="submitProductGalleryForm(this, 'addProductGalleryModal')" method="post">
+            <div class="modal-body">
+                <input type="hidden" asp-for="OwnProductId" />
+                <input type="hidden" asp-for="ProductGalleryId" />
+                <div class="section row">
+                    <div class="col-xs-12 text-center">
+                        <h3>@($"{Captions.Album} {Model.ProductName}")</h3>
+                    </div>
+                    <hr />
+                  @*   <div class="col-xs-12 col-sm-3 col-md-3 form-group">
+                        <input type="hidden" asp-for="UploadedFile" />
+                        <label asp-for="UploadedFile" class="star"></label>
+                        <input asp-for="UploadedFile" type="file" id="inputFile" class="form-control" accept=".mp4,.mpeg,.png,.jpg,.jpeg">
+                        <span asp-validation-for="UploadedFile" class="text-danger"></span>
+                    </div>  *@
+                    
+                    <div class="col-xs-12 col-sm-3 col-md-3 form-group">
+                        <label asp-for="UploadedFile"></label>
+                        <input asp-for="UploadedFile" type="file" id="inputFile" class="form-control" onchange="previewImage(this,'previewImg','btnImgDel')">
+                        <span asp-validation-for="UploadedFile" class="text-danger"></span>
+                    </div>
+                    <div class="col-xs-12 ">
+                        <p> @(string.Format(UserMessages.ImageOrVideoSizeDescription, "800", "450"))</p>
+                    </div>
+                    <div class="col-xs-12">
+                        <img id="previewImg" src="" style="max-height:100px;display:none">
+                    </div>
+                </div>
+            </div>
+            <div class="section row">
+                <div class="modal-footer text-right">
+                    <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+                     <button type="reset"  class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="table_productGalleryList">
+        @if(Model.ProductGalleries.Any())
+        {
+            <partial name="_ProductGalleryList" model="Model.ProductGalleries" />
+        }
+    </div>
+</div>
+
+
+
+

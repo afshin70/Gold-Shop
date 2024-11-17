@@ -1,0 +1,40 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.SettingsViewModels
+@using Gold.Domain.Enums
+@model DefaultMessageViewModel
+@{
+    Layout = null;
+   
+}
+
+<form id="form_smsContentSetting" action="/Dashboard/Setting/CreateOrEditDefaultMessage" onsubmit="submitFormAndGetResult(this,'form_smsContentSetting')" method="post">
+    <div class="panel-body">
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 form-group">
+                <label asp-for="MessageType"></label>
+                    <select name="messageType" id="messageType" asp-items="Model.MessageTypes" class="form-control Select2" onchange="loadDataBySelectList('/Dashboard/Setting/CreateOrEditDefaultMessage','messageType','form_smsContentSetting')">
+                    </select>
+                
+                <span asp-validation-for="MessageType" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 form-group">
+               @Captions.Parameters : <label asp-for="ContentParameters">@Model.ContentParameters</label>
+            </div>
+        </div>
+       
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 form-group">
+                <label asp-for="Content"></label>
+                <div class="input-group">
+                    <textarea asp-for="Content" class="form-control" rows="6"></textarea> <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer text-right">
+        <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+        @*<button type="button" onclick="$('#form_scriptSettings').trigger('reset');" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>*@
+    </div>
+</form>

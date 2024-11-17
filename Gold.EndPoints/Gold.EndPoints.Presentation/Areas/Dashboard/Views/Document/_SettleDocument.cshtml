@@ -1,0 +1,83 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels.DocumentViewModels
+@model SettleDocumentViewModel
+@{
+	Layout = null;
+	string currentPersianDate = DateTime.Now.GeorgianToPersian(ShowMode.OnlyDate);
+}
+<div class="section row">
+	<div class="col-xs-12 form-group">
+		<h6>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.DocumentNumber : @Model.DocumentNumber</lable>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.DocumentDate :  @(Model.DocumentDate.HasValue ? Model.DocumentDate.Value.GeorgianToPersian(ShowMode.OnlyDate) : "")</lable>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.InstallmentCount : @Model.InstallmentCount</lable>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.TotalDelay : @(Model.TotalDelayDay.HasValue ? Model.TotalDelayDay.Value : "0") @Captions.Day</lable>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.InstallmentRemainAmount : @(Model.InstallmentRemainAmount.HasValue ? Math.Abs(Model.InstallmentRemainAmount.Value).ToString("N0") : "") @Captions.Tooman @(Model.InstallmentRemainAmount == 0 ? string.Empty : (Model.InstallmentRemainAmount < 0 ? $"{Captions.Creditor}" : $"{Captions.Debtor}"))</lable>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.TotalDelayAmount : <span id="delayAmountLable">@Math.Abs(Model.DelayAmount).ToString("N0")</span> @Captions.Tooman</lable>
+			<lable class="col-xs-12 col-sm-6 form-group ">@Captions.TotalRemainAmount : @Math.Abs(Model.TotalRemainAmount).ToString("N0") @Captions.Tooman @(Model.TotalRemainAmount == 0 ? string.Empty : (Model.TotalRemainAmount < 0 ? $"{Captions.Creditor}" : $"{Captions.Debtor}"))</lable>
+		</h6>
+	</div>
+
+</div>
+<hr />
+
+@*<div  id="div_createOrEditPayment">*@
+
+<div id="form_createOrEditPayment">
+	<form action="/Dashboard/Document/SettleDocument" onsubmit="settleDocument(this,'settleDocumentModal','@UserMessages.AreYouSureSettleDocument')">
+		<input asp-for="DocumentId" type="hidden" />
+		<div class="section row">
+
+			<div class="col-xs-12 col-sm-12 col-md-6 form-group">
+				<label asp-for="SettleDate" class="col-xs-12 col-sm-12 star"></label>
+				<div class="input-group">
+					<input asp-for="SettleDate" onclick="PersianDatePicker.showPDatePicker(this,'@currentPersianDate');" onchange="GetSettleMessage()" class="form-control" autocomplete="off" />
+					<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+				</div>
+				<span asp-validation-for="SettleDate" class="text-danger"></span>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 form-group">
+				<label asp-for="DeliveryDate" class="col-xs-12 col-sm-12 star"></label>
+				<div class="input-group">
+					<input asp-for="DeliveryDate" onclick="PersianDatePicker.showPDatePicker(this,'@currentPersianDate');" onchange="GetSettleMessage()" class="form-control" autocomplete="off" />
+					<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+				</div>
+				<span asp-validation-for="DeliveryDate" class="text-danger"></span>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 form-group">
+				<div class="col-xs-12 col-sm-12 star">
+					<label asp-for="ReturnedAmount"></label> (@Captions.Tooman)
+				</div>
+				<div class="input-group">
+					<input asp-for="ReturnedAmount" onkeyup="monyFormat(this)" type="text" class="form-control" onkeypress="return safeOnlyNumber($(this),event)" maxlength="12"  />
+					<span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
+				</div>
+				<span asp-validation-for="ReturnedAmount" class="text-danger"></span>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 form-group">
+				<div class="col-xs-12 col-sm-12 star">
+					<label asp-for="DiscountAmount"></label> (@Captions.Tooman)
+				</div>
+				<div class="input-group">
+					<input asp-for="DiscountAmount" type="text" onkeyup="monyFormat(this)" onchange="GetSettleMessage()" class="form-control" onkeypress="return safeOnlyNumber($(this),event)" maxlength="12" />
+					<span class="input-group-addon"><i class="fa fa-dollar-sign"></i></span>
+				</div>
+				<span asp-validation-for="DiscountAmount" class="text-danger"></span>
+			</div>
+			<div class="col-xs-12  form-group">
+				<label asp-for="CustomerSettleMessageContent" class="col-xs-12 col-sm-12 star"></label>
+				<div class="input-group">
+					<textarea asp-for="CustomerSettleMessageContent" rows="6" class="form-control" autocomplete="off"></textarea>
+					<span class="input-group-addon"><i class="fa fa-pen"></i></span>
+				</div>
+				<span asp-validation-for="CustomerSettleMessageContent" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="section row">
+			<div class="modal-footer text-right">
+				<button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SettleDoc</span> <b><i class="fa fa-check-circle"></i></b></button>
+			</div>
+		</div>
+	</form>
+</div>
+
+@*    </div>*@

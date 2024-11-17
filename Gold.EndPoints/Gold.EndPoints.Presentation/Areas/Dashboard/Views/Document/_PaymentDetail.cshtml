@@ -1,0 +1,88 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.DocumentModels
+
+@model InstallmentPymentsDetailModel
+@{
+	Layout = null;
+
+	string status = string.Empty;
+	if (Model.SumOfRemainAmount < 0)
+		status = Captions.Creditor;
+	else if (Model.SumOfRemainAmount > 0)
+		status = Captions.Debtor;
+
+	string accountStatusToCurrentInstallmentValue = (Math.Abs(Model.SumOfRemainAmount) > 0 ? Math.Abs(Model.SumOfRemainAmount).ToString("N0") + " " + Captions.Tooman : Captions.FullPayment) + $" {status}";
+}
+ 
+<div class="section row">
+	<div class="col-xs-12 form-group">
+		<h6>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.DocumentNumber : @Model.DocumentNumber</lable>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.InstallmentDate : @Model.InstallmentDate.GeorgianToPersian(ShowMode.OnlyDate)</lable>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.InstallmentNumebr : @Model.InstallmentNumber @Captions.From @Model.InstallmentCount</lable>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.InstallmentPrice : @Model.InstallmentAmount.ToString("N0") @Captions.Tooman</lable>
+			<lable class="col-xs-12 col-sm-6 form-group">@Captions.AccountStatusToCurrentInstallment : @accountStatusToCurrentInstallmentValue</lable>
+		</h6>
+	</div>
+
+</div>
+
+<div class="k-rtl ">
+	<div class="k-grid k-widget k-display-block">
+		<div class="k-grid-header" style="padding-left: 17px;">
+			<div class="k-grid-header-wrap k-auto-scrollable">
+				<table>
+					<thead>
+						<tr>
+							<td class="k-header td-5">#</td>
+							<th class="k-header td-20">@Captions.PaymentDate</th>
+							<th class="k-header td-25">@Captions.PaymentAmount (@Captions.Tooman)</th>
+							<th class="k-header td-30">@Captions.ReceiptImage</th>
+							<th class="k-header td-20">@Captions.PaymentRegisterDate</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		<div class="k-grid-content k-auto-scrollable" style="height: auto;">
+			<table class="k-selectable">
+				@if (Model.Payments != null)
+				{
+					<tbody>
+						@{
+							long sumOfPayments = 0;
+							int rowNumber = 1;
+						}
+						@foreach (var payment in Model.Payments)
+						{
+							<tr>
+								<td class="td-5">@rowNumber</td>
+								<td class="td-20">@payment.PaymentDate.GeorgianToPersian(ShowMode.OnlyDate)</td>
+								<td class="td-25">@payment.Amount.ToString("N0")</td>
+								<td class="td-30 text-center">
+									@if (!string.IsNullOrEmpty(payment.ImageName))
+									{
+
+										<a href="/Dashboard/Document/GetPaymentImage?imageName=@payment.ImageName" target="_blank">@Captions.ViewReceipt</a>
+									}
+								</td>
+								<td class="td-20">@payment.RegisterDate.GeorgianToPersian(ShowMode.OnlyDateAndTime)</td>
+							</tr>
+							rowNumber++;
+							sumOfPayments += payment.Amount;
+						}
+						
+					</tbody>
+					<tfoot>
+						<tr>
+							<td class="td-5 border-top"> </td>
+							<td class="td-20 border-top"></td>
+							<td class="td-25 border-top">@Captions.SumTotal : @sumOfPayments.ToString("N0") @Captions.Tooman</td>
+							<td class="td-30 border-top"></td>
+							<td class="td-20 border-top no-border-left"></td>
+						</tr>
+					</tfoot>
+				}
+			</table>
+		</div>
+	</div>
+</div>

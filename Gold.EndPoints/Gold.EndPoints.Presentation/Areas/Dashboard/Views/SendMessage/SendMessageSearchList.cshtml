@@ -1,0 +1,52 @@
+﻿@model List<SendMessageModel>
+@{
+    Layout = null;
+}
+<div class="k-rtl">
+    <div class="k-grid k-widget k-display-block">
+        <div class="k-grid-header" style="padding-left: 17px;">
+            <div class="k-grid-header-wrap k-auto-scrollable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="k-header td-5 "> <input type="checkbox" id="selectAll" onclick="checkAllCheckBoxesByName('selectAll','customerList')" /> @Captions.Select </th>
+                            <th class="k-header td-20">@Captions.FullName</th>
+                            <th class="k-header td-20">@Captions.Nationality</th>
+                            <th class="k-header td-15">@Captions.NationalCode_UserName</th>
+                            <th class="k-header td-20">@Captions.Mobile</th>
+                            <th class="k-header td-10">@Captions.AccountStatus</th>
+                            <th class="k-header td-10">@Captions.RegisteryDate</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="k-grid-content k-auto-scrollable" style="height: auto;">
+            <table class="k-selectable">
+                <tbody class="customerList">
+                    @if (Model != null)
+                    {
+                        string accountStatusClass = "";
+                        foreach (var item in Model.OrderBy(x => x.CustomerName))
+                        {
+                            if (item.AccountStatus == Captions.GoodPay)
+                                accountStatusClass = "badge badge-success";
+                            else if (item.AccountStatus == Captions.DeadBeat)
+                                accountStatusClass = "badge badge-danger";
+                            <tr>
+                                <td class="td-5 "><input type="checkbox" checked name="customerId" value="@item.CustomerId" /></td>
+                                <td class="td-20">@item.CustomerName</td>
+                                <td class="td-20">@item.Nationality</td>
+                                <td class="td-15">@item.NationalCode</td>
+                                <td class="td-20">@item.Mobile</td>
+                                <td class="td-10 text-center"><span class="@accountStatusClass">@item.AccountStatus</span></td>
+                                <td class="td-10">@item.RegisterDate</td>
+                            </tr>
+                            accountStatusClass = string.Empty;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

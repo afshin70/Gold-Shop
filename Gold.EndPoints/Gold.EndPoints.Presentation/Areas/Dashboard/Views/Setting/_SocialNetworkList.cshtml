@@ -1,0 +1,64 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.SettingsModels;
+
+<div class="k-rtl ">
+    @(Html.Kendo().Grid<SocialNetworkModel>()
+        .Name("grid_SocialNetwork")
+        .Columns(columns =>
+        {
+            columns.Bound("").ClientTemplate("#= renderRecordNumber(data,gridName) #")
+            .Title("#")
+            .Width(30);
+
+
+            columns.Bound(c => c.Title)
+            .Sortable(true)
+            .Title(Captions.Title)
+            .Filterable(true)
+            .Width(100);
+
+            columns.Bound(c => c.Url)
+            .Title(Captions.Url)
+            .Sortable(true)
+        .ClientTemplate($"<div class='text-center'><a href='#=Url#' target='_blank'  class='' title='{Captions.Url}'>#=Url#</a></div>")
+        @*.ClientTemplate($"<div class='text-center'><a href='#=Url#' target='_blank'  class='btn btn-info btn-sm' title='{Captions.Url}'><i class='fa fa-link'></i></a></div>")*@
+        .Filterable(true)
+        .Width(100);
+
+
+
+            columns.Bound(c => c.Id)
+            .ClientTemplate($"<div class='text-center'><button class='btn btn-primary' onclick='loadData(\"/Dashboard/Setting/CreateOrEditSocialNetwork?id=#=Id#\",\"form_socialNetwork\")'  title='{Captions.Edit}'><i class='fa fa-edit'></i></button>" +
+            $"<button class='btn btn-danger' onclick='getRequestWithConfirmRefreshGrid(\"/Dashboard/Setting/RemoveSocialNetwork?id=#=Id#\",\"{UserMessages.AreYouSureForDelete}\",gridName,resetSocialNetworkForm)' title='{Captions.Delete}'><i class='fa fa-trash'></i></button></div>")
+            .Title(Captions.Operation)
+            .Width(100)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+        })
+        .Sortable()
+        .Selectable()
+        .Scrollable(x => x.Height("auto"))
+        .Filterable()
+        .HtmlAttributes(new { @class = "" })
+        .Pageable(pageable => pageable
+        .PageSizes(new[] { 10, 50, 100, 500 })
+        .Info(true)
+        .Enabled(true)
+        .PreviousNext(true)
+        .Input(true)
+        .Numeric(true)
+        .ButtonCount(8)
+        .Refresh(true)
+        )
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Sort(x => x.Add(y => y.Title))
+        .Read(read => read.Action("SocialNetworkList_Read", "Setting"))
+        ).Events(ev => ev.DataBound("onDataBound"))
+        )
+</div>
+<script>
+    function GetData(){
+        return;
+    }
+</script>

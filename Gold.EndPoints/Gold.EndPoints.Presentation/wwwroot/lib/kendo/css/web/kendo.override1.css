@@ -1,0 +1,47 @@
+﻿.k-grid, .k-listview {
+    position: relative;
+    zoom: 1;
+    font-size: 13px;
+    font-family:'IRANSans' !important
+}
+.k-dropdown .k-dropdown-wrap {
+    border-color: #e4e7eb;
+    color: #212529;
+    background-color: #e4e7eb;
+    transition: color .2s ease,background-color .2s ease,border-color .2s ease,box-shadow .2s ease;
+   
+}
+.k-list {
+    height: auto;
+    font-size: 13px;
+    font-family: 'IRANSans' !important
+}
+.k-autocomplete, .k-autocomplete.k-state-hover, .k-block, .k-draghandle, .k-dropdown-wrap, .k-dropdown-wrap.k-state-hover, .k-grid-header, .k-grouping-header, .k-header, .k-link.k-state-hover, .k-numeric-wrap, .k-numeric-wrap.k-state-hover, .k-pager-wrap, .k-picker-wrap, .k-picker-wrap.k-state-hover, .k-tabstrip-items .k-item, .k-textbox, .k-textbox:hover, .k-toolbar, .k-tooltip {
+    background-repeat: repeat;
+    background-position: 0 center;
+    font-weight: bold;
+    font-size: 12px;
+    direction: rtl;
+    text-align: right;
+
+}
+     
+.k-icon, .k-tool-icon {
+    position: unset;
+    display: inline-block;
+    overflow: hidden;
+    width: 1em;
+    height: 1em;
+    text-align: center;
+    vertical-align: middle;
+    background-image: none;
+    font: 16px/1 WebComponentsIcons;
+    speak: none;
+    font-variant: normal;
+    text-transform: none;
+    text-indent: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: inherit;
+}
+ 

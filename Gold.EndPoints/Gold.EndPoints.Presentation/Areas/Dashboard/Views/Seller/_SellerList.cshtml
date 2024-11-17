@@ -1,0 +1,94 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.SellerModels;
+
+<div class="k-rtl ">
+    @(
+
+        Html.Kendo().Grid<SellerModel>()
+        .Name("grid_sellerGrid")
+        .Columns(columns =>
+        {
+            columns.Bound("").ClientTemplate("#= renderRecordNumber(data,gridNameSeller) #")
+            .Title("#")
+            .Width(30);
+
+            columns.Bound(c => c.FullName)
+            .Sortable(true)
+            .Title(Captions.Name)
+            .Filterable(true)
+            .Width(80);
+
+             columns.Bound(c => c.GalleryName)
+            .Sortable(true)
+            .Title(Captions.Gallery)
+            .Filterable(true)
+            .Width(80);
+ 
+            columns.Bound(c => c.ProductRegisterPerMinCount)
+            .Sortable(true)
+            .Title(Captions.ProductRegisterPerHourCount)
+            .Filterable(true)
+            .Width(100);
+           
+            columns.Bound(c => c.UserName)
+            .Sortable(true)
+            .Title(Captions.UserName)
+            .Filterable(true)
+            .Width(80);
+
+            columns.Bound(c => c.HasAccessToRegisterLoan)
+            .Title(Captions.RegisterLoan)
+            .ClientTemplate($"<div class='text-center'><span class=\"badge #=(HasAccessToRegisterLoan?'badge-success':'badge-danger')#\"> #=(HasAccessToRegisterLoan?'{Captions.Active}':'{Captions.DeActive}')#</span></div>")
+            .Sortable(true)
+            .Filterable(true)
+            .Width(85);
+
+            columns.Bound(c => c.HasAccessToRegisterProduct)
+            .Title(Captions.RegisterProduct)
+            .ClientTemplate($"<div class='text-center'><span class=\"badge #=(HasAccessToRegisterProduct?'badge-success':'badge-danger')#\"> #=(HasAccessToRegisterProduct?'{Captions.Active}':'{Captions.DeActive}')#</span></div>")
+            .Sortable(true)
+            .Filterable(true)
+            .Width(85);
+          
+
+            columns.Bound(c => c.IsActive)
+            .Title(Captions.Status)
+            .ClientTemplate($"<div class='text-center'><span class=\"badge #=(IsActive?'badge-success':'badge-danger')#\"> #=(IsActive?'{Captions.Active}':'{Captions.DeActive}')#</span></div>")
+            .Sortable(true)
+            .Filterable(true)
+            .Width(85);
+
+           
+
+
+            columns.Bound(c => c.Id)
+            .ClientTemplate($"<div class='text-center'><button class='btn btn-primary' onclick='loadData(\"/Dashboard/Seller/CreateOrEditSeller?id=#=Id#\",\"form_seller\")'  title='{Captions.Edit}'><i class='fa fa-edit'></i></button>" +
+            $"<button class='btn btn-danger' onclick='getRequestWithConfirmRefreshGrid(\"/Dashboard/Seller/RemoveSeller?id=#=Id#\",\"{UserMessages.AreYouSureForDelete}\",gridNameSeller,resetSellerForm)' title='{Captions.Delete}'><i class='fa fa-trash'></i></button></div>")
+            .Title(Captions.Operation)
+            .Width(100)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+        })
+        .Sortable()
+        .Selectable()
+        .Scrollable(x => x.Height("auto"))
+        .Filterable()
+        .HtmlAttributes(new { @class = "" })
+        .Pageable(pageable => pageable
+        .PageSizes(new[] { 10, 50, 100, 500 })
+        .Info(true)
+        .Enabled(true)
+        .PreviousNext(true)
+        .Input(true)
+        .Numeric(true)
+        .ButtonCount(8)
+        .Refresh(true)
+        )
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Sort(x => x.Add(y => y.FullName))
+        .Read(read => read.Action("SellerList_Read", "Seller"))
+        ).Events(ev => ev.DataBound("onDataBound"))
+        )
+</div>

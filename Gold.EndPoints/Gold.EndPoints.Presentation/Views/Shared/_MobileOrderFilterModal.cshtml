@@ -1,0 +1,94 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.ProductModels;
+@model ProductsFilterModel
+@{
+    Layout = null;
+}
+
+
+<div class="modal fade filter-area px-0" id="mobile-order" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog w-100 modal-fullscreen-md-down" id="">
+        <div class="modal-content dir-rtl">
+            <div class="modal-header py-1 border-bottom-0 text-center">
+                <h6 id="mobile-modal-title" class="modal-title">
+                    <i class="fa-light fa-arrow-up-wide-short ms-1"></i>
+                    @if (Model.SortBy.HasValue)
+                    {
+                        <text>@Model.SortBy.GetDisplayName()</text>
+                    }
+                </h6>
+                <button type="button" class="btn btn-link px-0 mx-0" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-close"></i>
+                </button>
+            </div>
+            <div class="modal-body px-0 pt-0">
+                <div class="accordion-body">
+                    <ul>
+                        <li>
+                            @if (Model.SortBy == SortBy.Newest)
+                            {
+                                <i class="fa fa-check"></i>
+                            }
+                            <button name="@SortBy.Newest" onclick="filterBySort('@SortBy.Newest')" class="btn btn-link">
+                                @SortBy.Newest.GetDisplayName()
+                            </button>
+                        </li>
+                        <li>
+                            @if (Model.SortBy == SortBy.MostVisited)
+                            {
+                                <i class="fa fa-check"></i>
+                            }
+                            <button name="@SortBy.MostVisited" onclick="filterBySort('@SortBy.MostVisited')" class="btn btn-link">
+                                @SortBy.MostVisited.GetDisplayName()
+                            </button>
+                        </li>
+                        <li>
+                            @if (Model.SortBy == SortBy.LowestWage)
+                            {
+                                <i class="fa fa-check"></i>
+                            }
+                            <button name="@SortBy.LowestWage" onclick="filterBySort('@SortBy.LowestWage')" class="btn btn-link">
+                                @SortBy.LowestWage.GetDisplayName()
+                            </button>
+                        </li>
+                        <li>
+                            @if (Model.SortBy == SortBy.HighestWage)
+                            {
+                                <i class="fa fa-check"></i>
+                            }
+                            <button name="@SortBy.HighestWage" onclick="filterBySort('@SortBy.HighestWage')" class="btn btn-link">
+                                @SortBy.HighestWage.GetDisplayName()
+                            </button>
+                        </li>
+                        <li>
+                            @if (Model.SortBy == SortBy.MostExpensive)
+                            {
+                                <i class="fa fa-check"></i>
+                            }
+                            <button name="@SortBy.MostExpensive" onclick="filterBySort('@SortBy.MostExpensive')" class="btn btn-link">
+                                @SortBy.MostExpensive.GetDisplayName()
+                            </button>
+                        </li>
+                        <li>
+                            @if (Model.SortBy == SortBy.Cheapest)
+                            {
+                                <i class="fa fa-check"></i>
+                            }
+                            <button name="@SortBy.Cheapest" onclick="filterBySort('@SortBy.Cheapest')" class="btn btn-link">
+                                @SortBy.Cheapest.GetDisplayName()
+                            </button>
+                        </li>
+                        <li>
+                            @if (Model.SortBy == SortBy.BiggestDiscount)
+                            {
+                                <i class="fa fa-check"></i>
+                            }
+                            <button name="@SortBy.BiggestDiscount" onclick="filterBySort('@SortBy.BiggestDiscount')" class="btn btn-link">
+                                @SortBy.BiggestDiscount.GetDisplayName()
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

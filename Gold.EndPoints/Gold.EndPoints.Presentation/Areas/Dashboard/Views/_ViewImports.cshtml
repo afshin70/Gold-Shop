@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.Extensions.Options
+@using Kendo.Mvc.UI
+@using Gold.EndPoints.Presentation
+@using Gold.EndPoints.Presentation.Models
+
+@*View Models*@
+@using Gold.ApplicationService.Contract.DTOs.ViewModels
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.AuthenticationViewModels
+@*@using Gold.ApplicationService.Contract.DTOs.ViewModels.SettingsViewModels*@
+
+@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.CustomerViewModels
+@using Gold.ApplicationService.Contract.DTOs.Models.CityModels
+
+@using Gold.Resources;
+@using Gold.SharedKernel.DTO.Bootstrap
+@using Gold.SharedKernel.Enums
+@using Gold.SharedKernel.ExtentionMethods
+@using Gold.SharedKernel.Helpers
+
+@* فعال سازی استفاده‌ی از Tag Helpers برای تمام Viewهای برنامه  *@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Gold.Infrastracture.TagHelpers.SmartTags
+@addTagHelper *, Kendo.Mvc

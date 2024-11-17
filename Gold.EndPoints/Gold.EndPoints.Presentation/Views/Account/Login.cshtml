@@ -1,0 +1,81 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.AuthenticationViewModels;
+@using Gold.Resources;
+@model LoginViewModel
+@{
+	ViewData["Title"] = Captions.EnteringSystem;
+	ViewData["IsShowBackgroundImage"] = true;
+}
+<div class="container">
+	<div id="loginArea" class="row justify-content-center">
+		@*login_content*@
+		<div class="col-12 col-sm-10 col-md-9 col-lg-5">
+			<div class="card shadow  overflow-hidden">
+				<div class="card-body">
+
+					<form action="/Login" method="post" asp-antiforgery="true" onsubmit="login(this)" class="dir-rtl p-1">
+						<div class="title-section mt-2 text-center">
+							<h5 class="fw-bold">
+								@Captions.EnteringSystem
+							</h5>
+						</div>
+						<div class="row pb-3">
+							<div class="col-12 mb-2">
+								<input asp-for="UserName" type="text" tabindex="1" class="form-control" placeholder="@Captions.NationalCode" autocomplete="off">
+								<span asp-validation-for="UserName" class="text-danger fs-12"></span>
+							</div>
+							<div class="col-12 mb-2">
+								<div class="input-group dir-ltr">
+									<button onclick="ShowPassword('Password',this)" class="btn btn-primary border-left w-50p " type="button" id="button-addon1">
+										<i class="fa fa-eye align-middle"></i>
+									</button>
+									<input tabindex="2" asp-for="Password" type="password" class="form-control border-right text-end dir-ltr" placeholder="@Captions.PasswordByDefaultYourMobileNumber">
+								</div>
+								<span asp-validation-for="Password" class="text-danger fs-12"></span>
+							</div>
+							<div class="col-12 mb-3">
+								<div class="input-group dir-ltr">
+									<button class="btn btn-primary border-left w-50p " tabindex="4" type="button" onclick="refreshImage('captcha')">
+										<i class="fa-solid fa-arrows-rotate align-middle"></i>
+									</button>
+									<img id="captcha" class="secret-code-img" src="/Captcha/GetImage/@Captions.CaptchaPage_Login" alt="secret code">
+									<input asp-for="Captcha" tabindex="3" type="tel" class="form-control border-right" placeholder="@Captions.SecurityCode" onkeypress="return safeOnlyNumber($(this),event)" autocomplete="off">
+								</div>
+								<span asp-validation-for="Captcha" class="text-danger fs-12"></span>
+							</div>
+							<div class="col-12 mb-2 col-md-6">
+								<div class="form-check">
+									<label>
+										<input type="checkbox" tabindex="5" class="form-check-input" asp-for="RememberMe" id="flexCheckDefault">
+										<label class="form-check-label text-white" for="flexCheckDefault">
+											@UserMessages.RememberMe
+										</label>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-12 col-md-6 mb-2 text-md-start text-end ">
+								<button type="submit" tabindex="6" class="btn btn-primary px-5">@Captions.Enter</button>
+							</div>
+							<hr>
+							<div class="col-12 col-md-6">
+								<a class="small" tabindex="7" href="/ForgetPassword">@Captions.IForgetMyPassword</a>&nbsp;&nbsp;
+							</div>
+							<div class="col-12 col-md-6 text-end mt-1 text-md-start">
+								<a class="btn btn-outline-gray_light  px-5" data-bs-dismiss="modal" href="/Account/Register" tabindex="7">@Captions.RegisterInSite</a>
+							</div>
+
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+
+}
+

@@ -1,0 +1,203 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.CustomerModels
+@using Gold.ApplicationService.Contract.DTOs.Models.CityModels
+@using Gold.SharedKernel.Tools;
+@model CreateOrEditCustomerViewModel
+@{
+    Layout = null;
+    string currentPersianDate = DateTimeTools.GeorgianToPersian(DateTime.Now, ShowMode.OnlyDate);
+    List<SelectListItem> nationalityList = Enum.GetValues(typeof(NationalityType)).Cast<NationalityType>().Select(v => new SelectListItem
+            {
+                Selected = (v == NationalityType.Iranian),
+                Text = v.GetDisplayName(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
+    List<SelectListItem> genderList = Enum.GetValues(typeof(GenderType)).Cast<GenderType>().Select(v => new SelectListItem
+            {
+                Text = v.GetDisplayName(),
+                Value = ((int)v).ToString()
+            }).ToList();
+}
+<form id="form_createOrEditCustomer" action="/Dashboard/Customer/CreateOrEditCustomer" onsubmit="submitCustomerFormByRefreshGrid(this, gridName,resetCustomerForm,'@UserMessages.AreYouSureForRegisterIfMobileDuplicated')" method="post">
+    <div class="panel-body">
+        <input asp-for="Id" type="hidden" />
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="FullName" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="FullName" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Gender"></label>
+                <select asp-for="Gender" asp-items="@genderList" class="form-control Select2">
+                    <option selected value="">@Captions.SelectIt</option>
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="FatherName" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="FatherName" type="text" class="form-control">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="FatherName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Nationality" class="star"></label>
+                <select asp-for="Nationality" asp-items="@nationalityList" class="form-control Select2">
+                    <option selected value="">@Captions.SelectIt</option>
+                </select>
+                <span asp-validation-for="Nationality" class="text-danger"></span>
+            </div>
+
+
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="NationalCode" class="star"></label>
+                <div class="input-group">
+                    @*    <input asp-for="NationalCode" type="text" class="form-control" onkeypress="return safeOnlyNumber($(this),event)" autocomplete="off">*@
+                    <input asp-for="NationalCode" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="NationalCode" class="text-danger"></span>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="BirthDate"></label>
+                <div class="input-group">
+                    <input asp-for="BirthDate" onchange="DateValidate(this)" type="text" onclick="PersianDatePicker.showPDatePicker(this, '@currentPersianDate');" class="form-control date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Mobile" class="star"></label>
+                <div class="input-group">
+                    <input asp-for="Mobile" type="text" class="form-control" onkeypress="return safeOnlyNumber($(this),event)" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+            @if (Model.Id == 0)
+            {
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label asp-for="EssentialTels.Tel" class="star"></label>
+                    <div class="input-group">
+                        <input asp-for="EssentialTels.Tel" type="tel" class="form-control" onkeypress="return safeOnlyNumber($(this),event)" autocomplete="off">
+                        <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                    </div>
+                    <span asp-validation-for="EssentialTels.Tel" class="text-danger"></span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label asp-for="EssentialTels.RelationShip"></label>
+                    <div class="input-group">
+                        <input asp-for="EssentialTels.RelationShip" type="text" class="form-control">
+                        <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                    </div>
+                    <span asp-validation-for="EssentialTels.RelationShip" class="text-danger"></span>
+                </div>
+            }
+        </div>
+
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="JobTitle"></label>
+                <div class="input-group">
+                    <input asp-for="JobTitle" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="JobTitle" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+
+                <label asp-for="SanaCode"></label>
+                <div class="input-group">
+                    <input asp-for="SanaCode" type="text" class="form-control" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="SanaCode" class="text-danger"></span>
+
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <div class="input-group">
+                    <label>@Captions.Status</label>
+                    <div class="checkbox checkbox-switchery">
+                        <label>
+                            <input type="checkbox" class="switchery" asp-for="IsActive">
+                        </label>
+                    </div>
+                </div>
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label>@Captions.Province</label>
+
+                <select id="proviances" asp-items="@Model.Proviances" class="form-control Select2" onchange="fillSelectList('proviances', 'CityId', '/Dashboard/BaseData/Cities')">
+                    <option selected value="">@Captions.SelectIt</option>
+                </select>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label>@Captions.City</label>
+
+                <select asp-items="@Model.Cities" asp-for="CityId" class="form-control Select2">
+                    <option value="">@Captions.SelectIt</option>
+                </select>
+
+                <span asp-validation-for="CityId" class="text-danger"></span>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+
+                <label asp-for="PostalCode"></label>
+                <div class="input-group">
+                    <input asp-for="PostalCode" type="tel" class="form-control" onkeypress="return safeOnlyNumber($(this),event)" autocomplete="off">
+                    <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                </div>
+                <span asp-validation-for="PostalCode" class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class="section row">
+            <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                <label asp-for="Address"></label>
+                <div class="">
+                    <textarea asp-for="Address" class="form-control" rows="2" cols="70"> </textarea>
+                </div>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            @if (Model.Id == 0)
+            {
+
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label asp-for="CardNumber"></label>
+                    <div class="input-group">
+                        <input asp-for="CardNumber" type="text" class="form-control number" onkeypress="return maskInput('0000-0000-0000-0000')" autocomplete="off">
+                        <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                    </div>
+                    <span asp-validation-for="CardNumber" class="text-danger"></span>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                    <label asp-for="CardNumberOwner"></label>
+                    <div class="input-group">
+                        <input asp-for="CardNumberOwner" type="text" class="form-control" autocomplete="off">
+                        <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+                    </div>
+                    <span asp-validation-for="CardNumberOwner" class="text-danger"></span>
+                </div>
+            }
+        </div>
+
+    </div>
+    <div class="panel-footer text-right">
+        <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+        <button type="button" onclick="resetCustomerForm()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+        </div>
+</form>

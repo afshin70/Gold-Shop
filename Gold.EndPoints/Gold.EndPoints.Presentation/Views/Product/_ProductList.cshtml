@@ -1,0 +1,21 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.ProductModels;
+@model List<ProductForShowInSiteModel>
+
+@if (Model is not null)
+{
+    if (Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <!-- Start of Product Card -->
+
+            <div dir="rtl" class="col-4 col-lg-3">
+                <div class="product @(item.IsSold?"saled":"")">
+                    <img onclick="getProductInfo('@item.Id')" class="product-img" src="@($"/Product/Image/{item.ImageName}")" alt="@item.Title">
+                </div>
+            </div>
+
+            <!-- End of Product Card -->
+        }
+    }
+}

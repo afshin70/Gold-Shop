@@ -1,0 +1,62 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.ManagerViewModels;
+@{
+    ViewData["Title"] = Captions.ManagerUsers;
+    var model = new CreateOrEditManagerUserViewModel() { ManagerUserId = 0, IsActive = true, AccessLevels = ViewBag.AccessLevels };
+
+
+    ViewBag.SelectedMenu = (byte)ManagerPermission.Managers;
+}
+
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <span> @Captions.ManagerUsers</span>
+        </h6>
+        <div class="heading-elements">
+            <ul class="icons-list">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="managerUserForm">
+        <partial name="_CreateOrEditManager" model="model" />
+    </div>
+</div>
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <span>@Captions.List @Captions.ManagerUsers</span>
+        </h6>
+        <div class="heading-elements">
+            <button type="button" onclick="exportFile('/Dashboard/Manager/InitReportData',GetData(),'/Dashboard/Manager/ExportExcel')" class="btn  btn-labeled"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+            <button type="button" onclick="exportFile('/Dashboard/Manager/InitReportData',GetData(),'/Dashboard/Manager/ExportPdf')" class="btn  btn-labeled"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+
+            <ul class="icons-list left-align">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="managerList">
+        <partial name="_ManagerList" />
+    </div>
+</div>
+@section HeaderScripts{
+    <script>
+        var gridName = "grid_managerUsersGrid";
+    </script>
+    }
+
+@section Scripts{
+
+    <script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select').select2();
+        });
+    </script>
+
+    
+    <script src="~/themes/default/js/plugins/forms/styling/switchery.min.js"></script>
+    <script src="~/scripts/dashboard/manageruser.js" asp-append-version="true"></script>
+
+ }

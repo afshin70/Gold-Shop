@@ -1,0 +1,108 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.ProductModels;
+
+<div class="k-rtl ">
+    @(Html.Kendo().Grid<ProductModel>()
+        .Name("grid_productsGrid")
+        .Columns(columns =>
+        {
+            columns.Bound("").ClientTemplate("#=renderRecordNumber(data,productGridName) #")
+            .Title("#")
+            .Width(40);
+
+            columns.Bound(c => c.GalleryName)
+            .Sortable(true)
+            .Title(Captions.Gallery)
+            .Filterable(true)
+            .Width(100);
+            
+            columns.Bound(c => c.Title)
+            .Sortable(true)
+            .Title(Captions.Title)
+            .Filterable(true)
+            .Width(100);
+
+            columns.Bound(c => c.Weight)
+            .Sortable(true)
+            .Title(Captions.Weight)
+            .Filterable(true)
+            .Width(100);
+            
+            columns.Bound(c => c.Karat)
+            .Sortable(true)
+            .Title(Captions.Karat)
+            .Filterable(true)
+            .Width(100);
+            
+            columns.Bound(c => c.Wage)
+            .Sortable(true)
+            .Title(Captions.Wage)
+            .Filterable(true)
+            .Width(100);
+            
+            columns.Bound(c => c.GalleryProfit)
+            .Sortable(true)
+            .Title(Captions.GalleryProfit)
+            .Filterable(true)
+            .Width(100);
+            
+            columns.Bound(c => c.StatusTitle)
+            .Sortable(true)
+            .Title(Captions.Status)
+            .ClientTemplate(
+            "<div class='text-center'>" +
+            $"<button class=\"btn  btn-sm #=(IsSold?'btn-danger':'btn-success')#\" onclick='getRequestWithConfirmRefreshGrid(\"/Dashboard/Product/ChangeStatus?id=#=Id#\",\"{UserMessages.AreYouSure}\",productGridName)' >#=StatusTitle#</i></button>" +
+            "</div>")
+            .Filterable(true)
+            .Width(100);
+
+
+
+
+             columns.Bound(c => c.Id)
+            .Title(Captions.Album)
+            .ClientTemplate(
+               "<div class='text-center'>"+
+            $"<button class='btn btn-success' onclick='loadDataInModal(\"/Dashboard/Product/CreateProductGallery?productId=#=Id#\",\"addProductGalleryModal\")' ><i class='fa fa-image'></i></button>" +
+               "</div>")
+            .Width(100)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+            columns.Bound(c => c.Id)
+            .ClientTemplate($"<div class='text-center'>"+
+            $"<button class='btn btn-primary' onclick='loadProductData(\"/Dashboard/Product/CreateOrEditProduct?id=#=Id#\")'  title='{Captions.Edit}'><i class='fa fa-edit'></i></button>" +
+            $"<button class='btn btn-danger' onclick='getRequestWithConfirmRefreshGrid(\"/Dashboard/Product/RemoveProduct?id=#=Id#\",\"{UserMessages.AreYouSureForDelete}\",productGridName)' title='{Captions.Delete}'><i class='fa fa-trash'></i></button></div>")
+            .Title(Captions.Operation)
+            .Width(100)
+            .Filterable(false)
+            .Sortable(false)
+            .Groupable(false);
+
+        })
+        .Sortable()
+        .Selectable()
+        .Scrollable(x => x.Height("auto"))
+        .Filterable()
+        .HtmlAttributes(new { @class = "" })
+        .Pageable(pageable => pageable
+        .PageSizes(new[] { 10, 50, 100, 500 })
+        .Info(true)
+        .Enabled(true)
+        .PreviousNext(true)
+        .Input(true)
+        .Numeric(true)
+        .ButtonCount(8)
+        .Refresh(true)
+        )
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        //.Sort(x => x.Add(y => y.RegisterDate))
+        .Read(read => read.Action("ProductList_Read", "Product"))
+        ).Events(ev => ev.DataBound("onDataBound"))
+        )
+</div>
+
+@*<script>
+    function GetData() { return; }
+</script>*@

@@ -1,0 +1,247 @@
+﻿@using Gold.SharedKernel.Enums;
+@using Gold.ApplicationService.Contract.Abstractions;
+@using Gold.ApplicationService.Contract.DTOs.ViewModels.SettingsViewModels;
+@inject ISettingService _settingService
+@{
+
+	var scriptsResult = await _settingService.GetSettingAsync<ScriptsSettingsViewModel>(Gold.Domain.Enums.SettingType.ScriptSetting);
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>@ViewData["Title"]</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="~/siteTheme/css/main.min.css" asp-append-version="true">
+	<link rel="stylesheet" href="~/siteTheme/fonts/FontAwesome/css/all.min.css">
+	<link rel="stylesheet" href="~/sitetheme/css/animate.min.css" />
+	<link rel="stylesheet" href="~/sitetheme/css/override.css" asp-append-version="true" />
+	@await RenderSectionAsync("Header", required: false)
+	@if (scriptsResult.IsSuccess)
+	{
+		if (!string.IsNullOrEmpty(scriptsResult.Data.Header))
+		{
+			@Html.Raw(scriptsResult.Data.Header)
+			;
+		}
+	}
+</head>
+<body>
+	@{
+		string footerDarkBg = "bg-dark";
+		if (ViewData["IsShowBackgroundImage"] != null)
+		{
+			var isShowBackgroundImage = (bool?)ViewData["IsShowBackgroundImage"];
+			if (isShowBackgroundImage.HasValue)
+			{
+				if (isShowBackgroundImage.Value)
+				{
+					footerDarkBg = "";
+					<img class="right-image d-none d-lg-block" src="~/siteTheme/image/right.png" alt="right image" loading="lazy">
+					<img class="top-image d-block d-lg-none" src="~/siteTheme/image/top.png" alt="top image" loading="lazy">
+					<img class="bottom-image d-block d-lg-none" src="~/siteTheme/image/bottom.png" alt="bottom image" loading="lazy">
+				}
+			}
+		}
+	}
+	<!-- Start Header -->
+	@(await Html.PartialAsync("_NavBar.cshtml"))
+	<!-- End Header -->
+	<main>
+		@RenderBody()
+	</main>
+
+
+	<!-- Desktop Footer -->
+	<footer class="bg-dark d-none d-lg-block pc_footer_menu dir-rtl">
+		<div class="container-fluid">
+			<div class="row container mx-auto">
+				<div class="col-12 col-md-8 d-none d-md-block py-4 footer_menu">
+					<a href="/">
+						<span>
+							@Captions.MainPage
+						</span>
+						<i class="fa-thin fa-pipe px-3"></i>
+					</a>
+					<a href="/AboutUs">
+						<span>
+							@Captions.AboutUs
+						</span>
+						<i class="fa-thin fa-pipe px-3"></i>
+					</a>
+					<a href="/ContactUs">
+						<span>
+							@Captions.ContactUs
+						</span>
+						<i class="fa-thin fa-pipe px-3"></i>
+					</a>
+					<a href="/Branchs">
+						<span>
+							@Captions.BrancheList
+						</span>
+						<i class="fa-thin fa-pipe px-3"></i>
+					</a>
+					<a href="/FAQ">
+						<span>
+							@Captions.FAQ
+						</span>
+
+					</a>
+				</div>
+				<div class="col-12 col-md-4 text-center py-2 py-md-4 footer_social_media">
+
+					@(await Component.InvokeAsync("FooterSocialNetwork"))
+
+				</div>
+			</div>
+			<div class="row mx-0">
+				<div class=" col py-3 pb-4">
+					<hr class="mt-0 mb-2">
+					<div class="row dir-rtl mx-0 container mx-auto align-items-center">
+						<div class="col-12">
+							<br />
+							<p class="mb-0 fw-light text-gray_middle small text-center copyright">
+								<a href="http://AraPendar.com" target="_blank">
+									@Captions.DesignAndSupport @Captions.AraPendar
+								</a>
+							</p>
+						</div>
+
+						@*<div class="col-4 footer_img text-center">
+						<img src="./assets/image/enamad_icon.png" alt="">
+						<img src="./assets/image/samandehi.png" alt="">
+						</div>*@
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- Mobile Footer -->
+	<footer class="d-block d-lg-none py-3 dir-rtl">
+		<div class="container">
+			<div class="row bg-dark rounded-pill mobile_footer">
+				<div class="col-auto text-center">
+					<a href="/">
+						<i class="fa-regular fa-house fa-fw @(ViewBag.SelectedMenuIcon==SiteSelectedIcon.Home?"text-primary":"") "></i>
+					</a>
+				</div>
+
+				<div class="col-auto text-center">
+					<a href="/Article">
+						<i class="fa-regular fa-book-open @(ViewBag.SelectedMenuIcon==SiteSelectedIcon.Blog?"text-primary":"") "></i>
+					</a>
+				</div>
+
+				<div class="col-auto text-center">
+					<a href="/Product/All">
+						<i class="fa-regular fa-gem @(ViewBag.SelectedMenuIcon==SiteSelectedIcon.Shop?"text-primary":"") "></i>
+					</a>
+				</div>
+
+				<div class="col-auto text-center">
+					@if (User.Identity.IsAuthenticated)
+					{
+						<a class="fot_user_menu_action position-relative">
+							<i class="fa-regular fa-user"></i>
+							@* <span class="position-absolute top-5 start-100 translate-middle p-1 bg-danger rounded-circle">
+						<span class="visually-hidden">New alerts</span>
+						</span>*@
+						</a>
+					}
+					else
+					{
+						<a href="/login" class="">
+							<i class="fa-regular fa-user"></i>
+						</a>
+					}
+				</div>
+
+				<div class="col-auto text-center">
+					<a class="text-white">
+						<i id="footer_menu_btn" class="fa-regular fot_menu_action fa-regular fa-bars @(ViewBag.SelectedMenuIcon==SiteSelectedIcon.Menu?"text-primary":"") "></i>
+					</a>
+				</div>
+
+			</div>
+
+
+		</div>
+	</footer>
+	<div id="footer_menu" class="footer-dropdown-menu animate__animated animate__slideInUp" style="display: none;">
+		<div class="close fot_menu_action">
+			<i class="fa-regular fa-times text-white"></i>
+		</div>
+		<div class="row mx-0">
+			<div class="col-12 py-5 footer_menu pb-3">
+				<h6 class="text-primary text-end mb-3"> لینک&zwnj;های مرتبط </h6>
+				<a href="/AboutUs">
+					@Captions.AboutUs
+				</a>
+				<a href="/ContactUs">
+					@Captions.ContactUs
+				</a>
+				<a href="/Branchs">
+					@Captions.BrancheList
+				</a>
+				<a href="/FAQ">
+					@Captions.FAQ
+				</a>
+			</div>
+
+			<h6 class="text-primary text-end mt-4 mb-3"> @Captions.FollowUs </h6>
+			<div class="col-12 col-md-4 text-center py-3 py-md-4 footer_social_media">
+				@(await Component.InvokeAsync("FooterSocialNetwork"))
+			</div>
+			<div class="col-12 py-4">
+				<p class="mb-0 fw-light small copyright">
+					<a href="http://AraPendar.com" target="_blank" class="text-gray_middle text-center">
+						@Captions.DesignAndSupport @Captions.AraPendar
+					</a>
+
+				</p>
+			</div>
+
+		</div>
+	</div>
+	@(await Html.PartialAsync("_FooterUserMenu"))
+	<!-- Start Loading -->
+	<div id="loader" class="loader_area">
+		<div class="loader_content">
+			<div>
+				<img src="~/siteTheme/image/Logo.png" alt="">
+			</div>
+			<div class="spinner-border text-primary loader" role="status">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		</div>
+	</div>
+	<!-- End Loading -->
+	<!-- jquery -->
+	<script src="~/sitetheme/js/jquery-3.6.4.min.js"></script>
+	<script src="~/lib/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+	<script src="~/siteTheme/js/bootstrap.bundle.min.js"></script>
+	<script src="~/siteTheme/js/sweetalert2@11.js"></script>
+	<script src="~/siteTheme/js/script.min.js" asp-append-version="true"></script>
+	<script src="~/scripts/site/site-global-mine.min.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+
+	@if (scriptsResult.IsSuccess)
+	{
+		if (!string.IsNullOrEmpty(scriptsResult.Data.Footer))
+		{
+			@Html.Raw(scriptsResult.Data.Footer);
+		}
+	}
+	@*<script>
+	$('#priceList').modal({
+	backdrop: 'static',
+	keyboard: false
+	})
+	</script>*@
+</body>
+</html>

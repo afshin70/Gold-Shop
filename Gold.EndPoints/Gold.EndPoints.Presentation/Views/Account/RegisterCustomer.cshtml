@@ -1,0 +1,99 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.ViewModels.AuthenticationViewModels.RegisterCustomerViewModels;
+@using Gold.Resources;
+@model RegisterCustomerViewModel
+@{
+    ViewData["Title"] = Captions.RegisterInSite;
+    ViewData["IsShowBackgroundImage"] = true;
+
+    List<SelectListItem> genderTypeList = Enum.GetValues(typeof(GenderType)).Cast<GenderType>().Select(v => new SelectListItem
+            {
+                Text = v.GetDisplayName(),
+                Value = ((int)v).ToString()
+            }).ToList();
+}
+
+<div class="container">
+    <div id="loginArea" class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-9 col-lg-5">
+            <div class="card shadow overflow-hidden">
+                <div class="card-body">
+                    <form action="/RegisterCustomer" method="post" asp-antiforgery="true" class="dir-rtl p-1">
+                        <div class="title-section mb-4 mt-2 text-center">
+                            <h5 class="fw-bold">
+                                @Captions.RegisterInSite
+                            </h5>
+                        </div>
+                        <input type="hidden" asp-for="NationalCode" />
+                        <input type="hidden" asp-for="NationalityType" />
+                        <input type="hidden" asp-for="Mobile" />
+                        <input type="hidden" asp-for="Token" />
+
+                        <div class="row pb-3">
+                            <div class="col-12 mb-2">
+                               @* <label class="small mb-2 text-white">@Captions.FullName</label>*@
+                                <input asp-for="FullName" type="text" class="form-control" placeholder="@Captions.FullName" autocomplete="off" tabindex="1">
+                                <span asp-validation-for="FullName" class="text-danger fs-12"></span>
+                            </div>
+
+                            <div class="col-12 mb-2">
+                               @* <label class="small mb-2 text-white">@Captions.Gender</label>*@
+                                <select class="form-control js-example-basic-single" asp-for="Gender" asp-items="genderTypeList" tabindex="2">
+                                    <option selected value="">@Captions.Gender</option>
+                                </select>
+                                <span asp-validation-for="Gender" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 mb-2">
+                                @*<label class="small mb-2 text-white">@Captions.FatherName</label>*@
+                                <input asp-for="FatherName" type="text" class="form-control" placeholder="@Captions.FatherName" autocomplete="off" tabindex="3">
+                                <span asp-validation-for="FatherName" class="text-danger fs-12"></span>
+                            </div>
+                            <div class="col-12 mb-2">
+                               @* <label class="small mb-2 text-white">@Captions.EssentialTel</label>*@
+                                <input asp-for="EssentialTel" type="tel" onkeypress="return safeOnlyNumber($(this),event)" class="form-control dir-rtl" placeholder="@Captions.EssentialTel" tabindex="4" autocomplete="off">
+                                <span asp-validation-for="EssentialTel" class="text-danger fs-12"></span>
+                            </div>
+                            <div class="col-12 mb-2">
+                               @* <label class="small mb-2 text-white">@Captions.RelationShip</label>*@
+                                <input asp-for="RelationShip" type="text" class="form-control" placeholder="@Captions.EssentialTelRatio" autocomplete="off" tabindex="5">
+                                <span asp-validation-for="RelationShip" class="text-danger fs-12"></span>
+                            </div>  
+                            <div class="col-12 mb-2">
+                                @*<label class="small mb-2 text-white">@Captions.BirthDate</label>*@
+                                <input asp-for="BirthDate" class="form-control  date" tabindex="6" placeholder="@Captions.BirthDate" autocomplete="off" />
+                               @* <span asp-validation-for="BirthDate" class="text-danger fs-12"></span>*@
+                            </div>
+                            <hr>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary px-5" tabindex="7">@Captions.RegisterInSite</button>
+                                <a  href="/Account/Register?NationalityType=@Model.NationalityType&NationalCode=@Model.NationalCode&Mobile=@Model.Mobile" class="btn btn-outline-gray_light" data-bs-dismiss="modal" tabindex="8">@Captions.Back</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Header {
+
+    <link href="~/sitetheme/css/select2.min.css" rel="stylesheet" />
+    <link href="~/sitetheme/css/persian-datepicker.min.css" rel="stylesheet" />
+}
+@section Scripts {
+
+    <script src="~/sitetheme/js/select2.min.js"></script>
+    <script src="~/sitetheme/js/persian-date.min.js"></script>
+    <script src="~/sitetheme/js/persian-datepicker.min.js"></script>
+    <script src="~/scripts/site/persiancalenderconfig.min.js"></script>
+    <script src="~/lib/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

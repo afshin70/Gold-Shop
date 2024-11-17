@@ -1,0 +1,140 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<!--<PropertyGroup>
+		<WarningLevel>3</WarningLevel>
+	</PropertyGroup>-->
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+	<PropertyGroup>
+		<PreserveCompilationContext>true</PreserveCompilationContext>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Areas\Dashboard\Data\**" />
+		<Compile Remove="Areas\Dashboard\Models\**" />
+		<Compile Remove="Areas\Dashboard\Views\BaseData\**" />
+		<Compile Remove="FakesAssemblies\**" />
+		<Compile Remove="Views\Shared\Modals\**" />
+		<Content Remove="Areas\Dashboard\Data\**" />
+		<Content Remove="Areas\Dashboard\Models\**" />
+		<Content Remove="Areas\Dashboard\Views\BaseData\**" />
+		<Content Remove="FakesAssemblies\**" />
+		<Content Remove="Views\Shared\Modals\**" />
+		<EmbeddedResource Remove="Areas\Dashboard\Data\**" />
+		<EmbeddedResource Remove="Areas\Dashboard\Models\**" />
+		<EmbeddedResource Remove="Areas\Dashboard\Views\BaseData\**" />
+		<EmbeddedResource Remove="FakesAssemblies\**" />
+		<EmbeddedResource Remove="Views\Shared\Modals\**" />
+		<None Remove="Areas\Dashboard\Data\**" />
+		<None Remove="Areas\Dashboard\Models\**" />
+		<None Remove="Areas\Dashboard\Views\BaseData\**" />
+		<None Remove="FakesAssemblies\**" />
+		<None Remove="Views\Shared\Modals\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Hangfire.AspNetCore" Version="1.7.34" />
+		<PackageReference Include="Hangfire.Core" Version="1.7.34" />
+		<PackageReference Include="Hangfire.SqlServer" Version="1.7.34" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.14" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.14" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.13">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.QualityTools.Testing.Fakes" Version="16.11.230815" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+		<PackageReference Include="Rotativa.AspNetCore" Version="1.2.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+		<PackageReference Include="WebMarkupMin.AspNetCore6" Version="2.13.8" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Gold.ApplicationService\Gold.ApplicationService.csproj" />
+		<ProjectReference Include="..\..\Gold.Infrastracture\Gold.Infrastracture.csproj" />
+		<ProjectReference Include="..\..\Gold.Resources\Gold.Resources.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="wwwroot\css\" />
+		<Folder Include="wwwroot\Files\Document\CustomerPaymentImages\" />
+		<Folder Include="wwwroot\Media\ProductGallery\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AdditionalDesignTimeBuildInput Remove="FakesAssemblies\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Remove="bundleconfig.json" />
+		<Content Remove="wwwroot\SiteTheme\js\script.min.js" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<UpToDateCheckInput Remove="Areas\Dashboard\Views\Customer\_CustomerList.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<_ContentIncludedByDefault Remove="Areas\Dashboard\Views\Customer\_CustomerList.cshtml" />
+		<_ContentIncludedByDefault Remove="wwwroot\SiteTheme\js\script.min.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="Areas\Dashboard\Views\Customer\_CustomerList.cshtml" />
+		<None Include="bundleconfig.json" />
+		<None Include="wwwroot\lib\jalali-moment-master\.eslintrc" />
+		<None Include="wwwroot\lib\jalali-moment-master\.github\ISSUE_TEMPLATE\bug_report.md" />
+		<None Include="wwwroot\lib\jalali-moment-master\.github\ISSUE_TEMPLATE\feature_request.md" />
+		<None Include="wwwroot\lib\jalali-moment-master\.gitignore" />
+		<None Include="wwwroot\lib\jalali-moment-master\.travis.yml" />
+		<None Include="wwwroot\lib\jalali-moment-master\cli.js" />
+		<None Include="wwwroot\lib\jalali-moment-master\dist\jalali-moment.browser.js" />
+		<None Include="wwwroot\lib\jalali-moment-master\dist\jalali-moment.browser.js.map" />
+		<None Include="wwwroot\lib\jalali-moment-master\dist\jalali-moment.js" />
+		<None Include="wwwroot\lib\jalali-moment-master\jalali-moment.js" />
+		<None Include="wwwroot\lib\jalali-moment-master\LICENSE" />
+		<None Include="wwwroot\lib\jalali-moment-master\npmdoc.md" />
+		<None Include="wwwroot\lib\jalali-moment-master\README.fa.md" />
+		<None Include="wwwroot\lib\jalali-moment-master\README.md" />
+		<None Include="wwwroot\lib\jalali-moment-master\test.js" />
+		<None Include="wwwroot\lib\jalali-moment-master\webpack.browser.js" />
+		<None Include="wwwroot\lib\jalali-moment-master\webpack.config.js" />
+		<None Include="wwwroot\lib\jalali-moment-master\yarn.lock" />
+		<None Include="wwwroot\SiteTheme\fonts\FontAwesome\webfonts\fa-brands-400.woff2" />
+		<None Include="wwwroot\SiteTheme\fonts\FontAwesome\webfonts\fa-duotone-900.woff2" />
+		<None Include="wwwroot\SiteTheme\fonts\FontAwesome\webfonts\fa-light-300.woff2" />
+		<None Include="wwwroot\SiteTheme\fonts\FontAwesome\webfonts\fa-regular-400.woff2" />
+		<None Include="wwwroot\SiteTheme\fonts\FontAwesome\webfonts\fa-sharp-light-300.woff2" />
+		<None Include="wwwroot\SiteTheme\fonts\FontAwesome\webfonts\fa-sharp-regular-400.woff2" />
+		<None Include="wwwroot\SiteTheme\fonts\FontAwesome\webfonts\fa-sharp-solid-900.woff2" />
+		<None Include="wwwroot\SiteTheme\fonts\FontAwesome\webfonts\fa-solid-900.woff2" />
+		<None Include="wwwroot\SiteTheme\fonts\FontAwesome\webfonts\fa-thin-100.woff2" />
+		<None Include="wwwroot\SiteTheme\fonts\FontAwesome\webfonts\fa-v4compatibility.woff2" />
+		<None Include="wwwroot\SiteTheme\js\script.min.js" />
+		<None Include="wwwroot\themes\default\plugins\bootstrap-fileinput\bootstrap-fileinput.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Kendo.Mvc">
+			<HintPath>bin\Kendo.Mvc.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<TypeScriptCompile Include="wwwroot\lib\jalali-moment-master\jalali-moment.d.ts" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="Areas\Dashboard\Views\Customer\_EssentialTelForm.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Content Update="Views\Shared\_Modal.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+
+</Project>

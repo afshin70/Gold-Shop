@@ -1,0 +1,85 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.ReportModels;
+
+@{
+    Layout = null;
+}
+<div class="k-rtl ">
+    @(Html.Kendo().Grid<ManagersOperationReportModel>()
+        .Name("grid_managersOperationReportGrid")
+        .Columns(columns =>
+        {
+            columns.Bound("")
+            .ClientTemplate("#= renderRecordNumber(data,gridName) #")
+            .Title("#")
+            .Width(40);
+
+            columns.Bound(c => c.Page)
+            .Sortable(true)
+            .Title(Captions.Page)
+            .Filterable(true)
+            .Width(80);
+
+            columns.Bound(c => c.Operation)
+            .Sortable(false)
+            .Title(Captions.Operation)
+            .Filterable(false)
+            .Width(60);
+
+            columns.Bound(c => c.UserName)
+            .Sortable(true)
+            .Title(Captions.User)
+            .Filterable(true)
+            .Width(90);
+
+            columns.Bound(c => c.PersianDate)
+            .Sortable(false)
+            .Title(Captions.Date)
+            .Filterable(false)
+            .Width(120);
+
+            columns.Bound(c => c.Description)
+            .Sortable(true)
+            .Title(Captions.Description)
+            .Filterable(true)
+            .Width(500);
+        })
+        .Sortable()
+        .Selectable()
+        .Scrollable(x => x.Height("auto"))
+        .Filterable()
+        .HtmlAttributes(new { @class = "" })
+        .Pageable(pageable => pageable
+        .PageSizes(new[] { 10, 50, 100, 500 })
+        .Info(true)
+        .Enabled(true)
+        .PreviousNext(true)
+        .Input(true)
+        .Numeric(true)
+        .ButtonCount(8)
+        .Refresh(true)
+        )
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Read(read => read.Action("ManagerOperation_Read", "ManagerReport").Data("GetData"))
+        )
+        .Resizable(x=>x.Columns(true))
+        .Events(ev => ev.DataBound("onDataBound"))
+        )
+</div>
+
+<script>
+    var gridName = 'grid_managersOperationReportGrid';
+</script>
+<script>
+
+    function GetData() {
+        return {
+            AdminMenuId: $("#AdminMenuId").val(),
+            FromDate: $("#FromDate").val(),
+            ActivityType: $("#ActivityType").val(),
+            ToDate: $("#ToDate").val(),
+            UserId: $("#UserId").val(),
+            Description: $("#Description").val(),
+        }
+    }
+</script>

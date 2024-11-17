@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = Captions.PaymentReport;
+    ViewBag.SelectedMenu = (byte)ManagerPermission.PaymentReport;
+}
+
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <span> @Captions.PaymentReport</span>
+        </h6>
+        <div class="heading-elements">
+            <ul class="icons-list">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <partial name="_PaymentSearchForm" />
+    </div>
+</div>
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">
+            <span> @Captions.List @Captions.Payments</span>
+        </h6>
+        <div class="heading-elements">
+            <button type="button" onclick="exportFile('/Dashboard/PaymentReport/InitReportData',GetData(),'/Dashboard/PaymentReport/ExportExcel')" class="btn  btn-labeled"><span>@Captions.ExcelExport</span> <b><i class="fa fa-download"></i></b></button>
+            <button type="button" onclick="exportFile('/Dashboard/PaymentReport/InitReportData',GetData(),'/Dashboard/PaymentReport/ExportPdf')" class="btn  btn-labeled"><span>@Captions.PdfExport</span> <b><i class="fa fa-download"></i></b></button>
+
+            <ul class="icons-list left-align">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="">
+        <partial name="_PaymentList" />
+
+    </div>
+</div>
+@section HeaderScripts{
+    <script>
+        var gridName = "grid_ConfirmedPaymentReport";
+    </script>
+    }
+@section Stylesheet{
+    <link href="~/lib/persiandatetimepicker/persiandatepicker.min.css" rel="stylesheet" />
+}
+@section Scripts{
+    <script src="~/lib/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="~/lib/persiandatetimepicker/persiandatepicker.min.js"></script>
+    
+ }

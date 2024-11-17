@@ -1,0 +1,50 @@
+﻿@model CardNumberViewModel
+@{
+    Layout = null;
+}
+<div id="form_cardNumberListAndForm_section">
+    <div id="form_essentialTel_section">
+        <form id="form_essentialTel" action="/Dashboard/Customer/AddOrEditCardNumber" onsubmit="submitFormAndShowModal2(this, 'addOrEditCardNumberModal')" method="post">
+            <div class="modal-body">
+                <input type="hidden" asp-for="CustomerId" />
+                <input type="hidden" asp-for="CardNumberId" />
+                <div class="section row">
+                    <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                        <label asp-for="CardNumber" class="star"></label>
+                        <div class="input-group">
+                           @* onkeypress="return maskInput($(this),event)"*@
+                            <input asp-for="CardNumber" type="text" class="form-control number" onkeypress="return maskInput('0000-0000-0000-0000')" autocomplete="off">
+                            <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+                        </div>
+                        <span asp-validation-for="CardNumber" class="text-danger"></span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 form-group">
+                        <label asp-for="Owner" class="star"></label>
+                        <div class="input-group">
+                            <input asp-for="Owner" type="text" class="form-control">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        </div>
+                        <span asp-validation-for="Owner" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="section row">
+                <div class="modal-footer text-right">
+                    <button type="submit" class="btn btn-success btn-labeled"><span>@Captions.SubmitInformation</span> <b><i class="fa fa-check-circle"></i></b></button>
+                    @*<button type="button" onclick="emptyInupts(['Tel','RelationShip'])" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>*@
+                    <button type="button" onclick="emptyCardNumberForm()" class="btn bg-slate btn-labeled legitRipple"><span>@Captions.Cancel</span> <b><i class="fa fa-times-circle"></i></b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="table_CardNumbers">
+        @if (Model.CardNumbers.Any())
+        {
+            <partial name="_CardNumberList" model="Model.CardNumbers" />
+        }
+    </div>
+</div>
+
+
+
+

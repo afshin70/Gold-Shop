@@ -1,0 +1,196 @@
+﻿@using Gold.ApplicationService.Contract.DTOs.Models.DocumentModels;
+@model DocumentDetailModel
+@{
+	ViewBag.SelectedMenu = (byte)ManagerPermission.DocumentsList;
+	ViewData["Title"] = $"{Captions.Document} - {Model.DocumentNumber}";
+}
+<div class="panel panel-flat">
+	<div class="panel-heading">
+		<h6 class="panel-title">
+			<span> @Captions.DocumentDetail</span>
+		</h6>
+		<div class="heading-elements">
+			<ul class="icons-list">
+				<li><a data-action="collapse"></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="panel-body">
+		<div class="panel-body">
+			<div class="text-left">
+				@if (Model.DocumentStatus == DocumentStatus.Active)
+				{
+					<button onclick="loadDataInModal('/Dashboard/Document/SettleDocument?documentId=@Model.Id','settleDocumentModal')" class="btn btn-sm btn-success">@Captions.Settle</button>
+					<button onclick="loadDataInModalWithConfirm('/Dashboard/Document/EditDocument?documentId=@Model.Id','editDocumentModal','@UserMessages.AreYouSureForEditDocument')" class="btn btn-sm btn-info">@Captions.EditDocument</button>
+				}
+				@if (Model.DocumentStatus == DocumentStatus.Settled)
+				{
+					<button onclick="unPaymentInstallment('/Dashboard/Document/UnSettleDocument?documentId=@Model.Id', '@UserMessages.AreYouSure')" class="btn btn-sm btn-warning">@Captions.UnSettle</button>
+				}
+			</div>
+			<div class="overflow-auto">
+				<table class="sanad">
+					<tr>
+						<td class="col-xs-4"><div class="col-xs-7 col-md-6">@Captions.FullName :</div><b>@Model.FullName</b></td>
+						<td class="col-xs-4"> <div class="col-xs-6 col-md-6">@Captions.National_Identification_Code :</div> <b>@Model.NationalCode</b></td>
+						<td class="col-xs-4"> <div class="col-xs-7 col-md-6">@Captions.DateOfSale :</div> <b>@Model.PersianDocumentDate</b></td>
+					</tr>
+					<tr>
+						<td class="col-xs-4"> <div class="col-xs-6 col-md-6">@Captions.Mobile :</div><b>@Model.Mobile</b></td>
+						<td class="col-xs-4"><div class="col-xs-6 col-md-6">@Captions.EssentialTel :</div><b>@Model.EssentialTel</b></td>
+						<td class="col-xs-4"> <div class="col-xs-6 col-md-6">@Captions.DocumentNumber :</div><b>@Model.DocumentNumber</b></td>
+					</tr>
+					<tr>
+						<td class="col-xs-4"> <div class="col-xs-6 col-md-6">@Captions.InvoiceAmount :</div><b>@Model.InvoiceAmount.ToString("N0") @Captions.Tooman</b> </td>
+						<td class="col-xs-4"> <div class="col-xs-6 col-md-6">@Captions.Prepayment :</div><b>@Model.PrePaymentAmount.ToString("N0") @Captions.Tooman</b> </td>
+						<td class="col-xs-4"> <div class="col-xs-6 col-md-6">@Captions.Remaining :</div><b>@Model.RemainAmount.ToString("N0") @Captions.Tooman</b> </td>
+
+					</tr>
+					<tr>
+						<td class="col-xs-4">
+							<div class="col-xs-6 col-md-6">@Captions.InstallmentsCount :</div><b>@Model.InstallmentCount</b>
+						</td>
+						<td class="col-xs-4">
+							<div class="col-xs-6 col-md-6">@Captions.InstallmentsAmount :</div><b>@Model.InstallmentAmount.ToString("N0") @Captions.Tooman</b>
+						</td>
+						<td class="col-xs-4" rowspan="2">
+
+							@if (Model.DocumentStatus == DocumentStatus.Active)
+							{
+								<div class="col-xs-12 text-left">
+									<button class="btn btn-info legitRipple" title="@Captions.Detail" onclick="loadDataInModal('/Dashboard/Document/CollateralDetail?documentId=@Model.Id','collateralDetailModal')"><i class="fa fa-info"></i></button>
+								</div>
+							}
+							<div class="col-xs-6 col-md-4">@Captions.Collateral :</div>
+							<div>
+								<b id="collateralsInfo">
+
+								</b>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="col-xs-4">
+							<div class="col-xs-6 col-md-6">@Captions.Gallery :</div><b>@Model.GalleryName</b>
+						</td>
+						<td class="col-xs-4">
+							<div class="col-xs-6 col-md-6">@Captions.Seller :</div><b>@Model.SellerName</b>
+						</td>
+					</tr>
+					<tr>
+						<td class="no-padding" colspan="3" id="installments">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" class="no-padding">
+							<table class="sanad-detail">
+								<tr>
+									<td class="col-md-5 no-border v-align-top">
+										@if (Model.DocumentStatus == DocumentStatus.Active)
+										{
+											<div class="col-xs-12 text-left">
+												<button class="btn btn-info legitRipple" title="@Captions.Edit" onclick="loadDataInModal('/Dashboard/Document/EditDocumentDescription?id=@Model.Id','adminDescriptionModal')"><i class="fa fa-edit"></i></button>
+											</div>
+										}
+										<label class="col-xs-12 col-sm-4">@Captions.DescriptionForAdmins :</label><b id="adminDesription">@Model.AdminDescription</b>
+									</td>
+									@*<td class="col-md-3 border-right v-align-top">
+										<label class="col-xs-6">@Captions.AmountPaid :@Model.SumOfPaymentedAmount.ToString("N0") @Captions.Tooman</label>
+									</td>
+									<td class="col-md-4 no-padding no-border" id="instllmentInfo">
+									</td>*@
+									
+									<td class="col-md-7 no-padding no-border" id="instllmentInfo">
+									</td>
+								</tr>
+							</table>
+
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+@{
+	ModalModel editDocumentAdminDescriptionModel = new()
+			{
+				IsShowCloseButtonInFooter = false,
+				Id = "adminDescriptionModal",
+				IsShowCloseIcon = true,
+				Size = ModalSize.Small,
+				Title = Captions.EditDocumentAdminDescription,
+			};
+	ModalModel installmentDetailModel = new()
+			{
+				IsShowCloseButtonInFooter = false,
+				Id = "installmentDetailModal",
+				IsShowCloseIcon = true,
+				Size = ModalSize.Larg,
+				Title = Captions.PaymentDetail,
+			};
+
+	ModalModel collateralDetailModel = new()
+			{
+				IsShowCloseButtonInFooter = false,
+				Id = "collateralDetailModal",
+				IsShowCloseIcon = true,
+				Size = ModalSize.None,
+				Title = Captions.Collateral,
+			};
+
+	ModalModel createOrEditPayment = new()
+			{
+				IsShowCloseButtonInFooter = false,
+				Id = "createOrEditPayment",
+				IsShowCloseIcon = true,
+				Size = ModalSize.Larg,
+				Title = Captions.Payment,
+			};
+	ModalModel settleDocumentModel = new()
+			{
+				IsShowCloseButtonInFooter = false,
+				Id = "settleDocumentModal",
+				IsShowCloseIcon = true,
+				Size = ModalSize.Larg,
+				Title = Captions.SettleDoc,
+			};
+	ModalModel editDocumentModel = new()
+			{
+				IsShowCloseButtonInFooter = false,
+				Id = "editDocumentModal",
+				IsShowCloseIcon = true,
+				Size = ModalSize.Larg,
+				Title = Captions.Edit,
+			};
+}
+<partial name="_Modal" model="editDocumentAdminDescriptionModel" />
+<partial name="_Modal" model="installmentDetailModel" />
+<partial name="_Modal" model="collateralDetailModel" />
+<partial name="_Modal" model="createOrEditPayment" />
+<partial name="_Modal" model="settleDocumentModel" />
+<partial name="_Modal" model="editDocumentModel" />
+@section Stylesheet{
+	<link href="~/lib/persiandatetimepicker/persiandatepicker.min.css" rel="stylesheet" />
+	<script src="~/lib/persiandatetimepicker/persiandatepicker.min.js"></script>
+	
+}
+@section Scripts{
+	<script>
+		var documentId = @Model.Id
+			$(document).ready(function () {
+				getInstallments(documentId);
+				getInstllmentInfo(documentId);
+				getCollateralsInfo(documentId);
+			});
+	</script>
+	<script src="~/themes/default/js/plugins/forms/selects/select2.min.js"></script>
+	<script src="~/lib/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+	
+	<script src="~/scripts/dashboard/document.js" asp-append-version="true"></script>
+	<script src="~/themes/default/js/plugins/forms/styling/switchery.min.js"></script>
+ }
